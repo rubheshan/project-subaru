@@ -1,0 +1,33 @@
+.navbar{
+    background: linear-gradient(to right, #89f3f3, #446ead);   
+    padding: 2rem 2rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: white;
+}
+
+.brand-logo a{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: inherit;      /* use the same color as normal text */
+    text-decoration: none;   /* remove underline */
+    margin: 0rem 3rem;
+
+}
+
+.navbar-link{
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    color: inherit;      /* use the same color as normal text */
+    text-decoration: none;   /* remove underline */
+    display: inline-block;
+    transition: 0.2s
+}
+
+.navbar-link:hover{
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
