@@ -1,21 +1,18 @@
-.navbar{
-    background: linear-gradient(to right, #89f3f3, #446ead);   
-    padding: 2rem 2rem;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    color: white;
+.navbar {
+  background: linear-gradient(to bottom, rgb(1, 10, 34), rgba(0,0,0,0));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;        /* size of navbar */
+  padding: 0;          /* no padding so center stays true */
 }
 
-.brand-logo a{
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: inherit;      /* use the same color as normal text */
-    text-decoration: none;   /* remove underline */
-    margin: 0rem 3rem;
-
+.navbar img {
+  max-height: 80px;    /* ← CONTROL IMAGE SIZE HERE */
+  width: auto;
+  object-fit: contain;
+  display: block;
 }
-
 .navbar-link{
     font-size: 1.5rem;
     font-weight: bold;
