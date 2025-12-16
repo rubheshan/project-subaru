@@ -18,6 +18,9 @@ html, body {
 
 button:hover {
     cursor: pointer;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+    background-color: rgb(44, 43, 43);
+    color: white;
+        border-radius: 4px;
+    transition: background-color 0.2s;
 
 }
