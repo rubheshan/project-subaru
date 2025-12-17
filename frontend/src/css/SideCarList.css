@@ -1,0 +1,23 @@
+.side-car-list {
+    position: fixed;
+    top: 0;
+    left: 300px;
+    width: 300px;
+    height: 100vh;
+    background: #797d80;
+    padding: 2rem;
+    transition: left 0.3s ease;
+    z-index: 900;
+
+    opacity:0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.side-car-list.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}

@@ -1,6 +1,20 @@
 import "../css/SideBar.css";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import SideCarList from "./SideCarList.jsx";
+
 
 function SideBar({isOpen,setIsOpen}){
+
+    const navigate = useNavigate();
+
+    const [isShown, setIsShown] = useState(false);
+    
+    function handleClick(){
+        navigate(`/About`);
+    }
+
+
     return(
         <div className={`sidebar ${isOpen ?  "open" : ""}`}>
             <div>
@@ -8,8 +22,12 @@ function SideBar({isOpen,setIsOpen}){
             </div>
 
             <div className="sidebar-content">
-                <button>Random Bullshit</button>
-                <button>Random Bullshit</button>
+                <button onClick={handleClick}>About</button>
+                <button
+                    onMouseEnter={() => setIsShown(true)}
+                    onMouseLeave={() => setIsShown(false)}
+                >Models</button>
+                <SideCarList isShown={isShown} setIsShown={setIsShown}/>
 
                 <button>Random Bullshit</button>
                 <button>Random Bullshit</button>
