@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "backend\\src"
+    ],
+    "java.project.referencedLibraries": [
+        "c:\\Tools\\apache-tomcat-11.0.15\\lib\\servlet-api.jar",
+        "backend\\webapp\\WEB-INF\\lib\\gson-2.10.1.jar"
+    ]
+}
