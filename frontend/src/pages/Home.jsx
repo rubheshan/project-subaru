@@ -8,69 +8,61 @@ const API_URL = 'http://localhost:8080/backend/products';
 function Home() {
   const sliderRef = useRef(null);
 
-  // 2. NEW STATE: State for the fetched data
+  // --- STATE MANAGEMENT ---
   const [carData, setCarData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // --- STATE FOR SLIDER PAUSE ---
+  // Slider & Video State
   const [isPaused, setIsPaused] = useState(false);
-  // --- STATE FOR VIDEO ON HOVER ---
   const [hoveredCarId, setHoveredCarId] = useState(null); 
-  // NEW STATE: Controls the video's opacity transition
   const [isVideoFadingIn, setIsVideoFadingIn] = useState(false);
 
-  // --- NEW useEffect: FETCH DATA FROM TOMCAT BACKEND ---
+  // --- FETCH DATA FROM BACKEND ---
   useEffect(() => {
     const fetchCarData = async () => {
       try {
-        // Fetch data from your Tomcat server
         const response = await fetch(API_URL);
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
         
-        // Handle non-200 responses (like a 404 or 500)
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
         const data = await response.json();
-        setCarData(data); // Store the fetched data
-        setError(null); // Clear any previous errors
-
+        setCarData(data);
+        setError(null);
       } catch (e) {
         console.error("Error fetching car data:", e);
-        setError("Failed to load car data from the backend.");
+        setError("Unable to load the vehicle lineup.");
       } finally {
-        setIsLoading(false); // Stop loading regardless of success/fail
+        setIsLoading(false);
       }
     };
 
     fetchCarData();
-  }, []); // Empty dependency array means this runs once when the component mounts
+  }, []);
 
-  // 3. UPDATED: Duplicate the FETCHED data for the loop (only run if data exists)
   const sliderCars = carData.length > 0 
     ? [...carData, ...carData, ...carData, ...carData]
-    : []; // Use an empty array if data hasn't loaded yet
+    : []; 
 
   useEffect(() => {
     const slider = sliderRef.current;
     
     const interval = setInterval(() => {
       if (slider && !isPaused && carData.length > 0) {
-        slider.scrollLeft += 1; 
+        slider.scrollLeft += 2; 
 
         if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
            slider.scrollLeft = 0;
         }
       }
-    }, 20);
+    }, 8); 
 
     return () => clearInterval(interval);
-  }, [isPaused]); 
+  }, [isPaused, carData.length]); 
 
+  // --- MANUAL NAVIGATION ---
   const scroll = (direction) => {
     const slider = sliderRef.current;
-    const scrollAmount = window.innerWidth * 0.6; 
+    const scrollAmount = window.innerWidth * 0.4; // Scroll 40% of screen width
 
     if (slider) {
       if (direction === 'left') {
@@ -81,14 +73,23 @@ function Home() {
     }
   };
 
-  // --- Conditional Rendering for Loading/Error States ---
+  // --- RENDER HELPERS ---
+  const formatPrice = (price) => {
+    return new Intl.NumberFormat('en-MY', {
+      style: 'currency',
+      currency: 'MYR',
+      minimumFractionDigits: 0, 
+      maximumFractionDigits: 0, 
+    }).format(price);
+  };
+
+  // --- LOADING / ERROR STATES ---
   if (isLoading) {
     return (
       <div>
         <MainBanner />
-        <div className="slider-container">
-          <h2>Loading Lineup...</h2>
-          <p>Connecting to Java Backend...</p>
+        <div className="models-section" style={{ height: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <h2 style={{ border: 'none', color: '#666' }}>LOADING EXPERIENCE...</h2>
         </div>
       </div>
     );
@@ -98,108 +99,92 @@ function Home() {
     return (
       <div>
         <MainBanner />
-        <div className="slider-container">
-          <h2>Error Loading Data</h2>
-          <p>{error}</p>
-          <p>Ensure Tomcat is running at {API_URL}</p>
+        <div className="models-section" style={{ padding: '50px' }}>
+          <h2>Temporarily Unavailable</h2>
+          <p style={{ color: '#888' }}>Please check your connection or try again later.</p>
         </div>
       </div>
     );
   }
 
+  // --- MAIN RENDER ---
   return (
     <div>
       <MainBanner />
 
-      <div className="slider-container">
-        <h2>Our Lineup</h2>
-        
-        {/* Left Button */}
-        <button 
-          className="nav-btn prev-btn" 
-          onClick={() => scroll('left')}
-          onMouseEnter={() => setIsPaused(true)} 
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          ←
-        </button>
+      <div className="models-section fade-in-up">
+        <div className="slider-container">
+          <h2>Our Lineup</h2>
+          
+          {/* Navigation Buttons */}
+          <button 
+            className="nav-btn prev-btn" 
+            onClick={() => scroll('left')}
+            onMouseEnter={() => setIsPaused(true)} 
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            ←
+          </button>
 
-        <div 
-          className="slider-track" 
-          ref={sliderRef}
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          {sliderCars.map((car, index) => (
-            <div 
-              key={index} 
-              className="slider-card"
-              // --- UPDATED HOVER HANDLERS ---
-              onMouseEnter={() => {
-                setIsPaused(true);
-                setHoveredCarId(car.id);
-                // We set the fade-in state in the video's onLoadedData event (below)
-              }}
-              onMouseLeave={() => {
-                setIsPaused(false);
-                // 1. Immediately start fading out the video
-                setIsVideoFadingIn(false); 
-                // 2. After the fade-out duration (e.g., 300ms from CSS), unmount the video element
-                // This prevents the video from trying to play while invisible.
-                setTimeout(() => setHoveredCarId(null), 300); 
-              }}
-            >
-              <div className="image-wrapper">
-                {/* 1. Static Image: ALWAYS present as the base/placeholder */}
-                <img src={car.imageUrl} alt={car.modelName} className="car-image-placeholder" />
+          <button 
+            className="nav-btn next-btn" 
+            onClick={() => scroll('right')}
+            onMouseEnter={() => setIsPaused(true)} 
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            →
+          </button>
 
-                {/* 2. Video: Only mounted when hovered AND video data exists */}
-                {hoveredCarId === car.id && car.videoUrl && (
-                  <video
-                    key={car.id} 
-                    src={car.videoUrl}
-                    // Apply 'faded-in' class based on state
-                    className={`car-video ${isVideoFadingIn ? 'faded-in' : ''}`}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    // CRITICAL: Once the video metadata is loaded, signal to start the fade-in transition
-                    onLoadedData={() => setIsVideoFadingIn(true)}
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-                )}
+          {/* Slider Track */}
+          <div 
+            className="slider-track" 
+            ref={sliderRef}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            {sliderCars.map((car, index) => (
+              <div 
+                key={`${car.id}-${index}`} // Unique key for duplicated items
+                className="slider-card"
+                onMouseEnter={() => {
+                  setIsPaused(true);
+                  setHoveredCarId(car.id);
+                }}
+                onMouseLeave={() => {
+                  setIsPaused(false);
+                  setIsVideoFadingIn(false); 
+                  setTimeout(() => setHoveredCarId(null), 300); // Wait for fade out
+                }}
+              >
+                <div className="image-wrapper">
+                  {/* Static Image (Base Layer) */}
+                  <img src={car.imageUrl} alt={car.modelName} className="car-image-placeholder" />
+
+                  {/* Video (Overlay Layer - Only renders on hover) */}
+                  {hoveredCarId === car.id && car.videoUrl && (
+                    <video
+                      src={car.videoUrl}
+                      className={`car-video ${isVideoFadingIn ? 'faded-in' : ''}`}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      onLoadedData={() => setIsVideoFadingIn(true)}
+                    >
+                    </video>
+                  )}
+                </div>
+                
+                <div className="card-details">
+                  <h3>{car.modelName}</h3>
+                  <p>Starting at {formatPrice(car.price)}</p>
+                  <button>Configure</button>
+                </div>
               </div>
-              
-              <div className="card-details">
-                <h3>{car.modelName}</h3>
-                <p>
-                  Starting at RM&nbsp;
-                  {car.price ? 
-                  // Use Intl.NumberFormat for cleaner number formatting without the default currency symbol text
-                  new Intl.NumberFormat('en-MY', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  }).format(car.price)
-                  : 'Price N/A'
-                }
-              </p>
-                <button>Build</button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
         </div>
-
-        <button 
-          className="nav-btn next-btn" 
-          onClick={() => scroll('right')}
-          onMouseEnter={() => setIsPaused(true)} 
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          →
-        </button>
-
       </div>
     </div>
   );

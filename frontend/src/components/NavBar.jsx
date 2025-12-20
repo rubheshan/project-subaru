@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import "../css/NavBar.css";
-import logo from "/images/home_page/logo.png";
+import logo from "/images/home_page/logo2.png";
 import SideBar from "./SideBar";
 
 function NavBar(){
