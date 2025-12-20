@@ -29,9 +29,6 @@ function SideBar({isOpen,setIsOpen}){
                 >Models</button>
                 <SideCarList isShown={isShown} setIsShown={setIsShown}/>
 
-                <button>Random Bullshit</button>
-                <button>Random Bullshit</button>
-
             </div>
 
         </div>
