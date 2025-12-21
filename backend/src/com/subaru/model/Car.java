@@ -8,12 +8,10 @@ public class Car implements Serializable {
     private int id;
     private String modelName;
     private double price;
-    private String imageUrl;   // Thumbnail for listing
+    private String imageUrl;   
     private String videoUrl;
-    
-    // NEW DYNAMIC IMAGE FIELDS
-    private String sideImageUrl;  // Act 1 Hero Image
-    private String frontImageUrl; // Act 2 Performance Image
+    private String sideImageUrl;  
+    private String frontImageUrl; 
 
     private String tagline;
     private String description;
@@ -26,13 +24,19 @@ public class Car implements Serializable {
     private String transmission;
     private List<String> colors;
 
-    // Updated Constructor
+    // --- NEW GALLERY FIELDS ---
+    private List<String> allImages;
+    private List<String> exteriorImages;
+    private List<String> interiorImages;
+
+    // Updated Constructor (Now 20 Arguments)
     public Car(int id, String modelName, double price, String imageUrl, String videoUrl, 
                String sideImageUrl, String frontImageUrl,
                String tagline, String description, List<String> strengths, 
                String horsepower, String torque, String topSpeed, 
                String accelerationMT, String accelerationAT, 
-               String transmission, List<String> colors) {
+               String transmission, List<String> colors,
+               List<String> allImages, List<String> exteriorImages, List<String> interiorImages) {
         this.id = id;
         this.modelName = modelName;
         this.price = price;
@@ -50,9 +54,13 @@ public class Car implements Serializable {
         this.accelerationAT = accelerationAT;
         this.transmission = transmission;
         this.colors = colors;
+        // New Gallery Assignments
+        this.allImages = allImages;
+        this.exteriorImages = exteriorImages;
+        this.interiorImages = interiorImages;
     }
 
-    // GETTERS
+    // EXISTING GETTERS
     public int getId() { return id; }
     public String getModelName() { return modelName; }
     public double getPrice() { return price; }
@@ -70,4 +78,9 @@ public class Car implements Serializable {
     public String getAccelerationAT() { return accelerationAT; }
     public String getTransmission() { return transmission; }
     public List<String> getColors() { return colors; }
+
+    // --- NEW GALLERY GETTERS ---
+    public List<String> getAllImages() { return allImages; }
+    public List<String> getExteriorImages() { return exteriorImages; }
+    public List<String> getInteriorImages() { return interiorImages; }
 }
