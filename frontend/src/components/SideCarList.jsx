@@ -1,5 +1,6 @@
 import "../css/SideCarList.css";
 import { useState } from "react";
+import { useEffect } from "react";
 const API_URL = 'http://localhost:8080/backend/products';
 
 function SideCarList({isShown,setIsShown}){
