@@ -36,9 +36,9 @@ const NumberTicker = ({ value, isDecimal = false }) => {
 const CarDetail = () => {
     const { id } = useParams();
     const [car, setCar] = useState(null);
-    // Part 3 States
     const [activeTab, setActiveTab] = useState('all');
     const [selectedImg, setSelectedImg] = useState("");
+    const [isFullScreen, setIsFullScreen] = useState(false);
 
     useEffect(() => {
         fetch(`http://localhost:8080/backend/products?id=${id}`)
@@ -52,15 +52,34 @@ const CarDetail = () => {
             .catch(err => console.error("Error:", err));
     }, [id]);
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') setIsFullScreen(false);
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, []);
+
     if (!car) return <div className="loading">Loading Subaru Malaysia...</div>;
 
     const extractNum = (str) => str ? str.replace(/[^0-9.]/g, '') : "0";
 
-    // Gallery Filter Logic
     const getImages = () => {
         if (activeTab === 'exterior') return car.exteriorImages;
         if (activeTab === 'interior') return car.interiorImages;
         return car.allImages;
+    };
+
+    const navigateImage = (direction) => {
+        const list = getImages();
+        const currIdx = list.indexOf(selectedImg);
+        let nextIdx;
+        if (direction === 'next') {
+            nextIdx = (currIdx + 1) % list.length;
+        } else {
+            nextIdx = (currIdx - 1 + list.length) % list.length;
+        }
+        setSelectedImg(list[nextIdx]);
     };
 
     return (
@@ -110,6 +129,29 @@ const CarDetail = () => {
                 </div>
             </section>
 
+            {/* NEW ACT: KEY HIGHLIGHTS */}
+            <section className="highlights-section">
+                <div className="highlights-header">
+                    <h2 className="highlights-main-title">CORE <span className="red-text">TECHNOLOGY</span></h2>
+                    <p className="highlights-subtitle">Engineering excellence built into every {car.modelName}.</p>
+                </div>
+                
+                <div className="highlights-grid">
+                    {car.highlights && car.highlights.map((item, index) => (
+                        <div key={index} className="highlight-card">
+                            <div className="highlight-img-box">
+                                <img src={item.image} alt={item.title} />
+                                <div className="card-number">0{index + 1}</div>
+                            </div>
+                            <div className="highlight-info">
+                                <h3>{item.title}</h3>
+                                <p>{item.description}</p>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </section>
+
             {/* ACT 3: THE GALLERY */}
             <section className="gallery-section">
                 <div className="gallery-header">
@@ -124,22 +166,17 @@ const CarDetail = () => {
                 </div>
 
                 <div className="gallery-main-display">
-                    {/* Navigation Arrows */}
-                    <button className="nav-arrow prev" onClick={() => {
-                        const list = getImages();
-                        const currIdx = list.indexOf(selectedImg);
-                        const nextIdx = (currIdx - 1 + list.length) % list.length;
-                        setSelectedImg(list[nextIdx]);
-                    }}>&#10094;</button>
+                    <button className="fullscreen-btn" onClick={() => setIsFullScreen(true)}>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
+                            <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                        </svg>
+                    </button>
+
+                    <button className="nav-arrow prev" onClick={() => navigateImage('prev')}>&#10094;</button>
 
                     <img src={selectedImg} alt="Subaru Gallery" key={selectedImg} className="fade-in" />
 
-                    <button className="nav-arrow next" onClick={() => {
-                        const list = getImages();
-                        const currIdx = list.indexOf(selectedImg);
-                        const nextIdx = (currIdx + 1) % list.length;
-                        setSelectedImg(list[nextIdx]);
-                    }}>&#10095;</button>
+                    <button className="nav-arrow next" onClick={() => navigateImage('next')}>&#10095;</button>
                 </div>
 
                 <div className="gallery-thumbnails">
@@ -154,6 +191,18 @@ const CarDetail = () => {
                     ))}
                 </div>
             </section>
+
+            {/* FULLSCREEN OVERLAY */}
+            {isFullScreen && (
+                <div className="fullscreen-overlay" onClick={() => setIsFullScreen(false)}>
+                    <button className="close-fullscreen" onClick={() => setIsFullScreen(false)}>&times;</button>
+                    <div className="fullscreen-content" onClick={(e) => e.stopPropagation()}>
+                        <button className="nav-arrow prev" onClick={() => navigateImage('prev')}>&#10094;</button>
+                        <img src={selectedImg} alt="Full View" />
+                        <button className="nav-arrow next" onClick={() => navigateImage('next')}>&#10095;</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
