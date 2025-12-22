@@ -2,6 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import '../css/CarDetail.css';
 
+/**
+ * Animated Number Ticker Component
+ */
 const NumberTicker = ({ value, isDecimal = false }) => {
     const [displayValue, setDisplayValue] = useState(0);
     const nodeRef = useRef(null);
@@ -39,17 +42,28 @@ const CarDetail = () => {
     const [activeTab, setActiveTab] = useState('all');
     const [selectedImg, setSelectedImg] = useState("");
     const [isFullScreen, setIsFullScreen] = useState(false);
+    const [selectedColor, setSelectedColor] = useState(null);
 
     useEffect(() => {
         fetch(`http://localhost:8080/backend/products?id=${id}`)
             .then(res => res.json())
             .then(data => {
-                setCar(data);
-                if (data.allImages && data.allImages.length > 0) {
-                    setSelectedImg(data.allImages[0]);
+                if (data) {
+                    setCar(data);
+                    
+                    // Initialize Gallery: Priority to Exterior images
+                    const allImages = [...(data.exteriorImages || []), ...(data.interiorImages || [])];
+                    if (allImages.length > 0) {
+                        setSelectedImg(allImages[0]);
+                    }
+
+                    // Initialize Color Configurator: Matches 'name', 'hex', 'image' from Car.java
+                    if (data.colorOptions && data.colorOptions.length > 0) {
+                        setSelectedColor(data.colorOptions[0]);
+                    }
                 }
             })
-            .catch(err => console.error("Error:", err));
+            .catch(err => console.error("Error fetching data:", err));
     }, [id]);
 
     useEffect(() => {
@@ -62,17 +76,24 @@ const CarDetail = () => {
 
     if (!car) return <div className="loading">Loading Subaru Malaysia...</div>;
 
+    // Helper to clean numeric strings for the ticker
     const extractNum = (str) => str ? str.replace(/[^0-9.]/g, '') : "0";
 
+    // Logic to filter gallery based on tabs
     const getImages = () => {
-        if (activeTab === 'exterior') return car.exteriorImages;
-        if (activeTab === 'interior') return car.interiorImages;
-        return car.allImages;
+        const exterior = car.exteriorImages || [];
+        const interior = car.interiorImages || [];
+        
+        if (activeTab === 'exterior') return exterior;
+        if (activeTab === 'interior') return interior;
+        return [...exterior, ...interior];
     };
 
     const navigateImage = (direction) => {
         const list = getImages();
         const currIdx = list.indexOf(selectedImg);
+        if (currIdx === -1) return;
+
         let nextIdx;
         if (direction === 'next') {
             nextIdx = (currIdx + 1) % list.length;
@@ -84,7 +105,8 @@ const CarDetail = () => {
 
     return (
         <div className="car-detail-page">
-            {/* ACT 1: HERO */}
+            
+            {/* ACT 1: HERO SECTION */}
             <section className="showroom-hero">
                 <div className="watermark-text">{car.modelName}</div>
                 <div className="car-image-container">
@@ -93,16 +115,17 @@ const CarDetail = () => {
                 </div>
             </section>
 
-            {/* ACT 2: PERFORMANCE */}
+            {/* ACT 2: PERFORMANCE SPECS */}
             <section className="performance-specs-section">
                 <div className="specs-container">
                     <div className="specs-data-column">
                         <div className="spec-group">
                             <div className="spec-value">
+                                {/* Corrected to match accelerationMT in Car.java */}
                                 <NumberTicker value={extractNum(car.accelerationMT)} isDecimal={true} />
                                 <small>s</small>
                             </div>
-                            <div className="spec-label">Acceleration 0 - 100 km/h</div>
+                            <div className="spec-label">Acceleration 0 - 100 km/h (MT)</div>
                         </div>
                         <div className="spec-group">
                             <div className="spec-value">
@@ -124,12 +147,12 @@ const CarDetail = () => {
                         </div>
                     </div>
                     <div className="specs-image-column">
-                        <img src={car.frontImageUrl} alt="Performance View" className="brz-front-img" />
+                        <img src={car.frontImageUrl} alt="Front View" className="brz-front-img" />
                     </div>
                 </div>
             </section>
 
-            {/* NEW ACT: KEY HIGHLIGHTS */}
+            {/* ACT 3: CORE TECHNOLOGY (HIGHLIGHTS) */}
             <section className="highlights-section">
                 <div className="highlights-header">
                     <h2 className="highlights-main-title">CORE <span className="red-text">TECHNOLOGY</span></h2>
@@ -152,16 +175,16 @@ const CarDetail = () => {
                 </div>
             </section>
 
-            {/* ACT 3: THE GALLERY */}
+            {/* ACT 4: GALLERY SECTION */}
             <section className="gallery-section">
                 <div className="gallery-header">
                     <div className="gallery-title">
                         <span className="red-slash">/</span> GALLERY
                     </div>
                     <div className="gallery-tabs">
-                        <button className={activeTab === 'all' ? 'active' : ''} onClick={() => {setActiveTab('all'); setSelectedImg(car.allImages[0]);}}>ALL</button>
-                        <button className={activeTab === 'exterior' ? 'active' : ''} onClick={() => {setActiveTab('exterior'); setSelectedImg(car.exteriorImages[0]);}}>EXTERIOR</button>
-                        <button className={activeTab === 'interior' ? 'active' : ''} onClick={() => {setActiveTab('interior'); setSelectedImg(car.interiorImages[0]);}}>INTERIOR</button>
+                        <button className={activeTab === 'all' ? 'active' : ''} onClick={() => setActiveTab('all')}>ALL</button>
+                        <button className={activeTab === 'exterior' ? 'active' : ''} onClick={() => setActiveTab('exterior')}>EXTERIOR</button>
+                        <button className={activeTab === 'interior' ? 'active' : ''} onClick={() => setActiveTab('interior')}>INTERIOR</button>
                     </div>
                 </div>
 
@@ -173,9 +196,7 @@ const CarDetail = () => {
                     </button>
 
                     <button className="nav-arrow prev" onClick={() => navigateImage('prev')}>&#10094;</button>
-
                     <img src={selectedImg} alt="Subaru Gallery" key={selectedImg} className="fade-in" />
-
                     <button className="nav-arrow next" onClick={() => navigateImage('next')}>&#10095;</button>
                 </div>
 
@@ -189,6 +210,42 @@ const CarDetail = () => {
                             <img src={img} alt={`Thumb ${index}`} />
                         </div>
                     ))}
+                </div>
+            </section>
+            
+            {/* ACT 5: COLOR CONFIGURATOR */}
+            <section className="configurator-section">
+                <div className="config-header">
+                    <h2>CHOOSE YOUR <span className="red-text">STYLE</span></h2>
+                    <p>Select a signature Subaru finish for your {car.modelName}</p>
+                </div>
+
+                <div className="config-container">
+                    <div className="config-preview">
+                        <img 
+                            src={selectedColor?.image ? selectedColor.image : car.sideImageUrl} 
+                            alt="Selected Color" 
+                            className="config-main-img fade-in"
+                        />
+                        <div className="car-shadow"></div>
+                    </div>
+
+                    <div className="config-controls">
+                        <h3 className="selected-color-name">
+                            {selectedColor?.name}
+                        </h3>
+                        <div className="swatch-list">
+                            {car.colorOptions?.map((color, index) => (
+                                <button
+                                    key={index}
+                                    className={`swatch-btn ${selectedColor?.name === color.name ? 'active' : ''}`}
+                                    style={{ backgroundColor: color.hex }}
+                                    onClick={() => setSelectedColor(color)}
+                                    title={color.name}
+                                />
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </section>
 

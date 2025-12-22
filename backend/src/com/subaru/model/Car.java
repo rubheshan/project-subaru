@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Car implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     private int id;
     private String modelName;
@@ -20,23 +21,24 @@ public class Car implements Serializable {
     private String accelerationMT;
     private String accelerationAT;
     private String transmission;
-    private List<String> colors;
+    
+    // CHANGED: Instead of List<String>, we use the ColorOption object
+    private List<ColorOption> colorOptions; 
+    
     private List<String> allImages;
     private List<String> exteriorImages;
     private List<String> interiorImages;
-
-    // NEW: List of Highlight objects
     private List<Highlight> highlights;
 
-    // Updated Constructor (Now 20 Arguments)
+    // --- Constructor ---
     public Car(int id, String modelName, double price, String imageUrl, String videoUrl, 
                String sideImageUrl, String frontImageUrl,
                String tagline, String description, 
                String horsepower, String torque, String topSpeed, 
                String accelerationMT, String accelerationAT, 
-               String transmission, List<String> colors,
+               String transmission, List<ColorOption> colorOptions, // <--- Updated type
                List<String> allImages, List<String> exteriorImages, List<String> interiorImages,
-               List<Highlight> highlights) { // <--- Added here
+               List<Highlight> highlights) {
         this.id = id;
         this.modelName = modelName;
         this.price = price;
@@ -52,11 +54,28 @@ public class Car implements Serializable {
         this.accelerationMT = accelerationMT;
         this.accelerationAT = accelerationAT;
         this.transmission = transmission;
-        this.colors = colors;
+        this.colorOptions = colorOptions; // <--- Updated here
         this.allImages = allImages;
         this.exteriorImages = exteriorImages;
         this.interiorImages = interiorImages;
-        this.highlights = highlights; // <--- Added here
+        this.highlights = highlights;
+    }
+
+    // --- Inner Class for Color Options (Configurator) ---
+    public static class ColorOption implements Serializable {
+        private String name;
+        private String hex;
+        private String image;
+
+        public ColorOption(String name, String hex, String image) {
+            this.name = name;
+            this.hex = hex;
+            this.image = image;
+        }
+
+        public String getName() { return name; }
+        public String getHex() { return hex; }
+        public String getImage() { return image; }
     }
 
     // --- Inner Class for Highlights ---
@@ -92,9 +111,9 @@ public class Car implements Serializable {
     public String getAccelerationMT() { return accelerationMT; }
     public String getAccelerationAT() { return accelerationAT; }
     public String getTransmission() { return transmission; }
-    public List<String> getColors() { return colors; }
+    public List<ColorOption> getColorOptions() { return colorOptions; } // <--- Updated
     public List<String> getAllImages() { return allImages; }
     public List<String> getExteriorImages() { return exteriorImages; }
     public List<String> getInteriorImages() { return interiorImages; }
-    public List<Highlight> getHighlights() { return highlights; } // <--- Added Getter
+    public List<Highlight> getHighlights() { return highlights; }
 }
