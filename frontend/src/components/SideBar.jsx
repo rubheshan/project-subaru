@@ -11,23 +11,37 @@ function SideBar({isOpen,setIsOpen}){
     const [isShown, setIsShown] = useState(false);
     
     function handleClick(){
+        setIsOpen(false);
+        setIsShown(false);
         navigate(`/About`);
+    }
+
+    function handleModelClick(){
+        if(isShown){
+            setIsShown(false);
+        } else{
+            setIsShown(true);
+        }
+    }
+
+    function closeSidebar(){
+        setIsOpen(false);
+        setIsShown(false);
     }
 
 
     return(
         <div className={`sidebar ${isOpen ?  "open" : ""}`}>
-            <div>
-                <button className="close-button" onClick={() => setIsOpen(false)}>Close</button>
-            </div>
+
 
             <div className="sidebar-content">
+                <button onClick={() => closeSidebar()}>Close</button>
+
                 <button onClick={handleClick}>About</button>
                 <button
-                    onMouseEnter={() => setIsShown(true)}
-                    onMouseLeave={() => setIsShown(false)}
+                    onClick={handleModelClick}
                 >Models</button>
-                <SideCarList isShown={isShown} setIsShown={setIsShown}/>
+                <SideCarList isShown={isShown} />
 
             </div>
 

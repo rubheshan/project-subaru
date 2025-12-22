@@ -3,11 +3,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 const API_URL = 'http://localhost:8080/backend/products';
 
-function SideCarList({isShown,setIsShown}){
+function SideCarList({isShown}){
 
     const [carData, setCarData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchCarData = async () => {
       try {
@@ -33,10 +34,22 @@ function SideCarList({isShown,setIsShown}){
 
     fetchCarData();
   }, []);
-    
+
+
+  
+const sideCarImg = carData;
+
     return(
         <div className={`side-car-list ${isShown ?  "open" : ""}`}>
- 
+            {sideCarImg.map((car, index) => (
+                <div className="side-car-item" key={index}>
+                <p className="car-name">{car.modelName}</p>
+                <img
+                  src={`http://localhost:8080/backend${car.sideImgUrl}`}
+                  alt={car.name}
+                />
+              </div>
+            ))}
         </div>
     );
 
