@@ -1,0 +1,63 @@
+.side-car-list {
+    position: fixed;
+    top: 0;
+    left: 400px;
+    width: 400px;
+    height: 100vh;
+
+    background: rgba(24, 23, 23); /* Dark semi-transparent */
+    padding: 2rem;
+    box-sizing: border-box;
+
+    z-index: 900;
+
+    /* 🔑 THIS enables scrolling */
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* visibility animation */
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: 
+        opacity 0.3s ease,
+        visibility 0.3s ease;
+
+    scroll-behavior: smooth;
+}
+
+.side-car-list.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.side-car-item {
+  position: relative;     /* 🔑 anchor for absolute text */
+  margin-bottom: 1.5rem;
+}
+
+.side-car-item img {
+  width: 100%;
+  display: block;
+  border-radius: 6px;
+}
+
+/* Text overlay */
+.car-name {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  padding: 4px 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 4px;
+
+  pointer-events: none; /* allows clicking image */
+}
