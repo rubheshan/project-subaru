@@ -1,60 +1,86 @@
-// backend/src/Car.java
-
-package com.subaru.model; // Use a package name to organize your code
+package com.subaru.model;
 
 import java.io.Serializable;
+import java.util.List;
 
-// Implementing Serializable is a good practice for objects that will be passed over a network (like to a Servlet)
 public class Car implements Serializable {
     
-    // Private Fields (Data Encapsulation)
     private int id;
     private String modelName;
     private double price;
-    private String imageUrl;
+    private String imageUrl;   
     private String videoUrl;
-    
-    // Constructor (Used to create a new Car object)
-    public Car(int id, String modelName, double price, String imageUrl, String videoUrl) {
+    private String sideImageUrl;  
+    private String frontImageUrl; 
+
+    private String tagline;
+    private String description;
+    private List<String> strengths;
+    private String horsepower;
+    private String torque;
+    private String topSpeed;
+    private String accelerationMT;
+    private String accelerationAT;
+    private String transmission;
+    private List<String> colors;
+
+    // --- NEW GALLERY FIELDS ---
+    private List<String> allImages;
+    private List<String> exteriorImages;
+    private List<String> interiorImages;
+
+    // Updated Constructor (Now 20 Arguments)
+    public Car(int id, String modelName, double price, String imageUrl, String videoUrl, 
+               String sideImageUrl, String frontImageUrl,
+               String tagline, String description, List<String> strengths, 
+               String horsepower, String torque, String topSpeed, 
+               String accelerationMT, String accelerationAT, 
+               String transmission, List<String> colors,
+               List<String> allImages, List<String> exteriorImages, List<String> interiorImages) {
         this.id = id;
         this.modelName = modelName;
         this.price = price;
         this.imageUrl = imageUrl;
         this.videoUrl = videoUrl;
-    }
-    
-    // Public Getter Methods (Read access) - Demonstrates OOP
-    public int getId() {
-        return id;
+        this.sideImageUrl = sideImageUrl;
+        this.frontImageUrl = frontImageUrl;
+        this.tagline = tagline;
+        this.description = description;
+        this.strengths = strengths;
+        this.horsepower = horsepower;
+        this.torque = torque;
+        this.topSpeed = topSpeed;
+        this.accelerationMT = accelerationMT;
+        this.accelerationAT = accelerationAT;
+        this.transmission = transmission;
+        this.colors = colors;
+        // New Gallery Assignments
+        this.allImages = allImages;
+        this.exteriorImages = exteriorImages;
+        this.interiorImages = interiorImages;
     }
 
-    public String getModelName() {
-        return modelName;
-    }
+    // EXISTING GETTERS
+    public int getId() { return id; }
+    public String getModelName() { return modelName; }
+    public double getPrice() { return price; }
+    public String getImageUrl() { return imageUrl; }
+    public String getVideoUrl() { return videoUrl; }
+    public String getSideImageUrl() { return sideImageUrl; }
+    public String getFrontImageUrl() { return frontImageUrl; }
+    public String getTagline() { return tagline; }
+    public String getDescription() { return description; }
+    public List<String> getStrengths() { return strengths; }
+    public String getHorsepower() { return horsepower; }
+    public String getTorque() { return torque; }
+    public String getTopSpeed() { return topSpeed; }
+    public String getAccelerationMT() { return accelerationMT; }
+    public String getAccelerationAT() { return accelerationAT; }
+    public String getTransmission() { return transmission; }
+    public List<String> getColors() { return colors; }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-    
-    public String getVideoUrl() {
-        return videoUrl;
-    }
-    
-    // Public Setter Methods (Write/Update access) - You can add business logic here later, like validation
-    public void setPrice(double price) {
-        // Example: You could add logic here to ensure price > 0
-        this.price = price;
-    }
-    
-    // (You can omit setters for ID, Name, and URLs if you don't want them changeable after creation)
-    
-    // Optional: toString() method for easy debugging
-    @Override
-    public String toString() {
-        return "Car [id=" + id + ", modelName=" + modelName + ", price=" + price + "]";
-    }
+    // --- NEW GALLERY GETTERS ---
+    public List<String> getAllImages() { return allImages; }
+    public List<String> getExteriorImages() { return exteriorImages; }
+    public List<String> getInteriorImages() { return interiorImages; }
 }

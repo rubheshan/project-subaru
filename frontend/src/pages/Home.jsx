@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import MainBanner from '../components/MainBanner';
+import { Link } from 'react-router-dom';
 
 import '../css/App.css';
 
@@ -178,7 +179,9 @@ function Home() {
                 <div className="card-details">
                   <h3>{car.modelName}</h3>
                   <p>Starting at {formatPrice(car.price)}</p>
-                  <button>Configure</button>
+                  <Link to={`/product/${car.id}`}> 
+                    <button>Configure</button>
+                  </Link>
                 </div>
               </div>
             ))}
