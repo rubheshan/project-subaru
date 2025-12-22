@@ -22,23 +22,22 @@ public class Car implements Serializable {
     private String accelerationAT;
     private String transmission;
     
-    // CHANGED: Instead of List<String>, we use the ColorOption object
     private List<ColorOption> colorOptions; 
-    
     private List<String> allImages;
     private List<String> exteriorImages;
     private List<String> interiorImages;
     private List<Highlight> highlights;
+    private List<Variant> variants;
 
-    // --- Constructor ---
     public Car(int id, String modelName, double price, String imageUrl, String videoUrl, 
                String sideImageUrl, String frontImageUrl,
                String tagline, String description, 
                String horsepower, String torque, String topSpeed, 
                String accelerationMT, String accelerationAT, 
-               String transmission, List<ColorOption> colorOptions, // <--- Updated type
+               String transmission, List<ColorOption> colorOptions,
                List<String> allImages, List<String> exteriorImages, List<String> interiorImages,
-               List<Highlight> highlights) {
+               List<Highlight> highlights,
+               List<Variant> variants) {
         this.id = id;
         this.modelName = modelName;
         this.price = price;
@@ -54,14 +53,49 @@ public class Car implements Serializable {
         this.accelerationMT = accelerationMT;
         this.accelerationAT = accelerationAT;
         this.transmission = transmission;
-        this.colorOptions = colorOptions; // <--- Updated here
+        this.colorOptions = colorOptions;
         this.allImages = allImages;
         this.exteriorImages = exteriorImages;
         this.interiorImages = interiorImages;
         this.highlights = highlights;
+        this.variants = variants;
     }
 
-    // --- Inner Class for Color Options (Configurator) ---
+    // --- UPDATED: Inner Class for Variant Comparison ---
+    public static class Variant implements Serializable {
+        private String name;
+        private double price;
+        private String image;
+        private List<SpecItem> specs; // Use a list to allow any number of details
+
+        public Variant(String name, double price, String image, List<SpecItem> specs) {
+            this.name = name;
+            this.price = price;
+            this.image = image;
+            this.specs = specs;
+        }
+
+        public String getName() { return name; }
+        public double getPrice() { return price; }
+        public String getImage() { return image; }
+        public List<SpecItem> getSpecs() { return specs; }
+    }
+
+    // --- NEW: Helper Class for individual Spec details ---
+    public static class SpecItem implements Serializable {
+        private String label;
+        private String value;
+
+        public SpecItem(String label, String value) {
+            this.label = label;
+            this.value = value;
+        }
+
+        public String getLabel() { return label; }
+        public String getValue() { return value; }
+    }
+
+    // --- Inner Class for Color Options ---
     public static class ColorOption implements Serializable {
         private String name;
         private String hex;
@@ -111,9 +145,10 @@ public class Car implements Serializable {
     public String getAccelerationMT() { return accelerationMT; }
     public String getAccelerationAT() { return accelerationAT; }
     public String getTransmission() { return transmission; }
-    public List<ColorOption> getColorOptions() { return colorOptions; } // <--- Updated
+    public List<ColorOption> getColorOptions() { return colorOptions; }
     public List<String> getAllImages() { return allImages; }
     public List<String> getExteriorImages() { return exteriorImages; }
     public List<String> getInteriorImages() { return interiorImages; }
     public List<Highlight> getHighlights() { return highlights; }
+    public List<Variant> getVariants() { return variants; }
 }

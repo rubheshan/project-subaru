@@ -43,21 +43,19 @@ const CarDetail = () => {
     const [selectedImg, setSelectedImg] = useState("");
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [selectedColor, setSelectedColor] = useState(null);
+    const [isImgLoading, setIsImgLoading] = useState(false); // Fix: New state for flicker control
 
+    // ACT 1: FETCH DATA
     useEffect(() => {
         fetch(`http://localhost:8080/backend/products?id=${id}`)
             .then(res => res.json())
             .then(data => {
                 if (data) {
                     setCar(data);
-                    
-                    // Initialize Gallery: Priority to Exterior images
                     const allImages = [...(data.exteriorImages || []), ...(data.interiorImages || [])];
                     if (allImages.length > 0) {
                         setSelectedImg(allImages[0]);
                     }
-
-                    // Initialize Color Configurator: Matches 'name', 'hex', 'image' from Car.java
                     if (data.colorOptions && data.colorOptions.length > 0) {
                         setSelectedColor(data.colorOptions[0]);
                     }
@@ -65,6 +63,22 @@ const CarDetail = () => {
             })
             .catch(err => console.error("Error fetching data:", err));
     }, [id]);
+
+    // GALLERY SYNC LOGIC
+    useEffect(() => {
+        if (!car) return;
+        const exterior = car.exteriorImages || [];
+        const interior = car.interiorImages || [];
+        
+        if (activeTab === 'exterior' && exterior.length > 0) {
+            setSelectedImg(exterior[0]);
+        } else if (activeTab === 'interior' && interior.length > 0) {
+            setSelectedImg(interior[0]);
+        } else if (activeTab === 'all') {
+            const allImages = [...exterior, ...interior];
+            if (allImages.length > 0) setSelectedImg(allImages[0]);
+        }
+    }, [activeTab, car]);
 
     useEffect(() => {
         const handleKeyDown = (e) => {
@@ -76,14 +90,11 @@ const CarDetail = () => {
 
     if (!car) return <div className="loading">Loading Subaru Malaysia...</div>;
 
-    // Helper to clean numeric strings for the ticker
     const extractNum = (str) => str ? str.replace(/[^0-9.]/g, '') : "0";
 
-    // Logic to filter gallery based on tabs
     const getImages = () => {
         const exterior = car.exteriorImages || [];
         const interior = car.interiorImages || [];
-        
         if (activeTab === 'exterior') return exterior;
         if (activeTab === 'interior') return interior;
         return [...exterior, ...interior];
@@ -93,20 +104,14 @@ const CarDetail = () => {
         const list = getImages();
         const currIdx = list.indexOf(selectedImg);
         if (currIdx === -1) return;
-
-        let nextIdx;
-        if (direction === 'next') {
-            nextIdx = (currIdx + 1) % list.length;
-        } else {
-            nextIdx = (currIdx - 1 + list.length) % list.length;
-        }
+        let nextIdx = direction === 'next' ? (currIdx + 1) % list.length : (currIdx - 1 + list.length) % list.length;
         setSelectedImg(list[nextIdx]);
     };
 
     return (
         <div className="car-detail-page">
             
-            {/* ACT 1: HERO SECTION */}
+            {/* HERO SECTION */}
             <section className="showroom-hero">
                 <div className="watermark-text">{car.modelName}</div>
                 <div className="car-image-container">
@@ -115,34 +120,24 @@ const CarDetail = () => {
                 </div>
             </section>
 
-            {/* ACT 2: PERFORMANCE SPECS */}
+            {/* PERFORMANCE SPECS */}
             <section className="performance-specs-section">
                 <div className="specs-container">
                     <div className="specs-data-column">
                         <div className="spec-group">
-                            <div className="spec-value">
-                                {/* Corrected to match accelerationMT in Car.java */}
-                                <NumberTicker value={extractNum(car.accelerationMT)} isDecimal={true} />
-                                <small>s</small>
-                            </div>
+                            <div className="spec-value"><NumberTicker value={extractNum(car.accelerationMT)} isDecimal={true} /><small>s</small></div>
                             <div className="spec-label">Acceleration 0 - 100 km/h (MT)</div>
                         </div>
                         <div className="spec-group">
-                            <div className="spec-value">
-                                <NumberTicker value={extractNum(car.horsepower)} /> <small>PS</small>
-                            </div>
+                            <div className="spec-value"><NumberTicker value={extractNum(car.horsepower)} /> <small>PS</small></div>
                             <div className="spec-label">Engine Power</div>
                         </div>
                         <div className="spec-group">
-                            <div className="spec-value">
-                                <NumberTicker value={extractNum(car.torque)} /> <small>Nm</small>
-                            </div>
+                            <div className="spec-value"><NumberTicker value={extractNum(car.torque)} /> <small>Nm</small></div>
                             <div className="spec-label">Torque</div>
                         </div>
                         <div className="spec-group">
-                            <div className="spec-value">
-                                <NumberTicker value={extractNum(car.topSpeed)} /> <small>km/h</small>
-                            </div>
+                            <div className="spec-value"><NumberTicker value={extractNum(car.topSpeed)} /> <small>km/h</small></div>
                             <div className="spec-label">Top Speed</div>
                         </div>
                     </div>
@@ -152,13 +147,12 @@ const CarDetail = () => {
                 </div>
             </section>
 
-            {/* ACT 3: CORE TECHNOLOGY (HIGHLIGHTS) */}
+            {/* HIGHLIGHTS */}
             <section className="highlights-section">
                 <div className="highlights-header">
                     <h2 className="highlights-main-title">CORE <span className="red-text">TECHNOLOGY</span></h2>
                     <p className="highlights-subtitle">Engineering excellence built into every {car.modelName}.</p>
                 </div>
-                
                 <div className="highlights-grid">
                     {car.highlights && car.highlights.map((item, index) => (
                         <div key={index} className="highlight-card">
@@ -175,12 +169,10 @@ const CarDetail = () => {
                 </div>
             </section>
 
-            {/* ACT 4: GALLERY SECTION */}
+            {/* GALLERY SECTION */}
             <section className="gallery-section">
                 <div className="gallery-header">
-                    <div className="gallery-title">
-                        <span className="red-slash">/</span> GALLERY
-                    </div>
+                    <div className="gallery-title"><span className="red-slash">/</span> GALLERY</div>
                     <div className="gallery-tabs">
                         <button className={activeTab === 'all' ? 'active' : ''} onClick={() => setActiveTab('all')}>ALL</button>
                         <button className={activeTab === 'exterior' ? 'active' : ''} onClick={() => setActiveTab('exterior')}>EXTERIOR</button>
@@ -190,11 +182,8 @@ const CarDetail = () => {
 
                 <div className="gallery-main-display">
                     <button className="fullscreen-btn" onClick={() => setIsFullScreen(true)}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
-                            <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
-                        </svg>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
                     </button>
-
                     <button className="nav-arrow prev" onClick={() => navigateImage('prev')}>&#10094;</button>
                     <img src={selectedImg} alt="Subaru Gallery" key={selectedImg} className="fade-in" />
                     <button className="nav-arrow next" onClick={() => navigateImage('next')}>&#10095;</button>
@@ -202,18 +191,14 @@ const CarDetail = () => {
 
                 <div className="gallery-thumbnails">
                     {getImages().map((img, index) => (
-                        <div 
-                            key={index} 
-                            className={`thumb-wrapper ${selectedImg === img ? 'active-thumb' : ''}`}
-                            onClick={() => setSelectedImg(img)}
-                        >
+                        <div key={index} className={`thumb-wrapper ${selectedImg === img ? 'active-thumb' : ''}`} onClick={() => setSelectedImg(img)}>
                             <img src={img} alt={`Thumb ${index}`} />
                         </div>
                     ))}
                 </div>
             </section>
             
-            {/* ACT 5: COLOR CONFIGURATOR */}
+            {/* ACT 5: COLOR CONFIGURATOR (UPDATED TO PREVENT FLICKER) */}
             <section className="configurator-section">
                 <div className="config-header">
                     <h2>CHOOSE YOUR <span className="red-text">STYLE</span></h2>
@@ -225,22 +210,28 @@ const CarDetail = () => {
                         <img 
                             src={selectedColor?.image ? selectedColor.image : car.sideImageUrl} 
                             alt="Selected Color" 
-                            className="config-main-img fade-in"
+                            /* Fix: Classes change based on loading state */
+                            className={`config-main-img ${isImgLoading ? 'image-loading' : 'fade-in'}`}
+                            key={selectedColor?.name}
+                            onLoad={() => setIsImgLoading(false)} // Fix: Turn off loading state once image arrived
                         />
                         <div className="car-shadow"></div>
                     </div>
 
                     <div className="config-controls">
-                        <h3 className="selected-color-name">
-                            {selectedColor?.name}
-                        </h3>
+                        <h3 className="selected-color-name">{selectedColor?.name}</h3>
                         <div className="swatch-list">
                             {car.colorOptions?.map((color, index) => (
                                 <button
                                     key={index}
                                     className={`swatch-btn ${selectedColor?.name === color.name ? 'active' : ''}`}
                                     style={{ backgroundColor: color.hex }}
-                                    onClick={() => setSelectedColor(color)}
+                                    onClick={() => {
+                                        if (color.name !== selectedColor?.name) {
+                                            setIsImgLoading(true); // Fix: Set loading to true immediately on click
+                                            setSelectedColor(color);
+                                        }
+                                    }}
                                     title={color.name}
                                 />
                             ))}
@@ -248,6 +239,38 @@ const CarDetail = () => {
                     </div>
                 </div>
             </section>
+
+            {/* VARIANT COMPARISON */}
+            {car.variants && car.variants.length > 0 && (
+                <section className="variants-section">
+                    <div className="variants-header">
+                        <h2>CHOOSE YOUR <span className="red-text">DRIVE</span></h2>
+                        <p>Available configurations for the {car.modelName}</p>
+                    </div>
+                    <div className="variants-grid">
+                        {car.variants.map((variant, index) => (
+                            <div key={index} className="variant-card">
+                                <div className="variant-image"><img src={variant.image} alt={variant.name} /></div>
+                                <div className="variant-content">
+                                    <h3>{variant.name}</h3>
+                                    <div className="variant-price-tag">
+                                        <small>Starting from</small>
+                                        <span className="price-val">RM {variant.price.toLocaleString()}</span>
+                                    </div>
+                                    <div className="variant-spec-list">
+                                        {variant.specs && variant.specs.map((spec, specIdx) => (
+                                            <div key={specIdx} className="v-spec-item">
+                                                <span className="v-label">{spec.label}</span>
+                                                <span className="v-value">{spec.value}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+            )}
 
             {/* FULLSCREEN OVERLAY */}
             {isFullScreen && (
@@ -260,6 +283,13 @@ const CarDetail = () => {
                     </div>
                 </div>
             )}
+
+            {/* Fix: Invisible Preloader to keep color switches instant */}
+            <div style={{ display: 'none' }}>
+                {car.colorOptions?.map((color, i) => (
+                    <img key={i} src={color.image} alt="preload" />
+                ))}
+            </div>
         </div>
     );
 };

@@ -747,3 +747,158 @@ body:has(.fullscreen-overlay) {
         height: 30px;
     }
 }
+
+/* --- ACT 6: VARIANT COMPARISON --- */
+
+.variants-section {
+    background: #ffffff;
+    padding: 100px 8%;
+    border-top: 1px solid #eee;
+    text-align: center;
+}
+
+.variants-header {
+    margin-bottom: 60px;
+}
+
+.variants-header h2 {
+    font-family: 'Arial Black', sans-serif;
+    font-size: clamp(2.5rem, 4vw, 3.5rem);
+    letter-spacing: -2px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    color: #000;
+}
+
+/* THE GRID */
+.variants-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 1300px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: stretch; /* Forces all cards in a row to be equal height */
+}
+
+.variant-card {
+    background: #fdfdfd;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    border: 1px solid #f0f0f0;
+    width: calc(50% - 20px);
+    min-width: 350px;
+}
+
+.variant-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.08);
+    border-color: #e10600;
+}
+
+.variant-image {
+    padding: 40px;
+    background: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+}
+
+.variant-image img {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 15px 15px rgba(0,0,0,0.1));
+}
+
+.variant-content {
+    padding: 40px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Essential to push the spec list to the bottom */
+}
+
+.variant-content h3 {
+    font-family: 'Arial Black', sans-serif;
+    font-size: 1.6rem;
+    margin-bottom: 12px;
+    color: #111;
+    text-transform: uppercase;
+}
+
+/* FIX: STARTING FROM OVERLAP */
+.variant-price-tag {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 35px;
+    gap: 4px; /* Creates a clean gap between label and price */
+}
+
+.variant-price-tag small {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: block;
+}
+
+.price-val {
+    font-family: 'Arial Black', sans-serif;
+    font-size: 2.2rem;
+    color: #111;
+    line-height: 1; /* Prevents vertical collision */
+    white-space: nowrap;
+}
+
+/* DYNAMIC SPEC LIST STYLING */
+.variant-spec-list {
+    margin-top: auto; /* Pushes the list to the bottom of the card */
+    border-top: 1px solid #eee;
+    padding-top: 25px;
+}
+
+.v-spec-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 48px; /* Standardizes row height across both cards */
+    padding: 4px 0;
+    border-bottom: 1px dashed #eee;
+}
+
+.v-spec-item:last-child {
+    border-bottom: none;
+}
+
+.v-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    color: #888;
+    font-weight: 600;
+}
+
+.v-value {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    color: #111;
+    font-weight: 700;
+}
+
+@media (max-width: 900px) {
+    .variant-card {
+        width: 100%;
+        min-width: unset;
+    }
+}
+
+/* --- ADDED SMOOTH ANCHORING --- */
+html {
+    scroll-behavior: smooth;
+}
