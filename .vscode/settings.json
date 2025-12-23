@@ -1,7 +1,12 @@
 {
     "java.project.sourcePaths": [],
     "java.project.referencedLibraries": [
+<<<<<<< HEAD
         "/Users/vedhaashree/Tools/apache-tomcat-11.0.15/lib/servlet-api.jar",
         "backend/webapp/WEB-INF/lib/gson-2.10.1.jar"
+=======
+        "d:\\Downloads\\apache-tomcat-11.0.15\\lib\\servlet-api.jar",
+        "d:\\.WORK\\project-subaru\\backend\\webapp\\WEB-INF\\lib\\gson-2.10.1.jar"
+>>>>>>> ac8bab58ad2e587138a91fc9670445d3dec94e33
     ]
 }
