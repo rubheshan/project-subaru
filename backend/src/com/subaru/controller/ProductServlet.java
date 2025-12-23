@@ -1,5 +1,3 @@
-// backend/src/com/subaru/controller/ProductServlet.java
-
 package com.subaru.controller;
 
 import com.subaru.model.Car;
