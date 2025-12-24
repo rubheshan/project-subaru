@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import MainBanner from '../components/MainBanner';
 import { Link } from 'react-router-dom';
 
+// We rely on the Global 'App.css' for the Dark Luxury theme
 import '../css/App.css';
 
 const API_URL = 'http://localhost:8080/backend/products';
@@ -9,17 +10,17 @@ const API_URL = 'http://localhost:8080/backend/products';
 function Home() {
   const sliderRef = useRef(null);
 
-  // --- STATE MANAGEMENT ---
+  // --- STATE ---
   const [carData, setCarData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Slider & Video State
+  // Interaction State
   const [isPaused, setIsPaused] = useState(false);
   const [hoveredCarId, setHoveredCarId] = useState(null); 
   const [isVideoFadingIn, setIsVideoFadingIn] = useState(false);
 
-  // --- FETCH DATA FROM BACKEND ---
+  // --- FETCH DATA ---
   useEffect(() => {
     const fetchCarData = async () => {
       try {
@@ -28,9 +29,8 @@ function Home() {
         
         const data = await response.json();
         setCarData(data);
-        setError(null);
       } catch (e) {
-        console.error("Error fetching car data:", e);
+        console.error("Error fetching lineup:", e);
         setError("Unable to load the vehicle lineup.");
       } finally {
         setIsLoading(false);
@@ -40,19 +40,26 @@ function Home() {
     fetchCarData();
   }, []);
 
+  // --- INFINITE SCROLL DATA PREP ---
+  // We clone the list 3 times to create the illusion of an endless loop
   const sliderCars = carData.length > 0 
-    ? [...carData, ...carData, ...carData, ...carData]
+    ? [...carData, ...carData, ...carData]
     : []; 
 
+  // --- AUTOPLAY LOGIC (The "Gliding" Effect) ---
   useEffect(() => {
     const slider = sliderRef.current;
     
+    // 15ms interval = ~60fps smooth motion
     const interval = setInterval(() => {
       if (slider && !isPaused && carData.length > 0) {
-        slider.scrollLeft += 2; 
+        // Move 1 pixel at a time for maximum smoothness (Luxury = Slow & Steady)
+        slider.scrollLeft += 1; 
 
-        if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10) {
-           slider.scrollLeft = 0;
+        // Reset seamlessly when we reach the end of the cloned list
+        // (slider.scrollWidth / 3) is the width of one real set of cars
+        if (slider.scrollLeft >= (slider.scrollWidth / 3) * 2) {
+           slider.scrollLeft = slider.scrollWidth / 3;
         }
       }
     }, 8); 
@@ -63,18 +70,21 @@ function Home() {
   // --- MANUAL NAVIGATION ---
   const scroll = (direction) => {
     const slider = sliderRef.current;
-    const scrollAmount = window.innerWidth * 0.4; // Scroll 40% of screen width
+    const scrollAmount = 500; // Scroll one card width
 
     if (slider) {
-      if (direction === 'left') {
-        slider.scrollLeft -= scrollAmount;
-      } else {
-        slider.scrollLeft += scrollAmount;
-      }
+      const target = direction === 'left' 
+        ? slider.scrollLeft - scrollAmount 
+        : slider.scrollLeft + scrollAmount;
+      
+      slider.scrollTo({
+        left: target,
+        behavior: 'smooth'
+      });
     }
   };
 
-  // --- RENDER HELPERS ---
+  // --- FORMAT PRICE (RM) ---
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-MY', {
       style: 'currency',
@@ -84,25 +94,27 @@ function Home() {
     }).format(price);
   };
 
-  // --- LOADING / ERROR STATES ---
+  // --- LOADING STATE (Minimalist) ---
   if (isLoading) {
     return (
       <div>
         <MainBanner />
-        <div className="models-section" style={{ height: '50vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <h2 style={{ border: 'none', color: '#666' }}>LOADING EXPERIENCE...</h2>
+        <div className="models-section" style={{ height: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {/* A simple pulsing text instead of a jarring loading bar */}
+          <h2 style={{ opacity: 0.5, animation: 'pulse 1.5s infinite' }}>LOADING EXPERIENCE...</h2>
         </div>
       </div>
     );
   }
 
+  // --- ERROR STATE ---
   if (error){
     return (
       <div>
         <MainBanner />
-        <div className="models-section" style={{ padding: '50px' }}>
+        <div className="models-section" style={{ padding: '50px', textAlign: 'center' }}>
           <h2>Temporarily Unavailable</h2>
-          <p style={{ color: '#888' }}>Please check your connection or try again later.</p>
+          <p style={{ color: '#888' }}>Please check your connection.</p>
         </div>
       </div>
     );
@@ -113,18 +125,20 @@ function Home() {
     <div>
       <MainBanner />
 
+      {/* "fade-in-up" makes the section rise gently when loaded */}
       <div className="models-section fade-in-up">
+        
         <div className="slider-container">
           <h2>Our Lineup</h2>
           
-          {/* Navigation Buttons */}
+          {/* Navigation Arrows */}
           <button 
             className="nav-btn prev-btn" 
             onClick={() => scroll('left')}
             onMouseEnter={() => setIsPaused(true)} 
             onMouseLeave={() => setIsPaused(false)}
           >
-            ←
+            &#8592; {/* Classic Arrow Symbol */}
           </button>
 
           <button 
@@ -133,10 +147,10 @@ function Home() {
             onMouseEnter={() => setIsPaused(true)} 
             onMouseLeave={() => setIsPaused(false)}
           >
-            →
+            &#8594;
           </button>
 
-          {/* Slider Track */}
+          {/* The Sliding Track */}
           <div 
             className="slider-track" 
             ref={sliderRef}
@@ -145,8 +159,9 @@ function Home() {
           >
             {sliderCars.map((car, index) => (
               <div 
-                key={`${car.id}-${index}`} // Unique key for duplicated items
+                key={`${car.id}-${index}`} 
                 className="slider-card"
+                // Hover Handlers for Video
                 onMouseEnter={() => {
                   setIsPaused(true);
                   setHoveredCarId(car.id);
@@ -154,14 +169,14 @@ function Home() {
                 onMouseLeave={() => {
                   setIsPaused(false);
                   setIsVideoFadingIn(false); 
-                  setTimeout(() => setHoveredCarId(null), 300); // Wait for fade out
+                  setTimeout(() => setHoveredCarId(null), 300);
                 }}
               >
                 <div className="image-wrapper">
-                  {/* Static Image (Base Layer) */}
+                  {/* 1. Static Image (Always Visible Base) */}
                   <img src={car.imageUrl} alt={car.modelName} className="car-image-placeholder" />
 
-                  {/* Video (Overlay Layer - Only renders on hover) */}
+                  {/* 2. Video Overlay (Loads on Hover) */}
                   {hoveredCarId === car.id && car.videoUrl && (
                     <video
                       src={car.videoUrl}
@@ -171,14 +186,15 @@ function Home() {
                       muted
                       playsInline
                       onLoadedData={() => setIsVideoFadingIn(true)}
-                    >
-                    </video>
+                    />
                   )}
                 </div>
                 
                 <div className="card-details">
                   <h3>{car.modelName}</h3>
                   <p>Starting at {formatPrice(car.price)}</p>
+                  
+                  {/* Link to Detail Page */}
                   <Link to={`/product/${car.id}`}> 
                     <button>Configure</button>
                   </Link>

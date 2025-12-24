@@ -11,9 +11,10 @@ function MainBanner() {
         className="hero-image"
       />
       <div className="hero-text">
-        <h1>All New Forester 2.5</h1>
+        <h1>One Life.</h1>
+        <h1>One Subaru.</h1>
         <p>Go Anywhere. Do Anything.</p>
-        <button className="cta-button">Configure Yours Now</button>
+        <button className="cta-button">Join Us Now</button>
       </div>
     </div>
   );

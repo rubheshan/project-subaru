@@ -107,10 +107,10 @@ function About() {
         <button>View Models</button>
       </div>
 
-      {/* DISCLAIMER */}
+      {/* DISCLAIMER */} 
       <div className="about-disclaimer">
         <p>
-            I want to watch that steve jobs movie 
+            wtf is this supposed to be rubhy 
         </p>
       </div>
 

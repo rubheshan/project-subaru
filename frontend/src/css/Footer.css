@@ -1,49 +1,45 @@
 .site-footer {
-  background: #111;
-  color: #eee;
-  padding: 3rem 1.5rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3); /* Transparent dark */
+  border-top: 1px solid rgba(255,255,255,0.05);
+  color: #888;
+  padding: 4rem 2rem 2rem;
+  margin-top: auto;
 }
 
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
-
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem;
 }
 
-.footer-section h3,
-.footer-section h4 {
-  margin-bottom: 0.8rem;
-  color: #fff;
+.footer-section h3 { color: white; margin-bottom: 1rem; }
+.footer-section h4 { 
+    color: white; 
+    font-size: 0.8rem; 
+    letter-spacing: 2px; 
+    margin-bottom: 1.2rem; 
+    text-transform: uppercase;
 }
 
-.footer-section p,
-.footer-section li {
-  font-size: 0.9rem;
-  color: #ccc;
+.footer-section ul { 
+  list-style: none; 
 }
 
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-}
+.footer-section li { 
+  margin-bottom: 0.8rem; cursor: pointer; transition: 0.3s; 
 
-.footer-section li {
-  margin-bottom: 0.5rem;
-  cursor: pointer;
 }
-
-.footer-section li:hover {
-  color: #fff;
+.footer-section li:hover { 
+  color: #003087; transform: translateX(5px); 
 }
 
 .footer-bottom {
-  border-top: 1px solid #333;
-  margin-top: 2rem;
-  padding-top: 1rem;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  margin-top: 3rem;
+  padding-top: 2rem;
   text-align: center;
-  font-size: 0.8rem;
-  color: #aaa;
+  font-size: 0.75rem;
+  opacity: 0.5;
 }

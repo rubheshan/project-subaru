@@ -237,3 +237,66 @@ html, body {
         transform: translateY(0);
     }
 }
+
+/* App.css - The Dark Luxury Foundation */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif; /* Clean luxury text */
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Titles use the futuristic font */
+h1, h2, h3 {
+    font-family: 'Michroma', sans-serif;
+    letter-spacing: 1px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #020b1c; }
+::-webkit-scrollbar-thumb { background: #003087; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #0045c4; }
+
+/* Selection Highlight */
+::selection { background: #003087; color: white; }
+
+:root {
+    --subaru-blue: #003087;
+    --subaru-blue-hover: #00205b;
+    --bg-dark: #010614;   
+    --text-white: #ffffff;
+    --text-grey: #aab4be; 
+}
+
+html, body {
+    width: 100%;
+    min-height: 100%;
+    /* The "Deep Ocean" Moving Gradient */
+    background: linear-gradient(-45deg, #020b1c, #001530, #000000, #001f52);
+    background-size: 400% 400%;
+    color: var(--text-white);
+    animation: deepOceanMove 20s ease infinite;
+}
+
+@keyframes deepOceanMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Fade In Animation */
+.fade-in-up {
+    animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+    opacity: 0; 
+    transform: translateY(30px);
+}
+@keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+/* Space for the Fixed Navbar */
+.main-page {
+    padding-top: 90px; 
+    min-height: 100vh;
+}
