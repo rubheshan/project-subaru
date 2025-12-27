@@ -1,9 +1,10 @@
 import "../css/SideCarList.css";
 import { useState } from "react";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 const API_URL = 'http://localhost:8080/backend/products';
 
-function SideCarList({isShown}){
+function SideCarList({isShown, onLinkClick}){
 
     const [carData, setCarData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -41,14 +42,19 @@ const sideCarImg = carData;
 
     return(
         <div className={`side-car-list ${isShown ?  "open" : ""}`}>
-            {sideCarImg.map((car, index) => (
-                <div className="side-car-item" key={index}>
-                <p className="car-name">{car.modelName}</p>
-                <img
-                  src={`http://localhost:8080/backend${car.sideImgUrl}`}
-                  alt={car.name}
-                />
-              </div>
+            {sideCarImg.map((car) => (
+              <Link 
+                    to={`/product/${car.id}`} 
+                    className="side-car-item" 
+                    key={car.id}
+                    onClick={onLinkClick}
+                >
+                    <p className="car-name">{car.modelName}</p>
+                    <img
+                        src={car.sideImageUrl}
+                        alt={car.modelName}
+                    />
+              </Link>
             ))}
         </div>
     );

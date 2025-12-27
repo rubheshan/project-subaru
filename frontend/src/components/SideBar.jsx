@@ -41,7 +41,7 @@ function SideBar({isOpen,setIsOpen}){
                 <button
                     onClick={handleModelClick}
                 >Models</button>
-                <SideCarList isShown={isShown} />
+                <SideCarList isShown={isShown} onLinkClick={closeSidebar} />
 
             </div>
 
