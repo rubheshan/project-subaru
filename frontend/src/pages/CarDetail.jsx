@@ -3,35 +3,71 @@ import { useParams } from 'react-router-dom';
 import '../css/CarDetail.css';
 
 /**
- * Animated Number Ticker Component
+ * 1. ANIMATION ENGINE (Updated to Reset on Scroll Up)
+ */
+const RevealSection = ({ children, className }) => {
+    const [isVisible, setIsVisible] = useState(false);
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(([entry]) => {
+            // Simply set state to match intersection status
+            // If scrolling down (entering), true. If scrolling up (leaving), false.
+            setIsVisible(entry.isIntersecting);
+        }, { threshold: 0.15 });
+
+        if (ref.current) observer.observe(ref.current);
+        return () => observer.disconnect();
+    }, []);
+
+    return (
+        <section ref={ref} className={`${className} ${isVisible ? 'is-visible' : ''}`}>
+            {children}
+        </section>
+    );
+};
+
+/**
+ * Animated Number Ticker (Resets when out of view)
  */
 const NumberTicker = ({ value, isDecimal = false }) => {
     const [displayValue, setDisplayValue] = useState(0);
     const nodeRef = useRef(null);
+    const targetValue = parseFloat(value) || 0;
 
     useEffect(() => {
-        const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
+        let timer = null;
+        
+        const observer = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) {
+                // START COUNTING
                 let start = 0;
-                const end = parseFloat(value) || 0;
                 const duration = 1500; 
-                const increment = end / (duration / 16);
+                const increment = targetValue / (duration / 16);
 
-                const timer = setInterval(() => {
+                timer = setInterval(() => {
                     start += increment;
-                    if (start >= end) {
-                        setDisplayValue(end);
+                    if (start >= targetValue) {
+                        setDisplayValue(targetValue);
                         clearInterval(timer);
                     } else {
                         setDisplayValue(isDecimal ? start.toFixed(1) : Math.floor(start));
                     }
                 }, 16);
+            } else {
+                // RESET TO 0 WHEN SCROLLING UP/AWAY
+                clearInterval(timer);
+                setDisplayValue(0);
             }
-        }, { threshold: 0.5 });
+        }, { threshold: 0.1 }); // Low threshold to reset early
 
         if (nodeRef.current) observer.observe(nodeRef.current);
-        return () => observer.disconnect();
-    }, [value, isDecimal]);
+        
+        return () => {
+            observer.disconnect();
+            if (timer) clearInterval(timer);
+        };
+    }, [targetValue, isDecimal]);
 
     return <span ref={nodeRef}>{displayValue}</span>;
 };
@@ -43,7 +79,7 @@ const CarDetail = () => {
     const [selectedImg, setSelectedImg] = useState("");
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [selectedColor, setSelectedColor] = useState(null);
-    const [isImgLoading, setIsImgLoading] = useState(false); // Fix: New state for flicker control
+    const [isImgLoading, setIsImgLoading] = useState(false); 
 
     // ACT 1: FETCH DATA
     useEffect(() => {
@@ -111,17 +147,17 @@ const CarDetail = () => {
     return (
         <div className="car-detail-page">
             
-            {/* HERO SECTION */}
-            <section className="showroom-hero">
+            {/* HERO SECTION (Static Animation on Load) */}
+            <RevealSection className="showroom-hero">
                 <div className="watermark-text">{car.modelName}</div>
                 <div className="car-image-container">
                     <img src={car.sideImageUrl} alt={car.modelName} className="main-car-img" />
                     <div className="car-shadow"></div>
                 </div>
-            </section>
+            </RevealSection>
 
-            {/* PERFORMANCE SPECS */}
-            <section className="performance-specs-section">
+            {/* PERFORMANCE SPECS (Now Wrapped in RevealSection for Re-Triggering) */}
+            <RevealSection className="performance-specs-section">
                 <div className="specs-container">
                     <div className="specs-data-column">
                         <div className="spec-group">
@@ -145,10 +181,10 @@ const CarDetail = () => {
                         <img src={car.frontImageUrl} alt="Front View" className="brz-front-img" />
                     </div>
                 </div>
-            </section>
+            </RevealSection>
 
             {/* HIGHLIGHTS */}
-            <section className="highlights-section">
+            <RevealSection className="highlights-section">
                 <div className="highlights-header">
                     <h2 className="highlights-main-title">CORE <span className="red-text">TECHNOLOGY</span></h2>
                     <p className="highlights-subtitle">Engineering excellence built into every {car.modelName}.</p>
@@ -167,10 +203,10 @@ const CarDetail = () => {
                         </div>
                     ))}
                 </div>
-            </section>
+            </RevealSection>
 
             {/* GALLERY SECTION */}
-            <section className="gallery-section">
+            <RevealSection className="gallery-section">
                 <div className="gallery-header">
                     <div className="gallery-title"><span className="red-slash">/</span> GALLERY</div>
                     <div className="gallery-tabs">
@@ -196,10 +232,10 @@ const CarDetail = () => {
                         </div>
                     ))}
                 </div>
-            </section>
+            </RevealSection>
             
-            {/* ACT 5: COLOR CONFIGURATOR (UPDATED TO PREVENT FLICKER) */}
-            <section className="configurator-section">
+            {/* CONFIGURATOR SECTION */}
+            <RevealSection className="configurator-section">
                 <div className="config-header">
                     <h2>CHOOSE YOUR <span className="red-text">STYLE</span></h2>
                     <p>Select a signature Subaru finish for your {car.modelName}</p>
@@ -210,16 +246,42 @@ const CarDetail = () => {
                         <img 
                             src={selectedColor?.image ? selectedColor.image : car.sideImageUrl} 
                             alt="Selected Color" 
-                            /* Fix: Classes change based on loading state */
                             className={`config-main-img ${isImgLoading ? 'image-loading' : 'fade-in'}`}
                             key={selectedColor?.name}
-                            onLoad={() => setIsImgLoading(false)} // Fix: Turn off loading state once image arrived
+                            onLoad={() => setIsImgLoading(false)} 
+                            
+                            /* --- THE SUBTLE GLOW FIX --- */
+                            style={{
+                                /* 0px horizontal, 60px down (floor), 
+                                   40px blur (soft), 
+                                   Color + "40" (Adds transparency/subtlety) 
+                                */
+                                filter: `drop-shadow(0 60px 60px ${selectedColor?.hex || '#ffffff'}40)` 
+                            }}
                         />
-                        <div className="car-shadow"></div>
+                        
+                        {/* --- DYNAMIC FLOOR SHADOW --- */}
+                        {/* We use the selected color's hex to tint the floor glow */}
+                        <div 
+                            className="car-shadow"
+                            style={{
+                                background: `radial-gradient(ellipse at center, ${selectedColor?.hex}66 0%, transparent 70%)`,
+                                opacity: 0.8
+                            }}
+                        ></div>
                     </div>
 
                     <div className="config-controls">
-                        <h3 className="selected-color-name">{selectedColor?.name}</h3>
+                        {/* --- ANIMATED TEXT --- */}
+                        {/* The 'key' forces React to re-play the animation on change */}
+                        <h3 
+                            className="selected-color-name" 
+                            key={selectedColor?.name}
+                            style={{ animation: 'fadeInUpShort 0.5s ease-out forwards' }}
+                        >
+                            {selectedColor?.name}
+                        </h3>
+                        
                         <div className="swatch-list">
                             {car.colorOptions?.map((color, index) => (
                                 <button
@@ -228,7 +290,7 @@ const CarDetail = () => {
                                     style={{ backgroundColor: color.hex }}
                                     onClick={() => {
                                         if (color.name !== selectedColor?.name) {
-                                            setIsImgLoading(true); // Fix: Set loading to true immediately on click
+                                            setIsImgLoading(true); 
                                             setSelectedColor(color);
                                         }
                                     }}
@@ -238,11 +300,11 @@ const CarDetail = () => {
                         </div>
                     </div>
                 </div>
-            </section>
+            </RevealSection>
 
             {/* VARIANT COMPARISON */}
             {car.variants && car.variants.length > 0 && (
-                <section className="variants-section">
+                <RevealSection className="variants-section">
                     <div className="variants-header">
                         <h2>CHOOSE YOUR <span className="red-text">DRIVE</span></h2>
                         <p>Available configurations for the {car.modelName}</p>
@@ -269,7 +331,7 @@ const CarDetail = () => {
                             </div>
                         ))}
                     </div>
-                </section>
+                </RevealSection>
             )}
 
             {/* FULLSCREEN OVERLAY */}
@@ -284,7 +346,7 @@ const CarDetail = () => {
                 </div>
             )}
 
-            {/* Fix: Invisible Preloader to keep color switches instant */}
+            {/* Invisible Preloader */}
             <div style={{ display: 'none' }}>
                 {car.colorOptions?.map((color, i) => (
                     <img key={i} src={color.image} alt="preload" />

@@ -13,7 +13,7 @@ function Footer() {
         <div className="footer-section">
           <h4>EXPLORE</h4>
           <ul>
-            <li>Models</li>
+            <li>About</li>
             <li>Technology</li>
             <li>Motorsports</li>
           </ul>

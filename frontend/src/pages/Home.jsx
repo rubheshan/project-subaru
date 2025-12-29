@@ -2,7 +2,6 @@ import React, { useRef, useEffect, useState } from 'react';
 import MainBanner from '../components/MainBanner';
 import { Link } from 'react-router-dom';
 
-// We rely on the Global 'App.css' for the Dark Luxury theme
 import '../css/App.css';
 
 const API_URL = 'http://localhost:8080/backend/products';
