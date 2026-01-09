@@ -300,3 +300,109 @@ html, body {
     padding-top: 90px; 
     min-height: 100vh;
 }
+
+/* --- LUXURY STATEMENT SECTION --- */
+.home-statement-section {
+  padding: 10rem 2rem;
+  background: #020202; /* Deepest Black */
+  text-align: center;
+  position: relative;
+  /* Optional: A very subtle gradient at the bottom */
+  background: linear-gradient(to bottom, #020202 0%, #050b14 100%);
+}
+
+.statement-eyebrow {
+  display: inline-block;
+  color: #c9a959; /* Gold Accent */
+  font-family: 'Michroma', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+  
+  /* Relative positioning for the decorative lines */
+  position: relative;
+  opacity: 0.8;
+  
+  /* Ensure it has the animation setup */
+  transition: all 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+}
+
+.statement-eyebrow,
+.statement-text {
+    opacity: 0;
+    transform: translateY(30px); /* A shorter distance looks faster */
+    
+    /* FASTER SPEED: Changed from 1.2s to 0.7s for a snappy feel */
+    transition: all 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000); /* easeOutCubic */
+}
+
+.reveal-content.is-visible .statement-eyebrow,
+.reveal-content.is-visible .statement-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.statement-text.delay-2 {
+    transition-delay: 0.25s; /* A quick 250ms pause */
+}
+
+.statement-eyebrow::before,
+.statement-eyebrow::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 1px;
+  background: rgba(201, 169, 89, 0.3);
+}
+
+.statement-eyebrow::before { right: 100%; margin-right: 15px; }
+.statement-eyebrow::after { left: 100%; margin-left: 15px; }
+
+.statement-headline {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300; /* Thin and elegant */
+  font-size: clamp(1.8rem, 4vw, 3rem); /* Responsive size */
+  line-height: 1.4;
+  color: #ffffff;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.statement-headline .dim-text {
+  color: #556677; /* Darker grey to create "reading rhythm" */
+  transition: color 0.5s ease;
+}
+
+.home-statement-section:hover .dim-text {
+  color: #8899a6; /* Lightens up slightly when you hover the section */
+}
+
+
+.reveal-content.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.statement-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #cfd6e4;
+  max-width: 800px;
+  /* IMPORTANT: Need margin-bottom so they don't overlap during animation */
+  margin: 0 auto 2rem auto; 
+}
+
+.statement-text strong {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.statement-text strong {
+  color: #ffffff;
+  font-weight: 500;
+}
+

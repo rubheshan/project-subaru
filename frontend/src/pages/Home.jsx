@@ -1,11 +1,39 @@
 import React, { useRef, useEffect, useState } from 'react';
 import MainBanner from '../components/MainBanner';
 import { Link } from 'react-router-dom';
-
-import '../css/App.css';
+import '../css/App.css'; // Ensure this imports your new Home.css rules too
 
 const API_URL = 'http://localhost:8080/backend/products';
 
+/* =========================================
+   1. ANIMATION HELPER (Added this part)
+   ========================================= */
+const RevealSection = ({ children, className }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.2 } // Trigger when 20% visible
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div 
+      ref={sectionRef} 
+      className={`reveal-content ${className || ''} ${isVisible ? 'is-visible' : ''}`}
+    >
+      {children}
+    </div>
+  );
+};
+
+/* =========================================
+   MAIN HOME COMPONENT
+   ========================================= */
 function Home() {
   const sliderRef = useRef(null);
 
@@ -40,23 +68,20 @@ function Home() {
   }, []);
 
   // --- INFINITE SCROLL DATA PREP ---
-  // We clone the list 3 times to create the illusion of an endless loop
   const sliderCars = carData.length > 0 
     ? [...carData, ...carData, ...carData]
     : []; 
 
-  // --- AUTOPLAY LOGIC (The "Gliding" Effect) ---
+  // --- AUTOPLAY LOGIC ---
   useEffect(() => {
     const slider = sliderRef.current;
     
     // 15ms interval = ~60fps smooth motion
     const interval = setInterval(() => {
       if (slider && !isPaused && carData.length > 0) {
-        // Move 1 pixel at a time for maximum smoothness (Luxury = Slow & Steady)
         slider.scrollLeft += 1; 
 
         // Reset seamlessly when we reach the end of the cloned list
-        // (slider.scrollWidth / 3) is the width of one real set of cars
         if (slider.scrollLeft >= (slider.scrollWidth / 3) * 2) {
            slider.scrollLeft = slider.scrollWidth / 3;
         }
@@ -69,7 +94,7 @@ function Home() {
   // --- MANUAL NAVIGATION ---
   const scroll = (direction) => {
     const slider = sliderRef.current;
-    const scrollAmount = 500; // Scroll one card width
+    const scrollAmount = 500; 
 
     if (slider) {
       const target = direction === 'left' 
@@ -83,7 +108,7 @@ function Home() {
     }
   };
 
-  // --- FORMAT PRICE (RM) ---
+  // --- FORMAT PRICE ---
   const formatPrice = (price) => {
     return new Intl.NumberFormat('en-MY', {
       style: 'currency',
@@ -93,13 +118,12 @@ function Home() {
     }).format(price);
   };
 
-  // --- LOADING STATE (Minimalist) ---
+  // --- LOADING STATE ---
   if (isLoading) {
     return (
       <div>
         <MainBanner />
         <div className="models-section" style={{ height: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          {/* A simple pulsing text instead of a jarring loading bar */}
           <h2 style={{ opacity: 0.5, animation: 'pulse 1.5s infinite' }}>LOADING EXPERIENCE...</h2>
         </div>
       </div>
@@ -124,20 +148,52 @@ function Home() {
     <div>
       <MainBanner />
 
-      {/* "fade-in-up" makes the section rise gently when loaded */}
+      {/* =========================================
+          2. NEW STATEMENT SECTION (Added here)
+      ========================================= */}
+      <section className="home-statement-section">
+        <RevealSection>
+          
+          <RevealSection>
+          
+          <span className="statement-eyebrow">The Philosophy</span>
+          
+          {/* Paragraph 1 */}
+          <p className="statement-text">
+            <strong>We don't just engineer cars.</strong> Life is a journey filled with countless roads, diverse landscapes, and defining moments.
+            The path is rarely straight, often winding through tough terrain and leading to unexpected discoveries.
+          </p>
+
+          {/* Paragraph 2 */}
+          <p className="statement-text delay-2">
+            Subaru understands this journey. We know your needs and desires evolve along the way. 
+            That's why we craft vehicles that are more than just transportation; they're true companions,
+             built for every stage of your life. Engineered with purpose, Subaru vehicles inspire unparalleled 
+             confidence and deliver peace of mind, safeguarding you on every adventure.
+          </p>
+
+          <p className="statement-text delay-2">
+            With Subaru, you don't just drive; <strong>you embrace life fully</strong>, secure in the knowledge that you have a companion for life.
+          </p>
+
+        </RevealSection>
+
+        </RevealSection>
+      </section>
+      {/* ========================================= */}
+
       <div className="models-section fade-in-up">
         
         <div className="slider-container">
           <h2>Our Lineup</h2>
           
-          {/* Navigation Arrows */}
           <button 
             className="nav-btn prev-btn" 
             onClick={() => scroll('left')}
             onMouseEnter={() => setIsPaused(true)} 
             onMouseLeave={() => setIsPaused(false)}
           >
-            &#8592; {/* Classic Arrow Symbol */}
+            &#8592;
           </button>
 
           <button 
@@ -149,7 +205,6 @@ function Home() {
             &#8594;
           </button>
 
-          {/* The Sliding Track */}
           <div 
             className="slider-track" 
             ref={sliderRef}
@@ -160,7 +215,6 @@ function Home() {
               <div 
                 key={`${car.id}-${index}`} 
                 className="slider-card"
-                // Hover Handlers for Video
                 onMouseEnter={() => {
                   setIsPaused(true);
                   setHoveredCarId(car.id);
@@ -172,10 +226,8 @@ function Home() {
                 }}
               >
                 <div className="image-wrapper">
-                  {/* 1. Static Image (Always Visible Base) */}
                   <img src={car.imageUrl} alt={car.modelName} className="car-image-placeholder" />
 
-                  {/* 2. Video Overlay (Loads on Hover) */}
                   {hoveredCarId === car.id && car.videoUrl && (
                     <video
                       src={car.videoUrl}
@@ -193,7 +245,6 @@ function Home() {
                   <h3>{car.modelName}</h3>
                   <p>Starting at {formatPrice(car.price)}</p>
                   
-                  {/* Link to Detail Page */}
                   <Link to={`/product/${car.id}`}> 
                     <button>Configure</button>
                   </Link>

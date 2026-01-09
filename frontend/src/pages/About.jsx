@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/About.css";
 
 /* --- ANIMATION ENGINE --- */
@@ -23,8 +24,16 @@ const RevealSection = ({ children, className }) => {
 };
 
 function About() {
+  const navigate = useNavigate();
+  
   return (
     <div className="about-page">
+
+      <div className="ambient-bg-container">
+        <div className="orb orb-1"></div>
+        <div className="orb orb-2"></div>
+        <div className="orb orb-3"></div>
+      </div>
 
       <RevealSection className="about-hero">
         
@@ -143,7 +152,7 @@ function About() {
       <RevealSection className="about-cta">
         <h2 className="section-title" style={{ fontSize: '2rem' }}>EXPERIENCE THE <span className="blue-text">DIFFERENCE</span></h2>
         <p style={{ color: '#8899a6' }}>Explore vehicles designed for confidence, adventure, and safety.</p>
-        <button className="cta-btn">View Lineup</button>
+        <button className="cta-btn"onClick={() => navigate('/')}>View Lineup</button>
       </RevealSection>
 
       {/* DISCLAIMER */} 
