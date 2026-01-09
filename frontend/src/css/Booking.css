@@ -1,0 +1,113 @@
+.booking-page {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  background: #0b0d10;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.booking-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.booking-card {
+  background: #12151b;
+  border-radius: 18px;
+  max-width: 950px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 2.5rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.booking-card img {
+  width: 100%;
+  border-radius: 14px;
+  object-fit: contain;
+  background: #0b0d10;
+  padding: 1rem;
+}
+
+/* 🔹 FORM */
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.booking-form input,
+.booking-form select {
+  background: #0f1218;
+  border: 1px solid #1f2430;
+  border-radius: 12px;
+  padding: 0.9rem 1rem;
+  font-size: 0.95rem;
+  color: #ffffff;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.booking-form input::placeholder {
+  color: #9ca3af;
+}
+
+.booking-form input:focus,
+.booking-form select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3);
+}
+
+.booking-form select option {
+  background: #0f1218;
+  color: #ffffff;
+}
+
+/* 🔹 BUTTON */
+.booking-form button {
+  margin-top: 1.2rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.booking-form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 25px rgba(37, 99, 235, 0.4);
+}
+
+.booking-form button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* 🔹 LOADING */
+.loading {
+  color: white;
+  font-size: 1.2rem;
+  padding: 5rem;
+  text-align: center;
+}
+
+/* 🔹 MOBILE */
+@media (max-width: 768px) {
+  .booking-card {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-title {
+    font-size: 2rem;
+  }
+}
