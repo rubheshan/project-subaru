@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import '../css/CarDetail.css';
 
 /**
@@ -72,6 +73,7 @@ const NumberTicker = ({ value, isDecimal = false }) => {
     return <span ref={nodeRef}>{displayValue}</span>;
 };
 
+
 const CarDetail = () => {
     const { id } = useParams();
     const [car, setCar] = useState(null);
@@ -80,6 +82,8 @@ const CarDetail = () => {
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [selectedColor, setSelectedColor] = useState(null);
     const [isImgLoading, setIsImgLoading] = useState(false); 
+    const navigate = useNavigate();
+    
 
     // ACT 1: FETCH DATA
     useEffect(() => {
@@ -351,6 +355,15 @@ const CarDetail = () => {
                 {car.colorOptions?.map((color, i) => (
                     <img key={i} src={color.image} alt="preload" />
                 ))}
+            </div>
+
+            <div className="book-now-wrapper">
+            <button
+                className="book-now-btn"
+                onClick={() => navigate(`/booking/${car.id}`)}
+                >
+                Book Now
+            </button>
             </div>
         </div>
     );
