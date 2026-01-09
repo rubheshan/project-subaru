@@ -72,27 +72,51 @@ public class ProductServlet extends HttpServlet {
 
         // --- 3. Subaru XV ---
         List<Car.ColorOption> xvColors = Arrays.asList(
-            createColor("xv", "Oasis Blue", "blue", "#007BA7"),
-            createColor("xv", "Sun Blaze Pearl", "orange", "#FF4500"),
-            createColor("xv", "Offshore Blue Metallic", "grey-blue", "#5D8AA8"),
-            createColor("xv", "Pure Red", "red", "#D00000"),
-            createColor("xv", "Crystal White Pearl", "white", "#FFFFFF"),
-            createColor("xv", "Crystal Black Silica", "black", "#0A0A0A"),
-            createColor("xv", "Magnetite Grey Metallic", "grey", "#3A3D40")
+            createColor("xv", "Dark Blue Pearl", "blue", "#20325e"),
+            createColor("xv", "Crystal Black Silica", "black", "#262626"),
+            createColor("xv", "Pure White", "white", "#FFFFFF"),
+            createColor("xv", "Cool Grey Khaki", "cool-grey", "#a6b0b7"),
+            createColor("xv", "Magnetite Grey Metallic", "grey", "#7b7c7e")
         );
         List<Car.Highlight> xvHighlights = Arrays.asList(
             new Car.Highlight("Urban Agility", "220mm ground clearance for city and trail.", "/assets/highlights/xv-urban.jpg"),
             new Car.Highlight("Smart Connectivity", "8-inch touchscreen with Apple CarPlay.", "/assets/highlights/xv-tech.jpg"),
-            new Car.Highlight("SRH Headlights", "Beams move in the direction of your turn.", "/assets/highlights/led.jpg")
+            new Car.Highlight("Symmetrical AWD", "Legendary traction and balance.", "/assets/highlights/awd.jpg")
         );
+
+        List<Car.Variant> xvVariants = new ArrayList<>();
+
+        xvVariants.add(new Car.Variant(
+            "XV 2.0i-P EyeSight", 155300.0, "/assets/cars/xv/xv-side.png",
+            Arrays.asList(
+                new Car.SpecItem("Horsepower", "156 PS"),
+                new Car.SpecItem("Torque", "196 Nm"),
+                new Car.SpecItem("0-100 km/h", "10.4s"),
+                new Car.SpecItem("Top Speed", "194 km/h"),
+                new Car.SpecItem("Safety System", "EyeSight 4.0")
+            )
+        ));
+
+        xvVariants.add(new Car.Variant(
+            "XV 2.0i-P EyeSight", 162300.0, "/assets/cars/xv/xv-side.png",
+            Arrays.asList(
+                new Car.SpecItem("Horsepower", "156 PS"),
+                new Car.SpecItem("Torque", "196 Nm"),
+                new Car.SpecItem("0-100 km/h", "10.4s"),
+                new Car.SpecItem("Top Speed", "194 km/h"),
+                new Car.SpecItem("Safety System", "EyeSight 4.0"),
+                new Car.SpecItem("Additional Technology", "360 Degree Camera\n Auto Vehicle Hold")
+            )
+        ));
+
         List<String> xvExt = Arrays.asList("/assets/cars/xv/exterior/ext-1.jpg", "/assets/cars/xv/exterior/ext-2.jpg", "/assets/cars/xv/exterior/ext-3.jpg", "/assets/cars/xv/exterior/ext-4.jpg");
         List<String> xvInt = Arrays.asList("/assets/cars/xv/interior/int-1.jpg", "/assets/cars/xv/interior/int-2.jpg", "/assets/cars/xv/interior/int-3.jpg", "/assets/cars/xv/interior/int-4.jpg");
-        cars.add(new Car(3, "XV", 155300.0, "/assets/video/XV-image.jpg", "/assets/video/XV.mp4", "/assets/cars/xv/xv-side.png", "/assets/cars/xv/xv-front.png", "Urban Explorer", "Style and capability.", "156hp", "196Nm", "194km/h", "10.4s", "10.4s", "CVT", xvColors, Stream.concat(xvExt.stream(), xvInt.stream()).collect(Collectors.toList()), xvExt, xvInt, xvHighlights, new ArrayList<>()));
+        cars.add(new Car(3, "XV", 155300.0, "/assets/video/XV-image.jpg", "/assets/video/XV.mp4", "/assets/cars/xv/xv-side.png", "/assets/cars/xv/xv-front.png", "Urban Explorer", "Style and capability.", "156hp", "196Nm", "194km/h", "10.4s", "10.4s", "CVT", xvColors, Stream.concat(xvExt.stream(), xvInt.stream()).collect(Collectors.toList()), xvExt, xvInt, xvHighlights, xvVariants));
 
         // --- 4. WRX ---
         List<Car.ColorOption> wrxColors = Arrays.asList(
             createColor("wrx", "WR Blue Pearl", "blue", "#0845AD"),
-            createColor("wrx", "Solar Orange Pearl", "orange", "#FF6600"),
+            createColor("wrx", "Ice Silver Metallic", "silver", "#9DA1A4"),
             createColor("wrx", "Ignition Red", "red", "#C40000"),
             createColor("wrx", "Ceramic White", "white", "#F4F4F4"),
             createColor("wrx", "Galaxy Purple Pearl", "purple", "#2E1A47"),
@@ -105,9 +129,34 @@ public class ProductServlet extends HttpServlet {
             new Car.Highlight("Performance Chassis", "Aggressive suspension and stiffened body.", "/assets/highlights/wrx-chassis.jpg"),
             new Car.Highlight("11.6-inch Tablet Display", "High-res display for vehicle settings.", "/assets/highlights/wrx-dash.jpg")
         );
+
+        List<Car.Variant> wrxVariants = new ArrayList<>();
+        
+        // Manual Variant
+        wrxVariants.add(new Car.Variant(
+            "WRX 2.4 6MT", 283500.0, "/assets/cars/wrx/wrx-side.png",
+            Arrays.asList(
+                new Car.SpecItem("Horsepower", "271 PS"),
+                new Car.SpecItem("Torque", "350 Nm"),
+                new Car.SpecItem("0-100 km/h", "5.6s"),
+                new Car.SpecItem("Top Speed", "250 km/h")
+            )
+        ));
+
+        wrxVariants.add(new Car.Variant(
+            "WRX 2.4 CVT EyeSight", 289500.0, "/assets/cars/wrx/wrx-side.png",
+            Arrays.asList(
+                new Car.SpecItem("Horsepower", "271 PS"),
+                new Car.SpecItem("Torque", "350 Nm"),
+                new Car.SpecItem("0-100 km/h", "65.4s"),
+                new Car.SpecItem("Top Speed", "250 km/h"),
+                new Car.SpecItem("Safety System", "EyeSight 4.0")
+            )
+        ));
+
         List<String> wrxExt = Arrays.asList("/assets/cars/wrx/exterior/ext-1.jpg", "/assets/cars/wrx/exterior/ext-2.jpg", "/assets/cars/wrx/exterior/ext-3.jpg", "/assets/cars/wrx/exterior/ext-4.jpg");
         List<String> wrxInt = Arrays.asList("/assets/cars/wrx/interior/int-1.jpg", "/assets/cars/wrx/interior/int-2.jpg", "/assets/cars/wrx/interior/int-3.jpg", "/assets/cars/wrx/interior/int-4.jpg");
-        cars.add(new Car(4, "WRX", 289500.0, "/assets/video/WRX-image.jpg", "/assets/video/WRX.mp4", "/assets/cars/wrx/wrx-side.png", "/assets/cars/wrx/wrx-front.png", "Pure Performance", "Icon of speed.", "271hp", "350Nm", "250km/h", "6.0s", "6.1s", "6MT/CVT", wrxColors, Stream.concat(wrxExt.stream(), wrxInt.stream()).collect(Collectors.toList()), wrxExt, wrxInt, wrxHighlights, new ArrayList<>()));
+        cars.add(new Car(4, "WRX", 289500.0, "/assets/video/WRX-image.jpg", "/assets/video/WRX.mp4", "/assets/cars/wrx/wrx-side.png", "/assets/cars/wrx/wrx-front.png", "Pure Performance", "Icon of speed.", "271hp", "350Nm", "250km/h", "5.8s", "5.4s", "6MT/CVT", wrxColors, Stream.concat(wrxExt.stream(), wrxInt.stream()).collect(Collectors.toList()), wrxExt, wrxInt, wrxHighlights, wrxVariants));
 
         // --- 5. BRZ ---
         List<Car.ColorOption> brzColors = Arrays.asList(

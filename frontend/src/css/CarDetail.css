@@ -363,10 +363,36 @@ h2 .red-text {
 .variant-price-tag small { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #888; text-transform: uppercase; letter-spacing: 1px; display: block; }
 .price-val { font-family: 'Michroma', sans-serif; font-size: 2.2rem; color: #003087; line-height: 1; white-space: nowrap; text-shadow: 0 0 10px rgba(0, 48, 135, 0.5); }
 .variant-spec-list { margin-top: auto; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; }
-.v-spec-item { display: flex; justify-content: space-between; align-items: center; min-height: 48px; padding: 4px 0; border-bottom: 1px dashed rgba(255,255,255,0.1); }
-.v-spec-item:last-child { border-bottom: none; }
-.v-label { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #888; font-weight: 600; }
-.v-value { font-family: 'Inter', sans-serif; font-size: 0.95rem; color: #fff; font-weight: 700; }
+.v-spec-item { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+    min-height: 48px; 
+    padding: 12px 0; 
+    border-bottom: 1px dashed rgba(255,255,255,0.1); 
+}
+.v-spec-item:last-child { 
+    border-bottom: none; 
+}
+
+.v-label { 
+    font-family: 'Inter', sans-serif; 
+    font-size: 0.85rem; 
+    color: #888; 
+    font-weight: 600;
+}
+
+.v-value { 
+    font-family: 'Inter', sans-serif; 
+    font-size: 0.95rem; 
+    color: #fff; 
+    font-weight: 700;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: right;
+    gap: 2px;
+}
 
 @media (max-width: 900px) {
     .variant-card { width: 100%; min-width: unset; }
