@@ -9,6 +9,7 @@ const Booking = () => {
   const [car, setCar] = useState(null);
   const [locations, setLocations] = useState([]);
 
+
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -16,6 +17,13 @@ const Booking = () => {
     date: "",
     location: ""
   });
+
+  useEffect(() => {
+  fetch("http://localhost:8080/backend/locations")
+    .then(res => res.json())
+    .then(data => setLocations(data))
+    .catch(err => console.error("Location fetch error:", err));
+}, []);
 
   // 🔹 Fetch selected car
   useEffect(() => {
@@ -38,7 +46,8 @@ const Booking = () => {
       !form.name ||
       !form.email ||
       !form.phone ||
-      !form.date 
+      !form.date  ||
+      !form.location
     ) {
       alert("Please fill in all fields.");
       return;
@@ -55,6 +64,7 @@ const Booking = () => {
       phone: form.phone,
       date: form.date,
       car: car.modelName,
+      location: form.location
     };
 
     emailjs
@@ -109,6 +119,23 @@ const Booking = () => {
             onChange={handleChange}
           />
 
+          <select
+            name="location"
+            value={form.location}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Subaru Location</option>
+
+            {locations.map((loc, index) => (
+              <option
+                key={index}
+                value={`${loc.city}, ${loc.state}`}
+              >
+                {loc.city}, {loc.state}
+              </option>
+            ))}
+          </select>
 
           <button type="submit">Confirm Booking</button>
         </form>
