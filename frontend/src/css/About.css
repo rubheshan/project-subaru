@@ -426,3 +426,94 @@
   left: 30%;
   animation: floatDeep 18s infinite ease-in-out reverse;
 }
+
+/* --- GLOBAL PRESENCE SECTION --- */
+.global-section {
+  position: relative;
+  padding: 8rem 2rem;
+  background: #020610; /* Very dark blue-black */
+  overflow: hidden;
+  text-align: center;
+}
+
+/* THE CSS WIREFRAME GLOBE (Background Visual) */
+.global-bg-globe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 48, 135, 0.2);
+  z-index: 0;
+  opacity: 0.6;
+  
+  /* Creates a grid/latitude-longitude look */
+  background: 
+    repeating-linear-gradient(90deg, transparent 0, transparent 50px, rgba(0, 48, 135, 0.1) 50px, rgba(0, 48, 135, 0.1) 51px),
+    repeating-linear-gradient(0deg, transparent 0, transparent 50px, rgba(0, 48, 135, 0.1) 50px, rgba(0, 48, 135, 0.1) 51px);
+    
+  animation: spinGlobe 60s linear infinite;
+}
+
+@keyframes spinGlobe {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* --- THE CONTENT GRID --- */
+.global-content {
+  position: relative;
+  z-index: 2; /* Sits above the globe */
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.global-header h2 {
+  font-family: 'Michroma', sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 4rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+/* --- THE MISSION CARDS --- */
+.mission-card {
+  background: rgba(2, 11, 28, 0.6); /* Dark Glass */
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3rem 2rem;
+  transition: all 0.4s ease;
+}
+
+.mission-card:hover {
+  transform: translateY(-10px);
+  border-color: var(--subaru-blue); /* Highlights blue on hover */
+  box-shadow: 0 10px 40px rgba(0, 48, 135, 0.3);
+}
+
+.mission-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  display: block;
+}
+
+.mission-card h3 {
+  color: #fff;
+  font-family: 'Michroma', sans-serif;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.mission-card p {
+  color: #aab4be;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
