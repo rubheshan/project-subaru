@@ -6,6 +6,7 @@ import About from "./pages/About.jsx";
 import './css/App.css';
 import Footer from "./components/Footer.jsx";
 import Booking from "./pages/Booking";
+import Compare from './pages/Compare';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/product/:id" element={<CarDetail />} />
           <Route path="/About" element={<About />} />
           <Route path="/booking/:id" element={<Booking />} />
+          <Route path="/compare" element={<Compare />} />
         </Routes>
       </main>
       <Footer />
