@@ -129,7 +129,7 @@ function About() {
           <div className="split-graphic">
             <img 
                 /* Placeholder image of Subaru EyeSight technology. Replace with your own image. */
-                src="https://www.subaru.ca/content/7907/media/General/webimage/EyeSight/2023/EyeSight_Cameras_Run_01.jpg" 
+                src="/images/home_page/eyesight_tech.jpg" 
                 alt="Subaru EyeSight Technology" 
             />
           </div>

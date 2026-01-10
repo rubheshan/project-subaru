@@ -406,3 +406,221 @@ html, body {
   font-weight: 500;
 }
 
+/* --- FEATURE GRID SECTION --- */
+.features-section {
+  padding: 8rem 2rem;
+  background-color: #050b14; /* Slightly lighter than pure black */
+  text-align: center;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 4rem auto 0;
+}
+
+.feature-card {
+  background: linear-gradient(135deg, #001233 0%, #00050a 100%);
+  
+  /* Make the border subtle blue instead of white/gold initially */
+  border: 1px solid rgba(0, 48, 135, 0.5); 
+  
+  padding: 3rem 2rem;
+  position: relative;
+  overflow: hidden;
+
+  /* 1. INITIAL STATE: Hidden & Pushed Down */
+  opacity: 0;
+  transform: translateY(40px);
+
+  /* 2. THE GLIDE PHYSICS */
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+  
+  /* Ensure text stays readable on blue */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.reveal-content.is-visible .feature-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.feature-card:nth-child(1) { transition-delay: 0.1s; }
+.feature-card:nth-child(2) { transition-delay: 0.3s; }
+.feature-card:nth-child(3) { transition-delay: 0.5s; }
+
+.feature-card:hover {
+  transform: translateY(-10px) !important;
+  
+  /* Gold border pops really well against the blue */
+  border-color: #c9a959; 
+  
+  /* Make the blue glow */
+  box-shadow: 0 10px 40px rgba(0, 48, 135, 0.6);
+  
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Animate the title inside the card on hover */
+.feature-card h3 {
+  font-family: 'Michroma', sans-serif;
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  transition: color 0.3s;
+}
+
+.feature-card:hover h3 {
+  color: #c9a959; /* Turn gold on hover */
+}
+
+.feature-card p {
+  color: #e0e6ed; /* Lightens the grey text to read better on blue */
+}
+
+/* Add a subtle icon placeholder circle */
+.icon-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #fff;
+  transition: all 0.4s ease;
+}
+
+.feature-card:hover .icon-circle {
+  background: #c9a959; /* Circle turns gold */
+  color: #000;
+}
+
+.features-section .statement-eyebrow,
+.features-section h2 {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reveal-content.is-visible .statement-eyebrow,
+.reveal-content.is-visible h2 {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- 1. NEW "BREATHING" BACKGROUND --- */
+.home-statement-section {
+  padding: 10rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  /* The "Breathing" Effect */
+  background: radial-gradient(circle at center, #111b2b 0%, #020202 60%);
+  background-size: 150% 150%;
+  animation: breatheLight 8s ease-in-out infinite alternate;
+}
+
+@keyframes breatheLight {
+  0% { background-size: 100% 100%; opacity: 0.8; }
+  100% { background-size: 130% 130%; opacity: 1; }
+}
+
+.stats-section {
+  position: relative;
+  padding: 4rem 0;
+  
+  /* The "Tech Strip" Background */
+  background: linear-gradient(90deg, #020202 0%, #0a1525 50%, #020202 100%);
+  border-top: 1px solid rgba(201, 169, 89, 0.2); /* Faint Gold Top */
+  border-bottom: 1px solid rgba(201, 169, 89, 0.2); /* Faint Gold Bottom */
+  
+  /* Center the content */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.stats-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5rem;
+  width: fit-content;
+  max-width: 1200px;
+  position: relative;
+  z-index: 2;
+}
+
+.stat-item {
+  position: relative;
+  text-align: center;
+  min-width: auto;
+  padding: 0 2rem;
+  cursor: default;
+
+  /* 1. INITIAL STATE: Hidden & Pushed Down */
+  opacity: 0;
+  transform: translateY(50px); 
+
+  /* 2. THE GLIDE PHYSICS: Smooth and heavy */
+  transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.stat-item:hover {
+  transform: translateY(-10px); 
+  transition: transform 0.3s ease; 
+}
+
+.stat-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: -3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 50px; /* Short divider line */
+  width: 1px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.reveal-content.is-visible .stat-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stat-number {
+  display: block;
+  font-family: 'Michroma', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4.5rem); /* Responsive big text */
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+  
+  /* Cool Blue Glow */
+  text-shadow: 0 0 20px rgba(0, 48, 135, 0.6);
+}
+
+.stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #8899a6;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.stat-item:hover .stat-label {
+  color: #c9a959; /* Gold */
+}
+
+/* Add delays for a staggered effect */
+.stat-item:nth-child(1) { transition-delay: 0.1s; }
+.stat-item:nth-child(2) { transition-delay: 0.3s; }
+.stat-item:nth-child(3) { transition-delay: 0.5s; }

@@ -55,17 +55,24 @@
     letter-spacing: 1px;
 }
 
-.cta-button {
-    background: var(--subaru-blue);
-    color: white;
-    border: none;
-    padding: 15px 40px;
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    transition: 0.3s;
+.hero-btn {
+  margin-top: 20px;
+  padding: 12px 32px;
+  background-color: transparent;
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  font-family: 'Inter', sans-serif; /* Or 'Michroma' if you want the tech look */
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.cta-button:hover {
-    background: #0045c4;
-    transform: translateY(-2px);
+.hero-btn:hover {
+  background-color: #ffffff;
+  color: #000000; /* Turns black on hover */
+  transform: translateY(-3px); /* Slight lift effect */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
 }

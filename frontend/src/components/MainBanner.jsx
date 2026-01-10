@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../css/MainBanner.css';
 
 function MainBanner() {
@@ -14,7 +15,9 @@ function MainBanner() {
         <h1>One Life.</h1>
         <h1>One Subaru.</h1>
         <p>Go Anywhere. Do Anything.</p>
-        <button className="cta-button">Learn More</button>
+        <Link to="/About">
+          <button className="hero-btn">Learn More</button>
+        </Link>
       </div>
     </div>
   );
