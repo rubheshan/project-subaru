@@ -166,7 +166,7 @@ const CarDetail = () => {
                     <div className="specs-data-column">
                         <div className="spec-group">
                             <div className="spec-value"><NumberTicker value={extractNum(car.accelerationMT)} isDecimal={true} /><small>s</small></div>
-                            <div className="spec-label">Acceleration 0 - 100 km/h (MT)</div>
+                            <div className="spec-label">Acceleration 0 - 100 km/h</div>
                         </div>
                         <div className="spec-group">
                             <div className="spec-value"><NumberTicker value={extractNum(car.horsepower)} /> <small>PS</small></div>
@@ -327,7 +327,11 @@ const CarDetail = () => {
                                         {variant.specs && variant.specs.map((spec, specIdx) => (
                                             <div key={specIdx} className="v-spec-item">
                                                 <span className="v-label">{spec.label}</span>
-                                                <span className="v-value">{spec.value}</span>
+                                                <span className="v-value">
+                                                    {spec.value.split('\n').map((line, i) => ( 
+                                                        <div key={i}>{line.trim()}</div>
+                                                    ))}
+                                                </span>
                                             </div>
                                         ))}
                                     </div>
