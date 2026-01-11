@@ -32,12 +32,13 @@ public class ProductServlet extends HttpServlet {
         List<Car.ColorOption> f25Colors = Arrays.asList(
             createColor("forester25", "Autumn Green Metallic", "green", "#4B533A"),
             createColor("forester25", "Brilliant Bronze Metallic", "bronze", "#7A6E5D"),
+            createColor("forester25", "Cashmere Gold Opal", "gold", "#d6cfc9"),
             createColor("forester25", "Crimson Red Pearl", "red", "#8B0000"),
             createColor("forester25", "Crystal White Pearl", "white", "#F2F2F2"),
             createColor("forester25", "River Rock Pearl", "grey", "#707372"),
             createColor("forester25", "Sapphire Blue Pearl", "blue", "#1B2A4E"),
             createColor("forester25", "Magnetite Grey Metallic", "dark-grey", "#3A3D40"),
-            createColor("forester25", "Horizon Blue Pearl", "light-blue", "#2A4D69"),
+            createColor("forester25", "Daybreak Blue Pearl", "light-blue", "#477499"),
             createColor("forester25", "Crystal Black Silica", "black", "#0A0A0A"),
             createColor("forester25", "Ice Silver Metallic", "silver", "#9DA1A4")
         );
@@ -46,6 +47,24 @@ public class ProductServlet extends HttpServlet {
             new Car.Highlight("EyeSight® 4.0", "Next-gen safety with wider field of view.", "/assets/highlights/eyesight.jpg"),
             new Car.Highlight("Premium Interior", "High-quality leather and dual-zone climate.", "/assets/highlights/f25-interior.jpg")
         );
+
+        List<Car.Variant> forester25Variants = new ArrayList<>();
+
+        forester25Variants.add(new Car.Variant(
+            "Forester 2.5i-S EyeSight", 221500.0, "/assets/cars/forester25/forester25-side.png",
+            Arrays.asList(
+                new Car.SpecItem("Horsepower", "185 PS"),
+                new Car.SpecItem("Torque", "247 Nm"),
+                new Car.SpecItem("0-100 km/h", "9.7s"),
+                new Car.SpecItem("Top Speed", "205 km/h"),
+                new Car.SpecItem("Transmission", "Lineartronic CVT with paddle shifters"),
+                new Car.SpecItem("Wheels", "18-inch alloy wheels"),
+                new Car.SpecItem("Infotainment System", "11-inch Full HD touchscreen display"),
+                new Car.SpecItem("Audio System", "Premium Harman Kardon speakers + subwoofer"),
+                new Car.SpecItem("Safety", "Enchanced EyeSight 4.0\nwith new wide-angle camera")
+            )
+        ));
+
         List<String> f25Ext = Arrays.asList("/assets/cars/forester25/exterior/ext-1.jpg", "/assets/cars/forester25/exterior/ext-2.jpg", "/assets/cars/forester25/exterior/ext-3.jpg", "/assets/cars/forester25/exterior/ext-4.jpg");
         List<String> f25Int = Arrays.asList("/assets/cars/forester25/interior/int-1.jpg", "/assets/cars/forester25/interior/int-2.jpg", "/assets/cars/forester25/interior/int-3.jpg", "/assets/cars/forester25/interior/int-4.jpg");
         
@@ -55,9 +74,9 @@ public class ProductServlet extends HttpServlet {
             "4,640 mm", "1,815 mm", "1,730 mm", "2,670 mm", "220 mm", "1,552 kg", "5", "225/55 R18"
         );
         
-        cars.add(new Car(1, "Forester 2.5i-S", 221500.0, "/assets/video/Forester2.5-image.jpg", "/assets/video/Forester2.5.mp4", "/assets/cars/forester25/forester25-side.png", "/assets/cars/forester25/forester25-front.png", "Unstoppable Adventure", "The flagship Forester.", "182hp", "239Nm", "193km/h", "9.5s", "9.5s", "CVT", 
+        cars.add(new Car(1, "Forester 2.5i-S", 221500.0, "/assets/video/Forester2.5-image.jpg", "/assets/video/Forester2.5.mp4", "/assets/cars/forester25/forester25-side.png", "/assets/cars/forester25/forester25-front.png", "Unstoppable Adventure", "The flagship Forester.", "185PS", "247Nm", "205km/h", "9.7s", "9.5s", "CVT", 
             f25Specs, // Pass the variable we just created
-            f25Colors, Stream.concat(f25Ext.stream(), f25Int.stream()).collect(Collectors.toList()), f25Ext, f25Int, f25Highlights, new ArrayList<>()));
+            f25Colors, Stream.concat(f25Ext.stream(), f25Int.stream()).collect(Collectors.toList()), f25Ext, f25Int, f25Highlights, forester25Variants));
 
         // --- 2. Forester (Standard) ---
         List<Car.ColorOption> fColors = Arrays.asList(
@@ -66,13 +85,74 @@ public class ProductServlet extends HttpServlet {
             createColor("forester", "Crystal Black Silica", "black", "#0A0A0A"),
             createColor("forester", "Ice Silver Metallic", "silver", "#9DA1A4"),
             createColor("forester", "Crystal White Pearl", "white", "#F2F2F2"),
-            createColor("forester", "Magnetite Grey Metallic", "grey", "#3A3D40")
+            createColor("forester", "Magnetite Grey Metallic", "grey", "#3A3D40"),
+            createColor("forester", "Brilliant Bronze Metallic", "bronze", "#7A6E5D")
         );
         List<Car.Highlight> fHighlights = Arrays.asList(
             new Car.Highlight("Symmetrical AWD", "Legendary traction and balance.", "/assets/highlights/awd.jpg"),
             new Car.Highlight("Subaru Global Platform", "Increased rigidity for smoother handling.", "/assets/highlights/sgp.jpg"),
             new Car.Highlight("X-MODE", "Optimizes engine/brakes for slippery surfaces.", "/assets/highlights/xmode.jpg")
         );
+
+        List<Car.Variant> foresterVariants = new ArrayList<>();
+
+        foresterVariants.add(new Car.Variant(
+            "Forester 2.0i-L EyeSight", 166800.0, "/assets/cars/forester/forester-side.png",
+            Arrays.asList(
+                new Car.SpecItem("Horsepower", "156 PS"),
+                new Car.SpecItem("Torque", "196 Nm"),
+                new Car.SpecItem("0-100 km/h", "10.3s"),
+                new Car.SpecItem("Top Speed", "193 km/h"),
+                new Car.SpecItem("Exterior", "Standard"),
+                new Car.SpecItem("Wheels", "17-inch"),
+                new Car.SpecItem("Interior", "Leather Seats"),
+                new Car.SpecItem("X-Mode", "Standard (Dual Mode)"),
+                new Car.SpecItem("Safety", "Core EyeSight")
+            )
+        ));
+        foresterVariants.add(new Car.Variant(
+            "Forester 2.0i-L EyeSight GT Edition", 172800.0, "/assets/cars/forester/forester-side.png",
+            Arrays.asList(
+                new Car.SpecItem("Horsepower", "156 PS"),
+                new Car.SpecItem("Torque", "196 Nm"),
+                new Car.SpecItem("0-100 km/h", "10.3s"),
+                new Car.SpecItem("Top Speed", "193 km/h"),
+                new Car.SpecItem("Exterior", "GT Lite Aero Kit"),
+                new Car.SpecItem("Wheels", "17-inch"),
+                new Car.SpecItem("Interior", "Leather Seats"),
+                new Car.SpecItem("X-Mode", "Standard (Dual Mode)"),
+                new Car.SpecItem("Safety", "Core EyeSight")
+            )
+        ));
+        foresterVariants.add(new Car.Variant(
+            "Forester 2.0i-S EyeSight", 176800.0, "/assets/cars/forester/forester-side.png",
+            Arrays.asList(
+                new Car.SpecItem("Horsepower", "156 PS"),
+                new Car.SpecItem("Torque", "196 Nm"),
+                new Car.SpecItem("0-100 km/h", "10.3s"),
+                new Car.SpecItem("Top Speed", "193 km/h"),
+                new Car.SpecItem("Exterior", "Standard\nLED Fogs"),
+                new Car.SpecItem("Wheels", "18-inch"),
+                new Car.SpecItem("Interior", "Leather Seats"),
+                new Car.SpecItem("X-Mode", "Special (Dual Mode)"),
+                new Car.SpecItem("Safety", "Enhanced EyeSight\nRear Sensors")
+            )
+        ));
+        foresterVariants.add(new Car.Variant(
+            "Forester 2.0i-S EyeSight GT Edition", 188800.0, "/assets/cars/forester/forester-side.png",
+            Arrays.asList(
+                new Car.SpecItem("Horsepower", "156 PS"),
+                new Car.SpecItem("Torque", "196 Nm"),
+                new Car.SpecItem("0-100 km/h", "10.3s"),
+                new Car.SpecItem("Top Speed", "193 km/h"),
+                new Car.SpecItem("Exterior", "Full GT Aero Kit\nGT Wheels"),
+                new Car.SpecItem("Wheels", "18-inch (GT Design)"),
+                new Car.SpecItem("Interior", "Diamond Quilted Leather (2-Tone)"),
+                new Car.SpecItem("X-Mode", "Special (Dual Mode)"),
+                new Car.SpecItem("Safety", "Enhanced EyeSight\nRear Sensors")
+            )
+        ));
+
         List<String> fExt = Arrays.asList("/assets/cars/forester/exterior/ext-1.jpg", "/assets/cars/forester/exterior/ext-2.jpg", "/assets/cars/forester/exterior/ext-3.jpg", "/assets/cars/forester/exterior/ext-4.jpg");
         List<String> fInt = Arrays.asList("/assets/cars/forester/interior/int-1.jpg", "/assets/cars/forester/interior/int-2.jpg", "/assets/cars/forester/interior/int-3.jpg", "/assets/cars/forester/interior/int-4.jpg");
         
@@ -82,9 +162,9 @@ public class ProductServlet extends HttpServlet {
             "4,625 mm", "1,815 mm", "1,730 mm", "2,670 mm", "220 mm", "1,539 kg", "5", "225/60 R17"
         );
 
-        cars.add(new Car(2, "Forester", 163500.0, "/assets/video/Forester-image.jpg", "/assets/video/Forester.mp4", "/assets/cars/forester/forester-side.png", "/assets/cars/forester/forester-front.png", "The All-Rounder", "Practical meets safety.", "156hp", "196Nm", "180km/h", "10s", "10s", "CVT", 
+        cars.add(new Car(2, "Forester", 163500.0, "/assets/video/Forester-image.jpg", "/assets/video/Forester.mp4", "/assets/cars/forester/forester-side.png", "/assets/cars/forester/forester-front.png", "The All-Rounder", "Practical meets safety.", "156PS", "196Nm", "193km/h", "10.3s", "10s", "CVT", 
             fSpecs, 
-            fColors, Stream.concat(fExt.stream(), fInt.stream()).collect(Collectors.toList()), fExt, fInt, fHighlights, new ArrayList<>()));
+            fColors, Stream.concat(fExt.stream(), fInt.stream()).collect(Collectors.toList()), fExt, fInt, fHighlights, foresterVariants));
 
         // --- 3. Subaru XV ---
         List<Car.ColorOption> xvColors = Arrays.asList(
@@ -107,18 +187,22 @@ public class ProductServlet extends HttpServlet {
                 new Car.SpecItem("Torque", "196 Nm"),
                 new Car.SpecItem("0-100 km/h", "10.4s"),
                 new Car.SpecItem("Top Speed", "194 km/h"),
-                new Car.SpecItem("Safety System", "EyeSight 4.0")
+                new Car.SpecItem("Safety System", "EyeSight 4.0"),
+                new Car.SpecItem("Wheels", "Standard 17-inch alloy wheels")
             )
         ));
         xvVariants.add(new Car.Variant(
-            "XV 2.0i-P EyeSight", 162300.0, "/assets/cars/xv/xv-side.png",
+            "XV 2.0i-P EyeSight GT Edition", 162300.0, "/assets/cars/xv/xv-side.png",
             Arrays.asList(
                 new Car.SpecItem("Horsepower", "156 PS"),
                 new Car.SpecItem("Torque", "196 Nm"),
                 new Car.SpecItem("0-100 km/h", "10.4s"),
                 new Car.SpecItem("Top Speed", "194 km/h"),
                 new Car.SpecItem("Safety System", "EyeSight 4.0"),
-                new Car.SpecItem("Additional Technology", "360 Degree Camera\n Auto Vehicle Hold")
+                new Car.SpecItem("Additional Technology", "360 Degree Camera\n Auto Vehicle Hold"),
+                new Car.SpecItem("Audio System", "JBL Premium Audio system with subwoofer"),
+                new Car.SpecItem("Ambient Lighting", "Cabin ambient lighting"),
+                new Car.SpecItem("Wheels", "Unique GT-exclusive 17-inch alloy wheels")
             )
         ));
         List<String> xvExt = Arrays.asList("/assets/cars/xv/exterior/ext-1.jpg", "/assets/cars/xv/exterior/ext-2.jpg", "/assets/cars/xv/exterior/ext-3.jpg", "/assets/cars/xv/exterior/ext-4.jpg");
@@ -130,7 +214,7 @@ public class ProductServlet extends HttpServlet {
             "4,485 mm", "1,800 mm", "1,615 mm", "2,665 mm", "220 mm", "1,459 kg", "5", "225/60 R17"
         );
 
-        cars.add(new Car(3, "XV", 155300.0, "/assets/video/XV-image.jpg", "/assets/video/XV.mp4", "/assets/cars/xv/xv-side.png", "/assets/cars/xv/xv-front.png", "Urban Explorer", "Style and capability.", "156hp", "196Nm", "194km/h", "10.4s", "10.4s", "CVT", 
+        cars.add(new Car(3, "XV", 155300.0, "/assets/video/XV-image.jpg", "/assets/video/XV.mp4", "/assets/cars/xv/xv-side.png", "/assets/cars/xv/xv-front.png", "Urban Explorer", "Style and capability.", "156PS", "196Nm", "194km/h", "10.4s", "10.4s", "CVT", 
             xvSpecs, 
             xvColors, Stream.concat(xvExt.stream(), xvInt.stream()).collect(Collectors.toList()), xvExt, xvInt, xvHighlights, xvVariants));
 
@@ -154,20 +238,32 @@ public class ProductServlet extends HttpServlet {
         wrxVariants.add(new Car.Variant(
             "WRX 2.4 6MT", 283500.0, "/assets/cars/wrx/wrx-side.png",
             Arrays.asList(
-                new Car.SpecItem("Horsepower", "271 PS"),
+                new Car.SpecItem("Horsepower", "275 PS"),
                 new Car.SpecItem("Torque", "350 Nm"),
                 new Car.SpecItem("0-100 km/h", "5.6s"),
-                new Car.SpecItem("Top Speed", "250 km/h")
+                new Car.SpecItem("Top Speed", "250 km/h"),
+                new Car.SpecItem("Transmission", "6-speed manual"),
+                new Car.SpecItem("Adaptive Cruise Control", "No"),
+                new Car.SpecItem("Lane Keep Assist", "No"),
+                new Car.SpecItem("Pre-collision braking", "No"),
+                new Car.SpecItem("Drive Mode", "None"),
+                new Car.SpecItem("Parking brake", "Manual\nhand-operated")
             )
         ));
         wrxVariants.add(new Car.Variant(
             "WRX 2.4 CVT EyeSight", 289500.0, "/assets/cars/wrx/wrx-side.png",
             Arrays.asList(
-                new Car.SpecItem("Horsepower", "271 PS"),
+                new Car.SpecItem("Horsepower", "275 PS"),
                 new Car.SpecItem("Torque", "350 Nm"),
-                new Car.SpecItem("0-100 km/h", "65.4s"),
+                new Car.SpecItem("0-100 km/h", "5.4s"),
                 new Car.SpecItem("Top Speed", "250 km/h"),
-                new Car.SpecItem("Safety System", "EyeSight 4.0")
+                new Car.SpecItem("Safety System", "EyeSight 4.0"),
+                new Car.SpecItem("Transmission", "Sport Lineartronic CVT with\n8-speed manual mode & paddle shifters"),
+                new Car.SpecItem("Adaptive Cruise Control", "Yes"),
+                new Car.SpecItem("Lane Keep Assist", "Yes"),
+                new Car.SpecItem("Pre-collision braking", "Yes"),
+                new Car.SpecItem("Drive Mode", "Yes\n(Sport, Sport Sharp, Intelligent modes)"),
+                new Car.SpecItem("Parking brake", "Electronic Parking Brake\nwith Auto Hold")
             )
         ));
         List<String> wrxExt = Arrays.asList("/assets/cars/wrx/exterior/ext-1.jpg", "/assets/cars/wrx/exterior/ext-2.jpg", "/assets/cars/wrx/exterior/ext-3.jpg", "/assets/cars/wrx/exterior/ext-4.jpg");
@@ -179,7 +275,7 @@ public class ProductServlet extends HttpServlet {
             "4,670 mm", "1,825 mm", "1,465 mm", "2,675 mm", "135 mm", "1,595 kg", "5", "245/40 R18"
         );
 
-        cars.add(new Car(4, "WRX", 289500.0, "/assets/video/WRX-image.jpg", "/assets/video/WRX.mp4", "/assets/cars/wrx/wrx-side.png", "/assets/cars/wrx/wrx-front.png", "Pure Performance", "Icon of speed.", "271hp", "350Nm", "250km/h", "5.8s", "5.4s", "6MT/CVT", 
+        cars.add(new Car(4, "WRX", 289500.0, "/assets/video/WRX-image.jpg", "/assets/video/WRX.mp4", "/assets/cars/wrx/wrx-side.png", "/assets/cars/wrx/wrx-front.png", "Pure Performance", "Icon of speed.", "275PS", "350Nm", "250km/h", "5.8s", "5.4s", "6MT/CVT", 
             wrxSpecs, 
             wrxColors, Stream.concat(wrxExt.stream(), wrxInt.stream()).collect(Collectors.toList()), wrxExt, wrxInt, wrxHighlights, wrxVariants));
 
@@ -205,7 +301,8 @@ public class ProductServlet extends HttpServlet {
                 new Car.SpecItem("Horsepower", "237 PS"),
                 new Car.SpecItem("Torque", "250 Nm"),
                 new Car.SpecItem("0-100 km/h", "6.3s"),
-                new Car.SpecItem("Top Speed", "226 km/h")
+                new Car.SpecItem("Top Speed", "226 km/h"),
+                new Car.SpecItem("Key Features", "Hill Start Assist,\nTorsen LSD")
             )
         ));
         brzVariants.add(new Car.Variant(
@@ -215,6 +312,7 @@ public class ProductServlet extends HttpServlet {
                 new Car.SpecItem("Torque", "250 Nm"),
                 new Car.SpecItem("0-100 km/h", "6.9s"),
                 new Car.SpecItem("Top Speed", "216 km/h"),
+                new Car.SpecItem("Key Features", "Adaptive Cruise Control,\nPre-Collision Braking,\nSteering Wheel Paddle Shifters,\nSport/Snow Modes,\nReverse Automatic Braking"),
                 new Car.SpecItem("Safety System", "EyeSight 4.0")
             )
         ));
@@ -227,26 +325,52 @@ public class ProductServlet extends HttpServlet {
             "4,265 mm", "1,775 mm", "1,310 mm", "2,575 mm", "130 mm", "1,289 kg", "4", "215/40 R18"
         );
 
-        cars.add(new Car(5, "BRZ", 249245.0, "/assets/video/BRZ-image.jpg", "/assets/video/BRZ.mp4", "/assets/cars/brz/brz-side.png", "/assets/cars/brz/brz-front.png", "Unleash Your Desire", "Pure sports car DNA.", "234PS", "250Nm", "226km/h", "6.3s", "6.9s", "6-speed manual", 
+        cars.add(new Car(5, "BRZ", 249245.0, "/assets/video/BRZ-image.jpg", "/assets/video/BRZ.mp4", "/assets/cars/brz/brz-side.png", "/assets/cars/brz/brz-front.png", "Unleash Your Desire", "Pure sports car DNA.", "237PS", "250Nm", "226km/h", "6.3s", "6.9s", "6-speed manual", 
             brzSpecs, 
             brzColors, Stream.concat(brzExt.stream(), brzInt.stream()).collect(Collectors.toList()), brzExt, brzInt, brzHighlights, brzVariants));
 
         // --- 6. Outback ---
         List<Car.ColorOption> outColors = Arrays.asList(
-            createColor("outback", "Autumn Green Metallic", "green", "#4B533A"),
+            createColor("outback", "Cashmere Gold Opal", "gold", "#d6cfc9"),
             createColor("outback", "Brilliant Bronze Metallic", "bronze", "#7A6E5D"),
-            createColor("outback", "Cosmic Blue Pearl", "blue", "#1B2A4E"),
-            createColor("outback", "Crimson Red Pearl", "red", "#8B0000"),
-            createColor("outback", "Dark Mahogany Pearl", "brown", "#4B3621"),
+            createColor("outback", "Sapphire Blue Pearl", "blue", "#565dad"),
             createColor("outback", "Crystal White Pearl", "white", "#F2F2F2"),
-            createColor("outback", "Ice Silver Metallic", "silver", "#9DA1A4"),
-            createColor("outback", "Crystal Black Silica", "black", "#0A0A0A")
+            createColor("outback", "Ice Silver Metallic", "silver", "#9DA1A4")
         );
         List<Car.Highlight> outHighlights = Arrays.asList(
             new Car.Highlight("Nappa Leather", "Exquisite tan seats for premium touring.", "/assets/highlights/outback-luxury.jpg"),
             new Car.Highlight("Driver Monitoring", "Facial recognition for safety.", "/assets/highlights/outback-safety.jpg"),
-            new Car.Highlight("Hands-Free Tailgate", "Open rear gate with a simple motion.", "/assets/highlights/outback-gate.jpg")
+            new Car.Highlight("Symmetrical AWD", "Legendary traction and balance.", "/assets/highlights/awd.jpg")
         );
+
+        List<Car.Variant> outbackVariants = new ArrayList<>();
+
+        outbackVariants.add(new Car.Variant(
+            "Outback 2.5i-TOURING EyeSight", 279000.0, "/assets/cars/outback/outback-side.png",
+            Arrays.asList(
+                new Car.SpecItem("Horsepower", "188 PS"),
+                new Car.SpecItem("Torque", "245 Nm"),
+                new Car.SpecItem("0-100 km/h", "9.6s"),
+                new Car.SpecItem("Top Speed", "206 km/h"),
+                new Car.SpecItem("Engine Type", "2.5L Naturally-Aspirated Boxer Engine"),
+                new Car.SpecItem("Safety System", "EyeSight Driver Assist Technology"),
+                new Car.SpecItem("Interior Features", "Nappa leather\n11.6-inch touchscreen\nHarmon Kardon audio\nWireless Apple CarPlay/Android Auto")
+            )
+        ));
+
+        outbackVariants.add(new Car.Variant(
+            "Outback 2.4 R-Touring EyeSight", 309000.0, "/assets/cars/outback/outback-side.png",
+            Arrays.asList(
+                new Car.SpecItem("Horsepower", "249 PS"),
+                new Car.SpecItem("Torque", "350 Nm"),
+                new Car.SpecItem("0-100 km/h", "7.5s"),
+                new Car.SpecItem("Top Speed", "221 km/h"),
+                new Car.SpecItem("Engine Type", "2.4L Turbocharged Boxer Engine"),
+                new Car.SpecItem("Safety System", "EyeSight Driver Assist Technology\nX-MODE with Hill Descent Control\nHands-free Power Rear Gate"),
+                new Car.SpecItem("Interior Features", "Nappa leather\n11.6-inch touchscreen\nHarmon Kardon audio\nWireless Apple CarPlay/Android Auto")
+            )
+        ));
+
         List<String> outExt = Arrays.asList("/assets/cars/outback/exterior/ext-1.jpg", "/assets/cars/outback/exterior/ext-2.jpg", "/assets/cars/outback/exterior/ext-3.jpg", "/assets/cars/outback/exterior/ext-4.jpg");
         List<String> outInt = Arrays.asList("/assets/cars/outback/interior/int-1.jpg", "/assets/cars/outback/interior/int-2.jpg", "/assets/cars/outback/interior/int-3.jpg", "/assets/cars/outback/interior/int-4.jpg");
 
@@ -256,9 +380,9 @@ public class ProductServlet extends HttpServlet {
             "4,870 mm", "1,875 mm", "1,675 mm", "2,745 mm", "213 mm", "1,682 kg", "5", "225/60 R18"
         );
 
-        cars.add(new Car(6, "Outback", 279000.0, "/assets/video/Outback-image.jpg", "/assets/video/Outback.mp4", "/assets/cars/outback/outback-side.png", "/assets/cars/outback/outback-front.png", "Luxury SUV", "Ultimate comfort and rugged utility.", "188hp", "245Nm", "206km/h", "9.6s", "9.6s", "CVT", 
+        cars.add(new Car(6, "Outback", 279000.0, "/assets/video/Outback-image.jpg", "/assets/video/Outback.mp4", "/assets/cars/outback/outback-side.png", "/assets/cars/outback/outback-front.png", "Luxury SUV", "Ultimate comfort and rugged utility.", "188PS", "245Nm", "206km/h", "9.6s", "9.6s", "CVT", 
             outSpecs, 
-            outColors, Stream.concat(outExt.stream(), outInt.stream()).collect(Collectors.toList()), outExt, outInt, outHighlights, new ArrayList<>()));
+            outColors, Stream.concat(outExt.stream(), outInt.stream()).collect(Collectors.toList()), outExt, outInt, outHighlights, outbackVariants));
 
         return cars;
     }

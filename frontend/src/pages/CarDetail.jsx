@@ -153,7 +153,30 @@ const CarDetail = () => {
             
             {/* HERO SECTION (Static Animation on Load) */}
             <RevealSection className="showroom-hero">
-                <div className="watermark-text">{car.modelName}</div>
+                <div className="watermark-container">
+                    <div 
+                        className="watermark-text"
+                        style={{ 
+                            // 1. DYNAMIC FONT SIZE
+                            fontSize: car.modelName.length > 12 
+                                ? '6.5vw'   // Forester 2.5i-S (Matches what worked)
+                                : car.modelName.length >= 7 
+                                ? '8.2vw'   // Forester / Outback (Slightly smaller to fit)
+                                : '15vw',   // WRX / BRZ / XV
+
+                            // 2. DYNAMIC LETTER SPACING (The Safety Valve)
+                            // This pulls the letters closer together so they don't hit the edges
+                            letterSpacing: car.modelName.length >= 7 ? '-0.7vw' : '-0.2vw',
+
+                            // 3. DYNAMIC STRETCH
+                            transform: car.modelName.length >= 7 
+                                ? 'scaleX(1.15) skewX(-12deg)' 
+                                : 'scaleX(1.4) skewX(-12deg)'
+                        }}
+                    >
+                        {car.modelName}
+                    </div>
+                </div>
                 <div className="car-image-container">
                     <img src={car.sideImageUrl} alt={car.modelName} className="main-car-img" />
                     <div className="car-shadow"></div>
