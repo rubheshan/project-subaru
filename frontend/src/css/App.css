@@ -1,3 +1,4 @@
+/* GLOBAL RESET & VARIABLES */
 * {
     margin: 0;
     padding: 0;
@@ -13,11 +14,11 @@
     --bg-dark: #010614;   
     --card-bg: #030f26;  
     
-    /* TEXT */
     --text-white: #ffffff;
     --text-grey: #aab4be; 
 }
 
+/* GLOBAL BACKGROUND & ANIMATION */
 html, body {
     width: 100%;
     height: 100%;
@@ -34,6 +35,7 @@ html, body {
     100% { background-position: 0% 50%; }
 }
 
+/* MODELS SECTION LAYOUT */
 .models-section {
     padding: 80px 0;
     background-color: transparent; 
@@ -46,6 +48,7 @@ html, body {
     overflow: hidden; 
 }
 
+/* SLIDER CARD STYLING */
 .slider-card {
     min-width: 450px;
     background: var(--card-bg);
@@ -93,7 +96,6 @@ html, body {
     z-index: 1;
 }
 
-/* THE GLOW EFFECT */
 .cta-button:hover,
 .card-details button:hover {
     transform: translateY(-3px); 
@@ -108,6 +110,7 @@ html, body {
     background-color: transparent; 
 }
 
+/* SECTION HEADING */
 .slider-container h2 {
     text-align: left;
     margin-left: 5vw;
@@ -121,6 +124,7 @@ html, body {
     padding-left: 20px;
 }
 
+/* NAVIGATION BUTTONS */
 .nav-btn {
     position: absolute;
     top: 55%; 
@@ -145,10 +149,10 @@ html, body {
 .prev-btn { left: 40px; }
 .next-btn { right: 40px; }
 
-/* The Track */
+/* SLIDER TRACK & MEDIA */
 .slider-track {
     display: flex;
-    gap: 30px; /* Tighter gap */
+    gap: 30px; 
     overflow-x: scroll;
     padding: 0 5vw;
     scroll-behavior: smooth;
@@ -158,7 +162,7 @@ html, body {
 .slider-track::-webkit-scrollbar { display: none; }
 
 .image-wrapper {
-    height: 280px; /* Widescreen ratio */
+    height: 280px; 
     width: 100%;
     overflow: hidden;
     position: relative;
@@ -173,12 +177,10 @@ html, body {
     transition: transform 0.7s ease;
 }
 
-/* Zoom effect on hover */
 .slider-card:hover .image-wrapper img {
     transform: scale(1.05);
 }
 
-/* Video fade logic remains the same */
 .image-wrapper video.car-video {
     position: absolute;
     top: 0;
@@ -189,10 +191,10 @@ html, body {
 }
 .image-wrapper video.car-video.faded-in { opacity: 1; }
 
-/* Card Text Content */
+/* CARD CONTENT & BUTTONS */
 .card-details {
     padding: 25px;
-    text-align: left; /* Left align is more modern */
+    text-align: left; 
 }
 
 .card-details h3 {
@@ -225,10 +227,11 @@ html, body {
     border-color: var(--subaru-blue);
 }
 
+/* FADE ANIMATIONS */
 .fade-in-up {
     animation: fadeInUp 1s ease-out forwards;
-    opacity: 0; /* Start invisible */
-    transform: translateY(20px); /* Start slightly down */
+    opacity: 0; 
+    transform: translateY(20px); 
 }
 
 @keyframes fadeInUp {
@@ -238,29 +241,25 @@ html, body {
     }
 }
 
-/* App.css - The Dark Luxury Foundation */
-
+/* APP FOUNDATION & SCROLLBAR */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif; /* Clean luxury text */
+    font-family: 'Inter', sans-serif; 
     -webkit-font-smoothing: antialiased;
 }
 
-/* Titles use the futuristic font */
 h1, h2, h3 {
     font-family: 'Michroma', sans-serif;
     letter-spacing: 1px;
 }
 
-/* Custom Scrollbar */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #020b1c; }
 ::-webkit-scrollbar-thumb { background: #003087; border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: #0045c4; }
 
-/* Selection Highlight */
 ::selection { background: #003087; color: white; }
 
 :root {
@@ -274,7 +273,6 @@ h1, h2, h3 {
 html, body {
     width: 100%;
     min-height: 100%;
-    /* The "Deep Ocean" Moving Gradient */
     background: linear-gradient(-45deg, #020b1c, #001530, #000000, #001f52);
     background-size: 400% 400%;
     color: var(--text-white);
@@ -287,7 +285,6 @@ html, body {
     100% { background-position: 0% 50%; }
 }
 
-/* Fade In Animation */
 .fade-in-up {
     animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
     opacity: 0; 
@@ -295,46 +292,41 @@ html, body {
 }
 @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
 
-/* Space for the Fixed Navbar */
 .main-page {
     padding-top: 90px; 
     min-height: 100vh;
 }
 
-/* --- LUXURY STATEMENT SECTION --- */
+/* LUXURY STATEMENT SECTION */
 .home-statement-section {
   padding: 10rem 2rem;
-  background: #020202; /* Deepest Black */
+  background: #020202; 
   text-align: center;
   position: relative;
-  /* Optional: A very subtle gradient at the bottom */
   background: linear-gradient(to bottom, #020202 0%, #050b14 100%);
 }
 
 .statement-eyebrow {
   display: inline-block;
-  color: #c9a959; /* Gold Accent */
+  color: #c9a959; 
   font-family: 'Michroma', sans-serif;
   font-size: 0.85rem;
   letter-spacing: 4px;
   text-transform: uppercase;
   margin-bottom: 2.5rem;
   
-  /* Relative positioning for the decorative lines */
   position: relative;
   opacity: 0.8;
   
-  /* Ensure it has the animation setup */
   transition: all 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000);
 }
 
 .statement-eyebrow,
 .statement-text {
     opacity: 0;
-    transform: translateY(30px); /* A shorter distance looks faster */
+    transform: translateY(30px); 
     
-    /* FASTER SPEED: Changed from 1.2s to 0.7s for a snappy feel */
-    transition: all 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000); /* easeOutCubic */
+    transition: all 0.7s cubic-bezier(0.215, 0.610, 0.355, 1.000); 
 }
 
 .reveal-content.is-visible .statement-eyebrow,
@@ -344,7 +336,7 @@ html, body {
 }
 
 .statement-text.delay-2 {
-    transition-delay: 0.25s; /* A quick 250ms pause */
+    transition-delay: 0.25s; 
 }
 
 .statement-eyebrow::before,
@@ -362,8 +354,8 @@ html, body {
 
 .statement-headline {
   font-family: 'Inter', sans-serif;
-  font-weight: 300; /* Thin and elegant */
-  font-size: clamp(1.8rem, 4vw, 3rem); /* Responsive size */
+  font-weight: 300; 
+  font-size: clamp(1.8rem, 4vw, 3rem); 
   line-height: 1.4;
   color: #ffffff;
   max-width: 900px;
@@ -371,12 +363,12 @@ html, body {
 }
 
 .statement-headline .dim-text {
-  color: #556677; /* Darker grey to create "reading rhythm" */
+  color: #556677; 
   transition: color 0.5s ease;
 }
 
 .home-statement-section:hover .dim-text {
-  color: #8899a6; /* Lightens up slightly when you hover the section */
+  color: #8899a6; 
 }
 
 
@@ -392,7 +384,6 @@ html, body {
   line-height: 1.8;
   color: #cfd6e4;
   max-width: 800px;
-  /* IMPORTANT: Need margin-bottom so they don't overlap during animation */
   margin: 0 auto 2rem auto; 
 }
 
@@ -406,10 +397,10 @@ html, body {
   font-weight: 500;
 }
 
-/* --- FEATURE GRID SECTION --- */
+/* FEATURES SECTION GRID */
 .features-section {
   padding: 8rem 2rem;
-  background-color: #050b14; /* Slightly lighter than pure black */
+  background-color: #050b14; 
   text-align: center;
 }
 
@@ -424,21 +415,17 @@ html, body {
 .feature-card {
   background: linear-gradient(135deg, #001233 0%, #00050a 100%);
   
-  /* Make the border subtle blue instead of white/gold initially */
   border: 1px solid rgba(0, 48, 135, 0.5); 
   
   padding: 3rem 2rem;
   position: relative;
   overflow: hidden;
 
-  /* 1. INITIAL STATE: Hidden & Pushed Down */
   opacity: 0;
   transform: translateY(40px);
 
-  /* 2. THE GLIDE PHYSICS */
   transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
   
-  /* Ensure text stays readable on blue */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
@@ -454,16 +441,13 @@ html, body {
 .feature-card:hover {
   transform: translateY(-10px) !important;
   
-  /* Gold border pops really well against the blue */
   border-color: #c9a959; 
   
-  /* Make the blue glow */
   box-shadow: 0 10px 40px rgba(0, 48, 135, 0.6);
   
   transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Animate the title inside the card on hover */
 .feature-card h3 {
   font-family: 'Michroma', sans-serif;
   color: #fff;
@@ -473,14 +457,13 @@ html, body {
 }
 
 .feature-card:hover h3 {
-  color: #c9a959; /* Turn gold on hover */
+  color: #c9a959; 
 }
 
 .feature-card p {
-  color: #e0e6ed; /* Lightens the grey text to read better on blue */
+  color: #e0e6ed; 
 }
 
-/* Add a subtle icon placeholder circle */
 .icon-circle {
   width: 60px;
   height: 60px;
@@ -496,10 +479,11 @@ html, body {
 }
 
 .feature-card:hover .icon-circle {
-  background: #c9a959; /* Circle turns gold */
+  background: #c9a959; 
   color: #000;
 }
 
+/* FEATURES ANIMATION */
 .features-section .statement-eyebrow,
 .features-section h2 {
   opacity: 0;
@@ -513,14 +497,13 @@ html, body {
   transform: translateY(0);
 }
 
-/* --- 1. NEW "BREATHING" BACKGROUND --- */
+/* DYNAMIC BACKGROUND EFFECT */
 .home-statement-section {
   padding: 10rem 2rem;
   text-align: center;
   position: relative;
   overflow: hidden;
 
-  /* The "Breathing" Effect */
   background: radial-gradient(circle at center, #111b2b 0%, #020202 60%);
   background-size: 150% 150%;
   animation: breatheLight 8s ease-in-out infinite alternate;
@@ -531,16 +514,15 @@ html, body {
   100% { background-size: 130% 130%; opacity: 1; }
 }
 
+/* STATS SECTION CONTAINER */
 .stats-section {
   position: relative;
   padding: 4rem 0;
   
-  /* The "Tech Strip" Background */
   background: linear-gradient(90deg, #020202 0%, #0a1525 50%, #020202 100%);
-  border-top: 1px solid rgba(201, 169, 89, 0.2); /* Faint Gold Top */
-  border-bottom: 1px solid rgba(201, 169, 89, 0.2); /* Faint Gold Bottom */
+  border-top: 1px solid rgba(201, 169, 89, 0.2); 
+  border-bottom: 1px solid rgba(201, 169, 89, 0.2); 
   
-  /* Center the content */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -558,6 +540,7 @@ html, body {
   z-index: 2;
 }
 
+/* STAT ITEMS STYLING */
 .stat-item {
   position: relative;
   text-align: center;
@@ -565,11 +548,9 @@ html, body {
   padding: 0 2rem;
   cursor: default;
 
-  /* 1. INITIAL STATE: Hidden & Pushed Down */
   opacity: 0;
   transform: translateY(50px); 
 
-  /* 2. THE GLIDE PHYSICS: Smooth and heavy */
   transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
@@ -584,7 +565,7 @@ html, body {
   right: -3rem;
   top: 50%;
   transform: translateY(-50%);
-  height: 50px; /* Short divider line */
+  height: 50px; 
   width: 1px;
   background: rgba(255, 255, 255, 0.15);
 }
@@ -594,15 +575,15 @@ html, body {
   transform: translateY(0);
 }
 
+/* STAT TYPOGRAPHY & DELAYS */
 .stat-number {
   display: block;
   font-family: 'Michroma', sans-serif;
-  font-size: clamp(2.5rem, 5vw, 4.5rem); /* Responsive big text */
+  font-size: clamp(2.5rem, 5vw, 4.5rem); 
   color: #fff;
   line-height: 1.1;
   margin-bottom: 0.5rem;
   
-  /* Cool Blue Glow */
   text-shadow: 0 0 20px rgba(0, 48, 135, 0.6);
 }
 
@@ -617,10 +598,9 @@ html, body {
 }
 
 .stat-item:hover .stat-label {
-  color: #c9a959; /* Gold */
+  color: #c9a959; 
 }
 
-/* Add delays for a staggered effect */
 .stat-item:nth-child(1) { transition-delay: 0.1s; }
 .stat-item:nth-child(2) { transition-delay: 0.3s; }
 .stat-item:nth-child(3) { transition-delay: 0.5s; }

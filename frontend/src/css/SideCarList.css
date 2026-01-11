@@ -1,3 +1,4 @@
+/* SIDE MENU LIST CONTAINER */
 .side-car-list {
     position: fixed;
     top: 0;
@@ -5,17 +6,17 @@
     width: 550px;
     height: 100vh;
 
-    background: rgba(24, 23, 23); /* Dark semi-transparent */
+    background: rgba(24, 23, 23); 
     padding: 2rem;
     box-sizing: border-box;
 
     z-index: 900;
 
-    /* 🔑 THIS enables scrolling */
+    /* SCROLLING BEHAVIOR */
     overflow-y: auto;
     overflow-x: hidden;
 
-    /* visibility animation */
+    /* ANIMATION & VISIBILITY */
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -27,17 +28,20 @@
     scroll-behavior: smooth;
 }
 
+/* OPEN STATE */
 .side-car-list.open {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
 }
 
+/* LIST ITEM CONTAINER */
 .side-car-item {
-  position: relative;     /* 🔑 anchor for absolute text */
+  position: relative;     
   margin-bottom: 1.5rem;
 }
 
+/* CAR IMAGE STYLING */
 .side-car-item img {
   width: 100%;
   display: block;
@@ -45,7 +49,7 @@
   object-fit: contain;
 }
 
-/* Text overlay */
+/* TEXT OVERLAY STYLING */
 .car-name {
   position: absolute;
   top: 8px;
@@ -60,5 +64,5 @@
   font-weight: 600;
   border-radius: 4px;
 
-  pointer-events: none; /* allows clicking image */
+  pointer-events: none; 
 }

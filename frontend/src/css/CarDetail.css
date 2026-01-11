@@ -1,10 +1,7 @@
-/* src/css/CarDetail.css */
-
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Michroma&display=swap');
 
-/* --- 1. GLOBAL THEME (Dark Mode - Slightly Lighter) --- */
+/* GLOBAL THEME */
 .car-detail-page {
-    /* Deep Charcoal/Navy Gradient */
     background: linear-gradient(to bottom, #050505 0%, #0a1529 40%, #0e2040 100%);
     overflow-x: hidden;
     color: #ffffff;
@@ -14,25 +11,19 @@
 .car-detail-page .spec-value,
 .car-detail-page .spec-value span {
     font-family: 'Michroma', sans-serif !important;
-    
-    /* TITANIC SIZE */
     font-size: 5vw !important; 
-    
     font-weight: 900 !important;
     line-height: 0.85 !important;      
     letter-spacing: -6px !important;
     color: #ffffff !important;
-    
     display: flex !important;
     align-items: baseline !important; 
     text-shadow: 0 0 60px rgba(0, 48, 135, 0.4) !important;
     margin: 0 !important;
-    
-    /* Remove 'order' properties */
     order: unset !important;
 }
 
-/* --- 2. ACT 1: THE SHOWROOM HERO ("The Predator") --- */
+/* SHOWROOM HERO SECTION */
 .showroom-hero {
     position: relative;
     height: 100vh;
@@ -52,7 +43,6 @@
     width: 100%;
     position: relative;
     margin-bottom: -12vh;
-    /* Remove any overflow: hidden here */
 }
 
 .watermark-text {
@@ -62,7 +52,6 @@
     white-space: nowrap;
     text-align: center;
     line-height: 1.2; 
-    
     color: transparent;
     -webkit-text-stroke: 3px rgba(255, 255, 255, 0.7);
     text-shadow: 
@@ -70,16 +59,12 @@
         0 0 30px rgba(255, 255, 255, 0.4), 
         0 0 60px rgba(255, 255, 255, 0.2),
         0 0 100px rgba(255, 255, 255, 0.1);
-
-    /* 3. VIBRANCY BOOST */
     filter: brightness(1.2) contrast(1.1);
-    
     opacity: 1;
     pointer-events: none;
     transition: all 0.3s ease; 
 }
 
-/* MOVEMENT: The "Hard Stop" Car Arrival */
 @keyframes carHardStop {
     0% {
         opacity: 0;
@@ -118,8 +103,7 @@
     filter: drop-shadow(0 40px 50px rgba(0,0,0,0.6));
 }
 
-
-/* --- 3. ACT 2: PERFORMANCE SPECS --- */
+/* PERFORMANCE SPECS SECTION */
 .performance-specs-section {
     position: relative;
     z-index: 5;
@@ -128,7 +112,6 @@
     backdrop-filter: blur(15px);
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -152,7 +135,7 @@
 
 .car-detail-page .spec-group {
     display: flex !important;
-    flex-direction: column-reverse !important; /* FLIPS the order */
+    flex-direction: column-reverse !important; 
     justify-content: flex-start !important;
     margin: 0 !important;
     padding: 10px 0 !important;
@@ -174,19 +157,14 @@
     text-transform: uppercase;
     letter-spacing: 4px;
     margin: 0 !important;
-    margin-bottom: -15px !important; /* Pulls closer to the number below */
+    margin-bottom: -15px !important; 
     padding-left: 5px;
-    
-    /* Remove 'order' properties if you had them */
     order: unset !important;
 }
 
 .car-detail-page .spec-value {
     font-family: 'Michroma', sans-serif;
-
-    /* THIS IS THE LINE THAT CONTROLS SIZE */
     font-size:12vw; 
-
     font-weight: 900;
     line-height: 0.8;      
     letter-spacing: -6px;
@@ -207,8 +185,6 @@
     transform: translateY(-15px) !important;
 }
 
-
-/* --- THE IMAGE COLUMN --- */
 .specs-image-column {
     position: relative;
     display: flex;
@@ -224,7 +200,6 @@
     position: relative; 
     z-index: 2; 
     filter: drop-shadow(0 40px 80px rgba(0,0,0,0.8));
-    
     opacity: 0;
     transform: translateX(10%);
     transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -236,9 +211,7 @@
     transition-delay: 0.3s;
 }
 
-/* --- CINEMATIC ANIMATIONS & TITLES --- */
-
-/* Base Transitions for Sections */
+/* SECTION TRANSITIONS & GLOBAL TITLES */
 .highlights-section, 
 .gallery-section, 
 .configurator-section, 
@@ -248,7 +221,6 @@
     padding: 100px 5%;
 }
 
-/* --- GLOBAL TITLES (Larger Colored Words) --- */
 h2 {
     font-family: 'Michroma', sans-serif;
     font-size: 2.5rem;
@@ -257,15 +229,14 @@ h2 {
     text-transform: uppercase;
 }
 
-/* FIX: Made even larger (1.25em) to pop more */
 h2 .red-text {
-    font-size: 1.25em; /* INCREASED from 1.15em */
+    font-size: 1.25em; 
     color: #003087; 
     text-shadow: 0 0 15px rgba(0, 48, 135, 0.6);
-    vertical-align: -3px; /* Adjusted alignment for size */
+    vertical-align: -3px; 
 }
 
-/* --- HIGHLIGHTS --- */
+/* HIGHLIGHTS SECTION */
 .highlights-header { text-align: center; margin-bottom: 80px; }
 .highlights-subtitle { font-family: 'Inter', sans-serif; font-size: 1rem; color: #888; letter-spacing: 1px; }
 
@@ -303,9 +274,9 @@ h2 .red-text {
 .highlight-info h3 { font-family: 'Michroma', sans-serif; font-size: 1.2rem; text-transform: uppercase; margin-bottom: 15px; color: #fff; }
 .highlight-info p { font-family: 'Inter', sans-serif; font-size: 0.95rem; line-height: 1.6; color: #aaa; }
 
-/* --- GALLERY --- */
+/* GALLERY SECTION */
 .gallery-section {
-    background: #050a14; /* Slightly lighter than pitch black */
+    background: #050a14; 
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -340,7 +311,7 @@ h2 .red-text {
 .thumb-wrapper:hover { opacity: 0.8 !important; }
 .thumb-wrapper.active-thumb { opacity: 1 !important; border-color: #003087; transform: translateY(-5px) !important; }
 
-/* --- CONFIGURATOR --- */
+/* CONFIGURATOR SECTION */
 .configurator-section { padding: 80px 5% 120px 5%; text-align: center; display: flex; flex-direction: column; align-items: center; }
 .config-header, .swatch-list, .config-main-img { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .configurator-section.is-visible .config-header { opacity: 1; transform: translateY(0); }
@@ -358,7 +329,7 @@ h2 .red-text {
 .swatch-btn:hover { transform: scale(1.15); box-shadow: 0 0 15px rgba(255,255,255,0.4); }
 .swatch-btn.active { border-color: #1a1a1a; box-shadow: 0 0 0 3px #003087, 0 0 20px rgba(0, 48, 135, 0.8); transform: scale(1.25); }
 
-/* --- VARIANTS --- */
+/* VARIANTS SECTION */
 .variants-section { padding: 100px 8%; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; }
 .variants-header { margin-bottom: 60px; }
 .variants-grid { display: flex; flex-wrap: wrap; gap: 40px; max-width: 1300px; margin: 0 auto; justify-content: center; align-items: stretch; }
@@ -380,6 +351,7 @@ h2 .red-text {
 .v-label { font-family: 'Inter', sans-serif; font-size: 0.85rem; color: #888; font-weight: 600; }
 .v-value { font-family: 'Inter', sans-serif; font-size: 0.95rem; color: #fff; font-weight: 700; }
 
+/* MEDIA QUERIES */
 @media (max-width: 900px) {
     .variant-card { width: 100%; min-width: unset; }
     .gallery-thumbnails { grid-template-columns: repeat(2, 1fr); }
@@ -395,7 +367,7 @@ h2 .red-text {
 }
 html { scroll-behavior: smooth; }
 
-/* --- FULLSCREEN --- */
+/* FULLSCREEN MODAL */
 .fullscreen-btn { position: absolute; bottom: 20px; right: 20px; background: rgba(0, 0, 0, 0.6); border: none; width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer; z-index: 15; transition: all 0.3s ease; backdrop-filter: blur(5px); }
 .fullscreen-btn:hover { background: #003087; transform: scale(1.1); }
 .fullscreen-btn svg { width: 20px; height: 20px; }
@@ -419,6 +391,7 @@ body:has(.fullscreen-overlay) { overflow: hidden; }
     }
 }
 
+/* INTERACTIVE ELEMENTS & BUTTONS */
 .selected-color-name {
     font-family: 'Michroma', sans-serif;
     font-size: 1.4rem; 
@@ -427,8 +400,6 @@ body:has(.fullscreen-overlay) { overflow: hidden; }
     text-transform: uppercase; 
     letter-spacing: 3px;
     color: #fff;
-    
-    /* ADDED: Smooth transition for the glow */
     transition: text-shadow 0.3s ease;
 }
 
@@ -436,8 +407,8 @@ body:has(.fullscreen-overlay) { overflow: hidden; }
     width: 45px; 
     height: 45px; 
     border-radius: 50%;
-    border: 3px solid #1a1a1a; /* Dark border keeps it separated from background */
-    box-shadow: 0 0 0 1px #555; /* Thin outer ring */
+    border: 3px solid #1a1a1a; 
+    box-shadow: 0 0 0 1px #555; 
     cursor: pointer;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
@@ -450,7 +421,6 @@ body:has(.fullscreen-overlay) { overflow: hidden; }
 .swatch-btn.active {
     border-color: #1a1a1a;
     transform: scale(1.25);
-    /* White Ring + Breathing Glow */
     animation: pulseRing 3s infinite ease-in-out;
 }
 
@@ -477,14 +447,11 @@ body:has(.fullscreen-overlay) { overflow: hidden; }
   box-shadow: 0 10px 25px rgba(30, 91, 255, 0.35);
 }
 
-
-
 @keyframes pulseRing {
     0% { box-shadow: 0 0 0 3px #fff, 0 0 10px rgba(255,255,255,0.2); }
     50% { box-shadow: 0 0 0 3px #fff, 0 0 20px rgba(255,255,255,0.5); }
     100% { box-shadow: 0 0 0 3px #fff, 0 0 10px rgba(255,255,255,0.2); }
 }
-
 
 .config-preview {
     width: 100%; 
@@ -505,7 +472,6 @@ body:has(.fullscreen-overlay) { overflow: hidden; }
     
     position: relative;
     z-index: 2; 
-    /* REMOVED margin-top */
 }
 
 .config-main-img:hover { transform: scale(1.02); }

@@ -58,14 +58,14 @@
 
 /* --- 5. HEADER ROW (Locked Top Alignment) --- */
 .header-row {
-  height: 500px; /* Fixed height to stop jumping */
+  height: 500px; 
 }
 
 .header-col {
   padding: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Lock content to top */
+  justify-content: flex-start; 
   align-items: center;
   border-right: 1px solid rgba(255, 255, 255, 0.05);
   position: relative;
@@ -121,7 +121,7 @@
   color: #fff;
   border: 1px solid #444;
   border-radius: 6px;
-  font-family: 'Outfit', sans-serif; /* Cleaner font */
+  font-family: 'Outfit', sans-serif; 
   font-size: 1rem;
   margin-bottom: 2rem;
   cursor: pointer;
@@ -182,11 +182,10 @@
 .spec-label {
   padding: 1.8rem 2rem;
   
-  /* Using 'Outfit' - Neat, Classy, Prettier */
   font-family: 'Outfit', sans-serif;
-  font-weight: 500; /* Medium weight */
+  font-weight: 500; 
   font-size: 1rem;
-  letter-spacing: 1px; /* Adds elegance */
+  letter-spacing: 1px; 
   
   color: #8899a6;
   text-transform: uppercase;
@@ -198,10 +197,9 @@
 .spec-value {
   padding: 1.8rem 1rem;
   
-  /* Using 'Outfit' - Neat, Classy, Prettier */
   font-family: 'Outfit', sans-serif;
-  font-weight: 300; /* Light weight looks very expensive */
-  font-size: 1.4rem; /* Nice and big */
+  font-weight: 300; 
+  font-size: 1.4rem; 
   
   color: #fff;
   text-align: center;
@@ -224,7 +222,7 @@
 
 .spec-data-row:hover .spec-label {
   color: #c9a959;
-  font-weight: 700; /* Bolder on hover */
+  font-weight: 700; 
 }
 
 .spec-data-row:hover .spec-value {
