@@ -67,7 +67,6 @@ public class ProductServlet extends HttpServlet {
 
         List<String> f25Ext = Arrays.asList("/assets/cars/forester25/exterior/ext-1.jpg", "/assets/cars/forester25/exterior/ext-2.jpg", "/assets/cars/forester25/exterior/ext-3.jpg", "/assets/cars/forester25/exterior/ext-4.jpg");
         List<String> f25Int = Arrays.asList("/assets/cars/forester25/interior/int-1.jpg", "/assets/cars/forester25/interior/int-2.jpg", "/assets/cars/forester25/interior/int-3.jpg", "/assets/cars/forester25/interior/int-4.jpg");
-        cars.add(new Car(1, "Forester 2.5i-S", 221500.0, "/assets/video/Forester2.5-image.jpg", "/assets/video/Forester2.5.mp4", "/assets/cars/forester25/forester25-side.png", "/assets/cars/forester25/forester25-front.png", "Unstoppable Adventure", "The flagship Forester.", "185PS", "247Nm", "205km/h", "9.7s", "9.5s", "CVT", f25Colors, Stream.concat(f25Ext.stream(), f25Int.stream()).collect(Collectors.toList()), f25Ext, f25Int, f25Highlights, forester25Variants));
         
         // --- DEFINE SPECS FOR CAR 1 ---
         Car.Specifications f25Specs = new Car.Specifications(
@@ -75,9 +74,9 @@ public class ProductServlet extends HttpServlet {
             "4,640 mm", "1,815 mm", "1,730 mm", "2,670 mm", "220 mm", "1,552 kg", "5", "225/55 R18"
         );
         
-        cars.add(new Car(1, "Forester 2.5i-S", 221500.0, "/assets/video/Forester2.5-image.jpg", "/assets/video/Forester2.5.mp4", "/assets/cars/forester25/forester25-side.png", "/assets/cars/forester25/forester25-front.png", "Unstoppable Adventure", "The flagship Forester.", "182hp", "239Nm", "193km/h", "9.5s", "9.5s", "CVT", 
+        cars.add(new Car(1, "Forester 2.5i-S", 221500.0, "/assets/video/Forester2.5-image.jpg", "/assets/video/Forester2.5.mp4", "/assets/cars/forester25/forester25-side.png", "/assets/cars/forester25/forester25-front.png", "Unstoppable Adventure", "The flagship Forester.", "185PS", "247Nm", "205km/h", "9.7s", "9.5s", "CVT", 
             f25Specs, // Pass the variable we just created
-            f25Colors, Stream.concat(f25Ext.stream(), f25Int.stream()).collect(Collectors.toList()), f25Ext, f25Int, f25Highlights, new ArrayList<>()));
+            f25Colors, Stream.concat(f25Ext.stream(), f25Int.stream()).collect(Collectors.toList()), f25Ext, f25Int, f25Highlights, forester25Variants));
 
         // --- 2. Forester (Standard) ---
         List<Car.ColorOption> fColors = Arrays.asList(
@@ -156,7 +155,6 @@ public class ProductServlet extends HttpServlet {
 
         List<String> fExt = Arrays.asList("/assets/cars/forester/exterior/ext-1.jpg", "/assets/cars/forester/exterior/ext-2.jpg", "/assets/cars/forester/exterior/ext-3.jpg", "/assets/cars/forester/exterior/ext-4.jpg");
         List<String> fInt = Arrays.asList("/assets/cars/forester/interior/int-1.jpg", "/assets/cars/forester/interior/int-2.jpg", "/assets/cars/forester/interior/int-3.jpg", "/assets/cars/forester/interior/int-4.jpg");
-        cars.add(new Car(2, "Forester", 166800.0, "/assets/video/Forester-image.jpg", "/assets/video/Forester.mp4", "/assets/cars/forester/forester-side.png", "/assets/cars/forester/forester-front.png", "The All-Rounder", "Practical meets safety.", "156PS", "196Nm", "193km/h", "10.3s", "10s", "CVT", fColors, Stream.concat(fExt.stream(), fInt.stream()).collect(Collectors.toList()), fExt, fInt, fHighlights, foresterVariants));
         
         // --- DEFINE SPECS FOR CAR 2 ---
         Car.Specifications fSpecs = new Car.Specifications(
@@ -164,9 +162,9 @@ public class ProductServlet extends HttpServlet {
             "4,625 mm", "1,815 mm", "1,730 mm", "2,670 mm", "220 mm", "1,539 kg", "5", "225/60 R17"
         );
 
-        cars.add(new Car(2, "Forester", 163500.0, "/assets/video/Forester-image.jpg", "/assets/video/Forester.mp4", "/assets/cars/forester/forester-side.png", "/assets/cars/forester/forester-front.png", "The All-Rounder", "Practical meets safety.", "156hp", "196Nm", "180km/h", "10s", "10s", "CVT", 
+        cars.add(new Car(2, "Forester", 163500.0, "/assets/video/Forester-image.jpg", "/assets/video/Forester.mp4", "/assets/cars/forester/forester-side.png", "/assets/cars/forester/forester-front.png", "The All-Rounder", "Practical meets safety.", "156PS", "196Nm", "193km/h", "10.3s", "10s", "CVT", 
             fSpecs, 
-            fColors, Stream.concat(fExt.stream(), fInt.stream()).collect(Collectors.toList()), fExt, fInt, fHighlights, new ArrayList<>()));
+            fColors, Stream.concat(fExt.stream(), fInt.stream()).collect(Collectors.toList()), fExt, fInt, fHighlights, foresterVariants));
 
         // --- 3. Subaru XV ---
         List<Car.ColorOption> xvColors = Arrays.asList(
@@ -209,7 +207,6 @@ public class ProductServlet extends HttpServlet {
         ));
         List<String> xvExt = Arrays.asList("/assets/cars/xv/exterior/ext-1.jpg", "/assets/cars/xv/exterior/ext-2.jpg", "/assets/cars/xv/exterior/ext-3.jpg", "/assets/cars/xv/exterior/ext-4.jpg");
         List<String> xvInt = Arrays.asList("/assets/cars/xv/interior/int-1.jpg", "/assets/cars/xv/interior/int-2.jpg", "/assets/cars/xv/interior/int-3.jpg", "/assets/cars/xv/interior/int-4.jpg");
-        cars.add(new Car(3, "XV", 155300.0, "/assets/video/XV-image.jpg", "/assets/video/XV.mp4", "/assets/cars/xv/xv-side.png", "/assets/cars/xv/xv-front.png", "Urban Explorer", "Style and capability.", "156PS", "196Nm", "194km/h", "10.4s", "10.4s", "CVT", xvColors, Stream.concat(xvExt.stream(), xvInt.stream()).collect(Collectors.toList()), xvExt, xvInt, xvHighlights, xvVariants));
 
         // --- DEFINE SPECS FOR CAR 3 ---
         Car.Specifications xvSpecs = new Car.Specifications(
@@ -217,7 +214,7 @@ public class ProductServlet extends HttpServlet {
             "4,485 mm", "1,800 mm", "1,615 mm", "2,665 mm", "220 mm", "1,459 kg", "5", "225/60 R17"
         );
 
-        cars.add(new Car(3, "XV", 155300.0, "/assets/video/XV-image.jpg", "/assets/video/XV.mp4", "/assets/cars/xv/xv-side.png", "/assets/cars/xv/xv-front.png", "Urban Explorer", "Style and capability.", "156hp", "196Nm", "194km/h", "10.4s", "10.4s", "CVT", 
+        cars.add(new Car(3, "XV", 155300.0, "/assets/video/XV-image.jpg", "/assets/video/XV.mp4", "/assets/cars/xv/xv-side.png", "/assets/cars/xv/xv-front.png", "Urban Explorer", "Style and capability.", "156PS", "196Nm", "194km/h", "10.4s", "10.4s", "CVT", 
             xvSpecs, 
             xvColors, Stream.concat(xvExt.stream(), xvInt.stream()).collect(Collectors.toList()), xvExt, xvInt, xvHighlights, xvVariants));
 
@@ -278,7 +275,7 @@ public class ProductServlet extends HttpServlet {
             "4,670 mm", "1,825 mm", "1,465 mm", "2,675 mm", "135 mm", "1,595 kg", "5", "245/40 R18"
         );
 
-        cars.add(new Car(4, "WRX", 289500.0, "/assets/video/WRX-image.jpg", "/assets/video/WRX.mp4", "/assets/cars/wrx/wrx-side.png", "/assets/cars/wrx/wrx-front.png", "Pure Performance", "Icon of speed.", "271hp", "350Nm", "250km/h", "5.8s", "5.4s", "6MT/CVT", 
+        cars.add(new Car(4, "WRX", 289500.0, "/assets/video/WRX-image.jpg", "/assets/video/WRX.mp4", "/assets/cars/wrx/wrx-side.png", "/assets/cars/wrx/wrx-front.png", "Pure Performance", "Icon of speed.", "275PS", "350Nm", "250km/h", "5.8s", "5.4s", "6MT/CVT", 
             wrxSpecs, 
             wrxColors, Stream.concat(wrxExt.stream(), wrxInt.stream()).collect(Collectors.toList()), wrxExt, wrxInt, wrxHighlights, wrxVariants));
 
@@ -321,7 +318,6 @@ public class ProductServlet extends HttpServlet {
         ));
         List<String> brzExt = Arrays.asList("/assets/cars/brz/exterior/ext-1.jpg", "/assets/cars/brz/exterior/ext-2.jpg", "/assets/cars/brz/exterior/ext-3.jpg", "/assets/cars/brz/exterior/ext-4.jpg");
         List<String> brzInt = Arrays.asList("/assets/cars/brz/interior/int-1.jpg", "/assets/cars/brz/interior/int-2.jpg", "/assets/cars/brz/interior/int-3.jpg", "/assets/cars/brz/interior/int-4.jpg");
-        cars.add(new Car(5, "BRZ", 249245.0, "/assets/video/BRZ-image.jpg", "/assets/video/BRZ.mp4", "/assets/cars/brz/brz-side.png", "/assets/cars/brz/brz-front.png", "Unleash Your Desire", "Pure sports car DNA.", "237PS", "250Nm", "226km/h", "6.3s", "6.9s", "6-speed manual", brzColors, Stream.concat(brzExt.stream(), brzInt.stream()).collect(Collectors.toList()), brzExt, brzInt, brzHighlights, brzVariants));
         
         // --- DEFINE SPECS FOR CAR 5 ---
         Car.Specifications brzSpecs = new Car.Specifications(
@@ -329,7 +325,7 @@ public class ProductServlet extends HttpServlet {
             "4,265 mm", "1,775 mm", "1,310 mm", "2,575 mm", "130 mm", "1,289 kg", "4", "215/40 R18"
         );
 
-        cars.add(new Car(5, "BRZ", 249245.0, "/assets/video/BRZ-image.jpg", "/assets/video/BRZ.mp4", "/assets/cars/brz/brz-side.png", "/assets/cars/brz/brz-front.png", "Unleash Your Desire", "Pure sports car DNA.", "234PS", "250Nm", "226km/h", "6.3s", "6.9s", "6-speed manual", 
+        cars.add(new Car(5, "BRZ", 249245.0, "/assets/video/BRZ-image.jpg", "/assets/video/BRZ.mp4", "/assets/cars/brz/brz-side.png", "/assets/cars/brz/brz-front.png", "Unleash Your Desire", "Pure sports car DNA.", "237PS", "250Nm", "226km/h", "6.3s", "6.9s", "6-speed manual", 
             brzSpecs, 
             brzColors, Stream.concat(brzExt.stream(), brzInt.stream()).collect(Collectors.toList()), brzExt, brzInt, brzHighlights, brzVariants));
 
@@ -384,9 +380,9 @@ public class ProductServlet extends HttpServlet {
             "4,870 mm", "1,875 mm", "1,675 mm", "2,745 mm", "213 mm", "1,682 kg", "5", "225/60 R18"
         );
 
-        cars.add(new Car(6, "Outback", 279000.0, "/assets/video/Outback-image.jpg", "/assets/video/Outback.mp4", "/assets/cars/outback/outback-side.png", "/assets/cars/outback/outback-front.png", "Luxury SUV", "Ultimate comfort and rugged utility.", "188hp", "245Nm", "206km/h", "9.6s", "9.6s", "CVT", 
+        cars.add(new Car(6, "Outback", 279000.0, "/assets/video/Outback-image.jpg", "/assets/video/Outback.mp4", "/assets/cars/outback/outback-side.png", "/assets/cars/outback/outback-front.png", "Luxury SUV", "Ultimate comfort and rugged utility.", "188PS", "245Nm", "206km/h", "9.6s", "9.6s", "CVT", 
             outSpecs, 
-            outColors, Stream.concat(outExt.stream(), outInt.stream()).collect(Collectors.toList()), outExt, outInt, outHighlights, new ArrayList<>()));
+            outColors, Stream.concat(outExt.stream(), outInt.stream()).collect(Collectors.toList()), outExt, outInt, outHighlights, outbackVariants));
 
         return cars;
     }

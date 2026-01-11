@@ -51,25 +51,29 @@
     align-items: center;
     width: 100%;
     position: relative;
-    z-index: 1;
-    font-family: 'Michroma', sans-serif; 
-    font-size: clamp(5rem, 9vw, 18rem); 
+    margin-bottom: -12vh;
+    /* Remove any overflow: hidden here */
+}
+
+.watermark-text {
+    font-family: 'Michroma', sans-serif;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 0.1vw; 
-    transform: scaleX(2.2) skewX(-12deg); 
-    margin-bottom: -8vh;
-    line-height: 1;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 1.2; 
     
     color: transparent;
-    -webkit-text-stroke: 3px rgba(255, 255, 255, 0.8);
+    -webkit-text-stroke: 3px rgba(255, 255, 255, 0.7);
     text-shadow: 
         0 0 15px rgba(255, 255, 255, 0.7), 
         0 0 30px rgba(255, 255, 255, 0.4), 
         0 0 60px rgba(255, 255, 255, 0.2),
         0 0 100px rgba(255, 255, 255, 0.1);
 
+    /* 3. VIBRANCY BOOST */
     filter: brightness(1.2) contrast(1.1);
+    
     opacity: 1;
     pointer-events: none;
     transition: all 0.3s ease; 
