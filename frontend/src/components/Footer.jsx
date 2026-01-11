@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"; // <--- 1. Import Link
 import "../css/Footer.css";
 
 function Footer() {
@@ -13,9 +14,10 @@ function Footer() {
         <div className="footer-section">
           <h4>EXPLORE</h4>
           <ul>
-            <li>About</li>
-            <li>Technology</li>
-            <li>Motorsports</li>
+            {/* 2. Update the List Items to use Link */}
+            <li><Link to="/About">About</Link></li>
+            <li><Link to="/compare">Compare</Link></li>
+            <li><Link to="/merch">Merchandise</Link></li>
           </ul>
         </div>
 

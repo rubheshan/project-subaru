@@ -43,3 +43,13 @@
   font-size: 0.75rem;
   opacity: 0.5;
 }
+
+.footer-section ul li a {
+  color: #fff; /* Or whatever text color you prefer */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+  color: #c9a959; /* Subaru Gold/Yellow on hover */
+}

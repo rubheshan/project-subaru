@@ -7,6 +7,7 @@ import './css/App.css';
 import Footer from "./components/Footer.jsx";
 import Booking from "./pages/Booking";
 import Compare from './pages/Compare';
+import Merch from './pages/Merch';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/About" element={<About />} />
           <Route path="/booking/:id" element={<Booking />} />
           <Route path="/compare" element={<Compare />} />
+          <Route path="/merch" element={<Merch />} />
         </Routes>
       </main>
       <Footer />

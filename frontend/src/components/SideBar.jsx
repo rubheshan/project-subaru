@@ -32,6 +32,12 @@ function SideBar({isOpen,setIsOpen}){
         }
     }
 
+    function handleMerchClick(){
+        setIsOpen(false);
+        setIsShown(false);
+        navigate(`/merch`);
+    }
+
     function closeSidebar(){
         setIsOpen(false);
         setIsShown(false);
@@ -43,10 +49,12 @@ function SideBar({isOpen,setIsOpen}){
                 <button onClick={() => closeSidebar()}>Close</button>
 
                 <button onClick={handleClick}>About</button>
-                
-                <button onClick={handleCompareClick}>Compare</button>
 
                 <button onClick={handleModelClick}>Models</button>
+
+                <button onClick={handleCompareClick}>Compare</button>
+
+                <button onClick={handleMerchClick}>Merchandise</button>
                 
                 <SideCarList isShown={isShown} onLinkClick={closeSidebar} />
             </div>
