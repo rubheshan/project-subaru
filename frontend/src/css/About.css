@@ -1,17 +1,15 @@
-/* src/css/About.css */
-
-/* --- 1. GLOBAL THEME & VARIABLES --- */
+/* GLOBAL THEME & VARIABLES */
 :root {
   --bg-dark-start: #020202;
   --bg-dark-mid: #050b14;
   --bg-dark-end: #0a1529;
   --accent-blue: #003087;
-  /* NEW: A sophisticated bronze/gold for contrast */
   --accent-gold: #c9a959; 
   --text-light: #e6e9ef;
   --text-dim: #8899a6;
 }
 
+/* PAGE CONTAINER */
 .about-page {
   font-family: 'Inter', sans-serif;
   color: var(--text-light);
@@ -22,7 +20,7 @@
   padding-bottom: 50px;
 }
 
-/* --- REUSABLE ANIMATION CLASSES --- */
+/* REUSABLE ANIMATIONS */
 .reveal-section {
   opacity: 0;
   transform: translateY(40px);
@@ -34,6 +32,7 @@
   transform: translateY(0);
 }
 
+/* HERO SECTION */
 .about-hero {
   height: 80vh;
   display: flex;
@@ -46,60 +45,42 @@
   background: transparent;
 }
 
+/* HERO BACKGROUND IMAGE */
 .hero-car-bg {
   position: absolute;
-  
-  /* 1. CENTERING & SIZING */
-  top: 55%;         /* Push it down slightly to sit behind text */
+  top: 55%;  
   left: 50%;        
-  transform: translate(-50%, -50%); /* Perfect Center */
+  transform: translate(-50%, -50%); 
   
-  width: 75%;       /* Smaller size (was 100%) */
-  height: auto;     /* Maintain aspect ratio */
+  width: 75%; 
+  height: auto;    
   max-height: 90%;
   object-fit: contain;
-  
   z-index: 0;
-  
-  /* 2. THE MYSTERIOUS LOOK */
-  opacity: 0.35;    /* Very faint (Ghostly) */
-  
-  /* 3. DARKER & MOODY */
+  opacity: 0.35;
   filter: brightness(0.6) contrast(1.2) grayscale(20%);
-  
-  /* 4. FADE EDGES (Vignette) */
-  /* This prevents hard edges if the image is rectangular */
   mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
 }
 
+/* HEADLIGHT ANIMATION KEYFRAMES */
 @keyframes headlightFlash {
   0%, 10%, 90%, 100% { opacity: 0; }
-  
-  /* BRIGHTER FLASH: Increased to 1.0 (Full intensity) */
   45%, 55% { opacity: 1; } 
 }
 
+/* HEADLIGHT BEAMS */
 .about-hero::before,
 .about-hero::after {
   content: "";
   position: absolute;
-  width: 130px; /* Slightly wider beam */
+  width: 130px; 
   height: 65px;
-  
-  /* THE BRIGHTNESS FIX: */
-  /* 1. Pure White center extended to 30% (was 10%) */
-  /* 2. Strong Blue-White mid-tone extends to 60% */
   background: radial-gradient(ellipse at center, 
       rgb(255, 255, 255) 30%, 
       rgba(200, 230, 255, 0.9) 60%, 
       transparent 80%);
-  
-  /* BLEND MODE: This makes it 'burn' into the image like real light */
   mix-blend-mode: screen;
-  
-  /* Soften the edges so it doesn't look like a sticker */
   filter: blur(15px);
-  
   opacity: 0;
   z-index: 1;
   animation: headlightFlash 6s ease-in-out infinite;
@@ -107,25 +88,17 @@
 }
 
 .about-hero::before {
-  /* Was 20% -> Now 38% (Much closer to center) */
   left: 30%; 
-  
-  /* You might need to tweak 'top' slightly depending on your specific image */
   top: 51%; 
 }
 
-/* Right Headlight */
 .about-hero::after {
-  /* Was 20% -> Now 38% (Much closer to center) */
   right: 30%; 
-  
-  /* Match the top value */
   top: 51%;
-  
   animation-delay: 0.1s;
 }
 
-
+/* HERO TYPOGRAPHY */
 .about-hero h1 {
   font-family: 'Michroma', sans-serif;
   font-size: clamp(3rem, 6vw, 5rem);
@@ -134,11 +107,8 @@
   margin-bottom: 1rem;
   position: relative;
   z-index: 2;
-  
-  /* STATIC CLEAN STYLE (No Gold Glow) */
   color: transparent;
   -webkit-text-stroke: 2px rgba(255, 255, 255, 0.9);
-  /* Simple dark shadow for contrast against the lights */
   text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
 }
 
@@ -152,7 +122,7 @@
   z-index: 2;
 }
 
-/* --- 3. SECTIONS --- */
+/* MAIN CONTENT SECTIONS */
 .about-section {
   max-width: 1200px;
   margin: 0 auto;
@@ -167,7 +137,7 @@
   backdrop-filter: blur(10px);
 }
 
-/* HEADERS */
+/* SECTION HEADERS */
 .section-title {
   font-family: 'Michroma', sans-serif;
   font-size: 2.5rem;
@@ -181,13 +151,13 @@
   color: var(--accent-blue);
   text-shadow: 0 0 20px rgba(0, 48, 135, 0.6);
 }
-/* New class for Gold text if needed */
+
 .section-title .gold-text {
   color: var(--accent-gold);
   text-shadow: 0 0 20px rgba(201, 169, 89, 0.6);
 }
 
-/* TEXT CONTENT */
+/* TEXT BLOCK STYLES */
 .text-block {
   text-align: center;
   max-width: 800px;
@@ -197,7 +167,7 @@
   color: #cfd6e4;
 }
 
-/* --- 4. THE GLASS GRID --- */
+/* GRID LAYOUT */
 .about-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -205,6 +175,7 @@
   margin-top: 2rem;
 }
 
+/* GRID CARDS */
 .about-card {
   position: relative;
   background: linear-gradient(145deg, rgba(20, 30, 50, 0.4), rgba(0, 0, 0, 0.6));
@@ -216,21 +187,18 @@
   overflow: hidden;
 }
 
-/* Updated Hover to use Gold Accent */
 .about-card:hover {
   transform: translateY(-10px);
   border-color: var(--accent-gold);
   box-shadow: 0 20px 50px rgba(201, 169, 89, 0.2);
 }
 
-/* Decorative Number - Updated to subtle Gold */
 .card-number {
   position: absolute;
   top: -10px;
   right: 10px;
   font-family: 'Michroma', sans-serif;
   font-size: 5rem;
-  /* Subtle gold tint */
   color: rgba(201, 169, 89, 0.05);
   z-index: 0;
   pointer-events: none;
@@ -239,7 +207,7 @@
 
 .about-card:hover .card-number {
   transform: translateY(-5px) scale(1.1);
-  color: rgba(201, 169, 89, 0.15); /* Brighter gold on hover */
+  color: rgba(201, 169, 89, 0.15); 
 }
 
 .about-card h3 {
@@ -260,7 +228,7 @@
   z-index: 1;
 }
 
-/* --- 5. SPLIT LAYOUT (Safety Section) --- */
+/* SPLIT LAYOUT SECTION */
 .split-layout {
   display: flex;
   align-items: center;
@@ -272,10 +240,9 @@
   text-align: left;
 }
 
-/* Updated Graphic Container for Image */
 .split-graphic {
   flex: 1;
-  height: 350px; /* Increased height for image */
+  height: 350px; 
   position: relative;
   border-radius: 8px;
   overflow: hidden;
@@ -287,19 +254,16 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* A subtle blue filter to blend it into the theme */
   filter: sepia(20%) hue-rotate(180deg) saturate(150%) contrast(120%);
   transition: filter 0.5s ease, transform 0.5s ease;
 }
 
 .split-graphic:hover img {
-    /* On hover, reveal true colors and zoom slightly */
     filter: none;
     transform: scale(1.05);
 }
 
-
-/* --- 6. CTA SECTION --- */
+/* CTA SECTION */
 .about-cta {
   text-align: center;
   padding: 6rem 1.5rem;
@@ -321,7 +285,6 @@
   text-transform: uppercase;
 }
 
-/* Updated Hover to use Gold Accent */
 .cta-btn:hover {
   background: var(--accent-gold);
   border-color: var(--accent-gold);
@@ -329,7 +292,7 @@
   box-shadow: 0 0 40px rgba(201, 169, 89, 0.6);
 }
 
-/* --- DISCLAIMER --- */
+/* DISCLAIMER SECTION */
 .about-disclaimer {
   text-align: center;
   padding: 2rem;
@@ -338,43 +301,28 @@
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-@media (max-width: 900px) {
-  .about-hero::before, .about-hero::after {
-    top: 50%; /* Adjust for smaller screens if needed */
-    width: 100px;
-    height: 60px;
-  }
-}
-
-@media (max-width: 768px) {
-  .split-layout { flex-direction: column; }
-  .split-graphic { width: 100%; height: 250px; }
-  .about-hero h1 { font-size: 2.5rem; }
-  .section-title { font-size: 1.8rem; }
-}
-
+/* BACKGROUND ORB CONTAINER */
 .ambient-bg-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  
-  /* FIX: Set to 0 so it sits ON TOP of the black body background */
   z-index: 0; 
-  
   overflow: hidden;
   pointer-events: none;
 }
 
+/* Z-INDEX MANAGEMENT */
 .about-hero, 
 .about-section, 
 .about-cta, 
 .about-disclaimer {
   position: relative;
-  z-index: 1; /* Content is Layer 1, Orbs are Layer 0 */
+  z-index: 1; 
 }
 
+/* FLOATING ANIMATION KEYFRAMES */
 @keyframes floatDeep {
   0% { transform: translate(0, 0) rotate(0deg) scale(1); }
   33% { transform: translate(200px, -100px) rotate(40deg) scale(1.2); }
@@ -388,16 +336,15 @@
   100% { transform: translate(0, 0) rotate(0deg); }
 }
 
-/* ORB STYLES */
+/* ORB ELEMENTS */
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(80px); /* Heavy Blur */
-  opacity: 0.6; /* High Visibility */
-  mix-blend-mode: screen; /* glowing effect */
+  filter: blur(80px); 
+  opacity: 0.6; 
+  mix-blend-mode: screen; 
 }
 
-/* Orb 1 (Blue - Top Left) */
 .orb-1 {
   width: 80vw;
   height: 80vw;
@@ -407,7 +354,6 @@
   animation: floatDeep 12s infinite ease-in-out;
 }
 
-/* Orb 2 (Gold - Bottom Right) */
 .orb-2 {
   width: 70vw;
   height: 70vw;
@@ -417,7 +363,6 @@
   animation: floatWide 15s infinite ease-in-out;
 }
 
-/* Orb 3 (Mid Blue - Center) */
 .orb-3 {
   width: 50vw;
   height: 50vw;
@@ -427,16 +372,16 @@
   animation: floatDeep 18s infinite ease-in-out reverse;
 }
 
-/* --- GLOBAL PRESENCE SECTION --- */
+/* GLOBAL PRESENCE SECTION */
 .global-section {
   position: relative;
   padding: 8rem 2rem;
-  background: #020610; /* Very dark blue-black */
+  background: #020610; 
   overflow: hidden;
   text-align: center;
 }
 
-/* THE CSS WIREFRAME GLOBE (Background Visual) */
+/* BACKGROUND GLOBE VISUAL */
 .global-bg-globe {
   position: absolute;
   top: 50%;
@@ -448,12 +393,9 @@
   border: 1px solid rgba(0, 48, 135, 0.2);
   z-index: 0;
   opacity: 0.6;
-  
-  /* Creates a grid/latitude-longitude look */
   background: 
     repeating-linear-gradient(90deg, transparent 0, transparent 50px, rgba(0, 48, 135, 0.1) 50px, rgba(0, 48, 135, 0.1) 51px),
     repeating-linear-gradient(0deg, transparent 0, transparent 50px, rgba(0, 48, 135, 0.1) 50px, rgba(0, 48, 135, 0.1) 51px);
-    
   animation: spinGlobe 60s linear infinite;
 }
 
@@ -462,10 +404,10 @@
   to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-/* --- THE CONTENT GRID --- */
+/* GLOBAL CONTENT CONTAINER */
 .global-content {
   position: relative;
-  z-index: 2; /* Sits above the globe */
+  z-index: 2; 
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -478,15 +420,16 @@
   letter-spacing: 2px;
 }
 
+/* MISSION GRID LAYOUT */
 .mission-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
 }
 
-/* --- THE MISSION CARDS --- */
+/* MISSION CARD STYLES */
 .mission-card {
-  background: rgba(2, 11, 28, 0.6); /* Dark Glass */
+  background: rgba(2, 11, 28, 0.6); 
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 3rem 2rem;
@@ -495,7 +438,7 @@
 
 .mission-card:hover {
   transform: translateY(-10px);
-  border-color: var(--subaru-blue); /* Highlights blue on hover */
+  border-color: var(--subaru-blue); 
   box-shadow: 0 10px 40px rgba(0, 48, 135, 0.3);
 }
 

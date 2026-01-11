@@ -1,3 +1,4 @@
+/* MAIN NAVIGATION BAR */
 .navbar {
     position: fixed;
     top: 0;
@@ -6,12 +7,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(1, 6, 20, 0.85); /* Deep Blue Glass */
+    background: rgba(1, 6, 20, 0.85); 
     backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     z-index: 1000;
 }
 
+/* LOGO STYLING */
 .navbar img {
     height: 250px; 
     width: auto;
@@ -23,13 +25,14 @@
     transform: scale(1.05);
 }
 
+/* MENU TOGGLE BUTTON */
 .menu-button {
     position: absolute;
     left: 40px;
     color: white;
     background: none;
     border: none;
-    font-family: 'Michroma', sans-serif; /* Futuristic font */
+    font-family: 'Michroma', sans-serif; 
     font-size: 0.8rem;
     cursor: pointer;
     display: flex;

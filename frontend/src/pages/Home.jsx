@@ -6,7 +6,7 @@ import '../css/App.css';
 const API_URL = 'http://localhost:8080/backend/products';
 
 /* =========================================
-   ANIMATION HELPER
+   SIMPLE SCROLL-REVEAL ANIMATION WRAPPER
    ========================================= */
 const RevealSection = ({ children, className }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -32,7 +32,7 @@ const RevealSection = ({ children, className }) => {
 };
 
 /* =========================================
-   MAIN HOME COMPONENT
+   HOME PAGE COMPONENT
    ========================================= */
 function Home() {
   const sliderRef = useRef(null);
@@ -43,6 +43,7 @@ function Home() {
   const [hoveredCarId, setHoveredCarId] = useState(null); 
   const [isVideoFadingIn, setIsVideoFadingIn] = useState(false);
 
+  // Fetch car lineup data from backend API
   useEffect(() => {
     const fetchCarData = async () => {
       try {
@@ -60,8 +61,10 @@ function Home() {
     fetchCarData();
   }, []);
 
+  // Duplicate data to allow smooth infinite scrolling
   const sliderCars = carData.length > 0 ? [...carData, ...carData, ...carData] : []; 
 
+  // Auto-scroll effect for the car slider
   useEffect(() => {
     const slider = sliderRef.current;
     const interval = setInterval(() => {
@@ -75,30 +78,52 @@ function Home() {
     return () => clearInterval(interval);
   }, [isPaused, carData.length]); 
 
+  // Manual navigation for slider arrows
   const scroll = (direction) => {
     const slider = sliderRef.current;
     const scrollAmount = 500; 
     if (slider) {
-      const target = direction === 'left' ? slider.scrollLeft - scrollAmount : slider.scrollLeft + scrollAmount;
+      const target =
+        direction === 'left'
+          ? slider.scrollLeft - scrollAmount
+          : slider.scrollLeft + scrollAmount;
       slider.scrollTo({ left: target, behavior: 'smooth' });
     }
   };
 
+  // Format price into Malaysian Ringgit
   const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-MY', { style: 'currency', currency: 'MYR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(price);
+    return new Intl.NumberFormat('en-MY', {
+      style: 'currency',
+      currency: 'MYR',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(price);
   };
 
+  // Loading screen while fetching data
   if (isLoading) {
     return (
       <div>
         <MainBanner />
-        <div className="models-section" style={{ height: '40vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <h2 style={{ opacity: 0.5, animation: 'pulse 1.5s infinite' }}>LOADING EXPERIENCE...</h2>
+        <div
+          className="models-section"
+          style={{
+            height: '40vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}
+        >
+          <h2 style={{ opacity: 0.5, animation: 'pulse 1.5s infinite' }}>
+            LOADING EXPERIENCE...
+          </h2>
         </div>
       </div>
     );
   }
 
+  // Fallback UI if API fails
   if (error){
     return (
       <div>
@@ -115,7 +140,7 @@ function Home() {
       <MainBanner />
 
       {/* =========================================
-          1. PHILOSOPHY SECTION (Now with Spotlight Background)
+          1. BRAND PHILOSOPHY SECTION
       ========================================= */}
       <section className="home-statement-section">
         <RevealSection>
@@ -139,7 +164,7 @@ function Home() {
       </section>
 
       {/* =========================================
-          2. NEW "STATS" SECTION (The Tech Vibe)
+          2. QUICK BRAND STATS SECTION
       ========================================= */}
       <section className="stats-section">
          <RevealSection className="stats-container">
@@ -163,7 +188,7 @@ function Home() {
       </section>
 
       {/* =========================================
-          3. FEATURES
+          3. CORE TECHNOLOGY FEATURES
       ========================================= */}
       <section className="features-section">
         <RevealSection>
@@ -195,27 +220,66 @@ function Home() {
       </section>
 
       {/* =========================================
-          4. CAR LINEUP
+          4. VEHICLE LINEUP SLIDER
       ========================================= */}
       <div className="models-section fade-in-up">
         <div className="slider-container">
           <h2>Our Lineup</h2>
           
-          <button className="nav-btn prev-btn" onClick={() => scroll('left')} onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>&#8592;</button>
-          <button className="nav-btn next-btn" onClick={() => scroll('right')} onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>&#8594;</button>
+          <button
+            className="nav-btn prev-btn"
+            onClick={() => scroll('left')}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            &#8592;
+          </button>
 
-          <div className="slider-track" ref={sliderRef} onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)}>
+          <button
+            className="nav-btn next-btn"
+            onClick={() => scroll('right')}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
+            &#8594;
+          </button>
+
+          <div
+            className="slider-track"
+            ref={sliderRef}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+          >
             {sliderCars.map((car, index) => (
               <div 
                 key={`${car.id}-${index}`} 
                 className="slider-card"
-                onMouseEnter={() => { setIsPaused(true); setHoveredCarId(car.id); }}
-                onMouseLeave={() => { setIsPaused(false); setIsVideoFadingIn(false); setTimeout(() => setHoveredCarId(null), 300); }}
+                onMouseEnter={() => {
+                  setIsPaused(true);
+                  setHoveredCarId(car.id);
+                }}
+                onMouseLeave={() => {
+                  setIsPaused(false);
+                  setIsVideoFadingIn(false);
+                  setTimeout(() => setHoveredCarId(null), 300);
+                }}
               >
                 <div className="image-wrapper">
-                  <img src={car.imageUrl} alt={car.modelName} className="car-image-placeholder" />
+                  <img
+                    src={car.imageUrl}
+                    alt={car.modelName}
+                    className="car-image-placeholder"
+                  />
                   {hoveredCarId === car.id && car.videoUrl && (
-                    <video src={car.videoUrl} className={`car-video ${isVideoFadingIn ? 'faded-in' : ''}`} autoPlay loop muted playsInline onLoadedData={() => setIsVideoFadingIn(true)} />
+                    <video
+                      src={car.videoUrl}
+                      className={`car-video ${isVideoFadingIn ? 'faded-in' : ''}`}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      onLoadedData={() => setIsVideoFadingIn(true)}
+                    />
                   )}
                 </div>
                 

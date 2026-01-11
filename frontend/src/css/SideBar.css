@@ -1,29 +1,33 @@
+/* SIDEBAR CONTAINER */
 .sidebar{
     position: fixed;
     top: 0;
     left: -400px;
     width: 400px;
     height: 100vh;
-    background: rgba(10, 10, 10); /* Dark semi-transparent */
+    background: rgba(10, 10, 10); 
     padding: 2rem;
     transition: left 0.3s ease;
     z-index: 1000;
     color: white;
 }
 
+/* SIDEBAR OPEN STATE */
 .sidebar.open{
     left: 0;
     transition: left 0.3s ease;
 }
 
+/* CONTENT LAYOUT */
 .sidebar-content {
-  margin-top: 30px; /* push items down below the button */
+  margin-top: 30px; 
   display: flex;
   flex-direction: column;
-  align-items: center;  /* horizontal center */
-  gap: 1rem;            /* spacing between items */
+  align-items: center;  
+  gap: 1rem;            
 }
 
+/* NAVIGATION BUTTONS */
 .sidebar-content button{
     margin: 0.5rem 0;
     width: 100%;
@@ -36,12 +40,13 @@
     color: white;
 }
 
+/* BUTTON HOVER STATE */
 .sidebar-content button:hover{
     background-color: rgb(44, 43, 43);
     color: white;
 }
 
-
+/* BUTTON GLOW EFFECT */
 .sidebar-content button:hover {
     background-color: rgba(30, 94, 255, 0.15);
     color: #ffffff;

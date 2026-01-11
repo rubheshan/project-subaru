@@ -1,3 +1,4 @@
+/* PAGE LAYOUT CONTAINER */
 .booking-page {
   min-height: 100vh;
   padding: 4rem 2rem;
@@ -8,6 +9,7 @@
   align-items: center;
 }
 
+/* PAGE TITLE */
 .booking-title {
   font-size: 2.4rem;
   font-weight: 700;
@@ -15,6 +17,7 @@
   text-align: center;
 }
 
+/* BOOKING CARD CONTAINER */
 .booking-card {
   background: #12151b;
   border-radius: 18px;
@@ -27,6 +30,7 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
+/* PRODUCT IMAGE STYLING */
 .booking-card img {
   width: 100%;
   border-radius: 14px;
@@ -35,13 +39,14 @@
   padding: 1rem;
 }
 
-/* 🔹 FORM */
+/* FORM LAYOUT */
 .booking-form {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
 }
 
+/* INPUT FIELDS & DROPDOWNS */
 .booking-form input,
 .booking-form select {
   background: #0f1218;
@@ -69,7 +74,7 @@
   color: #ffffff;
 }
 
-/* 🔹 BUTTON */
+/* SUBMIT BUTTON STYLING */
 .booking-form button {
   margin-top: 1.2rem;
   padding: 1rem;
@@ -93,21 +98,10 @@
   box-shadow: none;
 }
 
-/* 🔹 LOADING */
+/* LOADING INDICATOR */
 .loading {
   color: white;
   font-size: 1.2rem;
   padding: 5rem;
   text-align: center;
-}
-
-/* 🔹 MOBILE */
-@media (max-width: 768px) {
-  .booking-card {
-    grid-template-columns: 1fr;
-  }
-
-  .booking-title {
-    font-size: 2rem;
-  }
 }
