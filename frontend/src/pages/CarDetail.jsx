@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import '../css/CarDetail.css';
 
-/**
- * 1. ANIMATION ENGINE (Updated to Reset on Scroll Up)
+/*
+ * SECTION 1: Scroll-based reveal animation
+ * Elements appear when they enter the viewport and hide again when scrolling away
  */
 const RevealSection = ({ children, className }) => {
     const [isVisible, setIsVisible] = useState(false);
@@ -12,8 +13,7 @@ const RevealSection = ({ children, className }) => {
 
     useEffect(() => {
         const observer = new IntersectionObserver(([entry]) => {
-            // Simply set state to match intersection status
-            // If scrolling down (entering), true. If scrolling up (leaving), false.
+            // Toggle visibility based on whether section is in view
             setIsVisible(entry.isIntersecting);
         }, { threshold: 0.15 });
 
@@ -28,8 +28,9 @@ const RevealSection = ({ children, className }) => {
     );
 };
 
-/**
- * Animated Number Ticker (Resets when out of view)
+/*
+ * Animated number counter
+ * Starts counting when visible and resets when scrolled away
  */
 const NumberTicker = ({ value, isDecimal = false }) => {
     const [displayValue, setDisplayValue] = useState(0);
@@ -38,12 +39,12 @@ const NumberTicker = ({ value, isDecimal = false }) => {
 
     useEffect(() => {
         let timer = null;
-        
+
         const observer = new IntersectionObserver(([entry]) => {
             if (entry.isIntersecting) {
-                // START COUNTING
+                // Begin counting animation
                 let start = 0;
-                const duration = 1500; 
+                const duration = 1500;
                 const increment = targetValue / (duration / 16);
 
                 timer = setInterval(() => {
@@ -56,14 +57,14 @@ const NumberTicker = ({ value, isDecimal = false }) => {
                     }
                 }, 16);
             } else {
-                // RESET TO 0 WHEN SCROLLING UP/AWAY
+                // Reset value when leaving viewport
                 clearInterval(timer);
                 setDisplayValue(0);
             }
-        }, { threshold: 0.1 }); // Low threshold to reset early
+        }, { threshold: 0.1 });
 
         if (nodeRef.current) observer.observe(nodeRef.current);
-        
+
         return () => {
             observer.disconnect();
             if (timer) clearInterval(timer);
@@ -73,7 +74,6 @@ const NumberTicker = ({ value, isDecimal = false }) => {
     return <span ref={nodeRef}>{displayValue}</span>;
 };
 
-
 const CarDetail = () => {
     const { id } = useParams();
     const [car, setCar] = useState(null);
@@ -81,21 +81,24 @@ const CarDetail = () => {
     const [selectedImg, setSelectedImg] = useState("");
     const [isFullScreen, setIsFullScreen] = useState(false);
     const [selectedColor, setSelectedColor] = useState(null);
-    const [isImgLoading, setIsImgLoading] = useState(false); 
+    const [isImgLoading, setIsImgLoading] = useState(false);
     const navigate = useNavigate();
-    
 
-    // ACT 1: FETCH DATA
+    /*
+     * Fetch car data based on the selected ID
+     */
     useEffect(() => {
         fetch(`http://localhost:8080/backend/products?id=${id}`)
             .then(res => res.json())
             .then(data => {
                 if (data) {
                     setCar(data);
+
                     const allImages = [...(data.exteriorImages || []), ...(data.interiorImages || [])];
                     if (allImages.length > 0) {
                         setSelectedImg(allImages[0]);
                     }
+
                     if (data.colorOptions && data.colorOptions.length > 0) {
                         setSelectedColor(data.colorOptions[0]);
                     }
@@ -104,12 +107,15 @@ const CarDetail = () => {
             .catch(err => console.error("Error fetching data:", err));
     }, [id]);
 
-    // GALLERY SYNC LOGIC
+    /*
+     * Keep gallery image in sync when switching tabs
+     */
     useEffect(() => {
         if (!car) return;
+
         const exterior = car.exteriorImages || [];
         const interior = car.interiorImages || [];
-        
+
         if (activeTab === 'exterior' && exterior.length > 0) {
             setSelectedImg(exterior[0]);
         } else if (activeTab === 'interior' && interior.length > 0) {
@@ -120,6 +126,9 @@ const CarDetail = () => {
         }
     }, [activeTab, car]);
 
+    /*
+     * Allow exiting fullscreen mode using Escape key
+     */
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Escape') setIsFullScreen(false);
@@ -144,78 +153,101 @@ const CarDetail = () => {
         const list = getImages();
         const currIdx = list.indexOf(selectedImg);
         if (currIdx === -1) return;
-        let nextIdx = direction === 'next' ? (currIdx + 1) % list.length : (currIdx - 1 + list.length) % list.length;
+
+        const nextIdx =
+            direction === 'next'
+                ? (currIdx + 1) % list.length
+                : (currIdx - 1 + list.length) % list.length;
+
         setSelectedImg(list[nextIdx]);
     };
 
     return (
         <div className="car-detail-page">
-            
-            {/* HERO SECTION (Static Animation on Load) */}
+
+            {/* Hero section with animated reveal */}
             <RevealSection className="showroom-hero">
                 <div className="watermark-container">
-                    <div 
+                    <div
                         className="watermark-text"
-                        style={{ 
-                            // 1. DYNAMIC FONT SIZE
-                            fontSize: car.modelName.length > 12 
-                                ? '6.5vw'   // Forester 2.5i-S (Matches what worked)
-                                : car.modelName.length >= 7 
-                                ? '8.2vw'   // Forester / Outback (Slightly smaller to fit)
-                                : '15vw',   // WRX / BRZ / XV
+                        style={{
+                            fontSize: car.modelName.length > 12
+                                ? '6.5vw'
+                                : car.modelName.length >= 7
+                                ? '8.2vw'
+                                : '15vw',
 
-                            // 2. DYNAMIC LETTER SPACING (The Safety Valve)
-                            // This pulls the letters closer together so they don't hit the edges
                             letterSpacing: car.modelName.length >= 7 ? '-0.7vw' : '-0.2vw',
 
-                            // 3. DYNAMIC STRETCH
-                            transform: car.modelName.length >= 7 
-                                ? 'scaleX(1.15) skewX(-12deg)' 
+                            transform: car.modelName.length >= 7
+                                ? 'scaleX(1.15) skewX(-12deg)'
                                 : 'scaleX(1.4) skewX(-12deg)'
                         }}
                     >
                         {car.modelName}
                     </div>
                 </div>
+
                 <div className="car-image-container">
                     <img src={car.sideImageUrl} alt={car.modelName} className="main-car-img" />
                     <div className="car-shadow"></div>
                 </div>
             </RevealSection>
 
-            {/* PERFORMANCE SPECS (Now Wrapped in RevealSection for Re-Triggering) */}
+            {/* Performance statistics section */}
             <RevealSection className="performance-specs-section">
                 <div className="specs-container">
                     <div className="specs-data-column">
                         <div className="spec-group">
-                            <div className="spec-value"><NumberTicker value={extractNum(car.accelerationMT)} isDecimal={true} /><small>s</small></div>
+                            <div className="spec-value">
+                                <NumberTicker value={extractNum(car.accelerationMT)} isDecimal={true} />
+                                <small>s</small>
+                            </div>
                             <div className="spec-label">Acceleration 0 - 100 km/h</div>
                         </div>
+
                         <div className="spec-group">
-                            <div className="spec-value"><NumberTicker value={extractNum(car.horsepower)} /> <small>PS</small></div>
+                            <div className="spec-value">
+                                <NumberTicker value={extractNum(car.horsepower)} />
+                                <small>PS</small>
+                            </div>
                             <div className="spec-label">Engine Power</div>
                         </div>
+
                         <div className="spec-group">
-                            <div className="spec-value"><NumberTicker value={extractNum(car.torque)} /> <small>Nm</small></div>
+                            <div className="spec-value">
+                                <NumberTicker value={extractNum(car.torque)} />
+                                <small>Nm</small>
+                            </div>
                             <div className="spec-label">Torque</div>
                         </div>
+
                         <div className="spec-group">
-                            <div className="spec-value"><NumberTicker value={extractNum(car.topSpeed)} /> <small>km/h</small></div>
+                            <div className="spec-value">
+                                <NumberTicker value={extractNum(car.topSpeed)} />
+                                <small>km/h</small>
+                            </div>
                             <div className="spec-label">Top Speed</div>
                         </div>
                     </div>
+
                     <div className="specs-image-column">
                         <img src={car.frontImageUrl} alt="Front View" className="brz-front-img" />
                     </div>
                 </div>
             </RevealSection>
 
-            {/* HIGHLIGHTS */}
+            {/* Technology highlights */}
             <RevealSection className="highlights-section">
                 <div className="highlights-header">
-                    <h2 className="highlights-main-title">CORE <span className="red-text">TECHNOLOGY</span></h2>
-                    <p className="highlights-subtitle">Engineering excellence built into every {car.modelName}.</p>
+                    <h2 className="highlights-main-title">
+                        CORE <span className="red-text">TECHNOLOGY</span>
+                    </h2>
+                    <p className="highlights-subtitle">
+                        Engineering excellence built into every {car.modelName}.
+                    </p>
                 </div>
+
                 <div className="highlights-grid">
                     {car.highlights && car.highlights.map((item, index) => (
                         <div key={index} className="highlight-card">
@@ -232,10 +264,12 @@ const CarDetail = () => {
                 </div>
             </RevealSection>
 
-            {/* GALLERY SECTION */}
+            {/* Image gallery */}
             <RevealSection className="gallery-section">
                 <div className="gallery-header">
-                    <div className="gallery-title"><span className="red-slash">/</span> GALLERY</div>
+                    <div className="gallery-title">
+                        <span className="red-slash">/</span> GALLERY
+                    </div>
                     <div className="gallery-tabs">
                         <button className={activeTab === 'all' ? 'active' : ''} onClick={() => setActiveTab('all')}>ALL</button>
                         <button className={activeTab === 'exterior' ? 'active' : ''} onClick={() => setActiveTab('exterior')}>EXTERIOR</button>
@@ -244,9 +278,7 @@ const CarDetail = () => {
                 </div>
 
                 <div className="gallery-main-display">
-                    <button className="fullscreen-btn" onClick={() => setIsFullScreen(true)}>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg>
-                    </button>
+                    <button className="fullscreen-btn" onClick={() => setIsFullScreen(true)}>⤢</button>
                     <button className="nav-arrow prev" onClick={() => navigateImage('prev')}>&#10094;</button>
                     <img src={selectedImg} alt="Subaru Gallery" key={selectedImg} className="fade-in" />
                     <button className="nav-arrow next" onClick={() => navigateImage('next')}>&#10095;</button>
@@ -254,14 +286,18 @@ const CarDetail = () => {
 
                 <div className="gallery-thumbnails">
                     {getImages().map((img, index) => (
-                        <div key={index} className={`thumb-wrapper ${selectedImg === img ? 'active-thumb' : ''}`} onClick={() => setSelectedImg(img)}>
+                        <div
+                            key={index}
+                            className={`thumb-wrapper ${selectedImg === img ? 'active-thumb' : ''}`}
+                            onClick={() => setSelectedImg(img)}
+                        >
                             <img src={img} alt={`Thumb ${index}`} />
                         </div>
                     ))}
                 </div>
             </RevealSection>
-            
-            {/* CONFIGURATOR SECTION */}
+
+            {/* Car configurator */}
             <RevealSection className="configurator-section">
                 <div className="config-header">
                     <h2>CHOOSE YOUR <span className="red-text">STYLE</span></h2>
@@ -270,26 +306,18 @@ const CarDetail = () => {
 
                 <div className="config-container">
                     <div className="config-preview">
-                        <img 
-                            src={selectedColor?.image ? selectedColor.image : car.sideImageUrl} 
-                            alt="Selected Color" 
+                        <img
+                            src={selectedColor?.image || car.sideImageUrl}
+                            alt="Selected Color"
                             className={`config-main-img ${isImgLoading ? 'image-loading' : 'fade-in'}`}
                             key={selectedColor?.name}
-                            onLoad={() => setIsImgLoading(false)} 
-                            
-                            /* --- THE SUBTLE GLOW FIX --- */
+                            onLoad={() => setIsImgLoading(false)}
                             style={{
-                                /* 0px horizontal, 60px down (floor), 
-                                   40px blur (soft), 
-                                   Color + "40" (Adds transparency/subtlety) 
-                                */
-                                filter: `drop-shadow(0 60px 60px ${selectedColor?.hex || '#ffffff'}40)` 
+                                filter: `drop-shadow(0 60px 60px ${selectedColor?.hex || '#ffffff'}40)`
                             }}
                         />
-                        
-                        {/* --- DYNAMIC FLOOR SHADOW --- */}
-                        {/* We use the selected color's hex to tint the floor glow */}
-                        <div 
+
+                        <div
                             className="car-shadow"
                             style={{
                                 background: `radial-gradient(ellipse at center, ${selectedColor?.hex}66 0%, transparent 70%)`,
@@ -299,16 +327,14 @@ const CarDetail = () => {
                     </div>
 
                     <div className="config-controls">
-                        {/* --- ANIMATED TEXT --- */}
-                        {/* The 'key' forces React to re-play the animation on change */}
-                        <h3 
-                            className="selected-color-name" 
+                        <h3
+                            className="selected-color-name"
                             key={selectedColor?.name}
                             style={{ animation: 'fadeInUpShort 0.5s ease-out forwards' }}
                         >
                             {selectedColor?.name}
                         </h3>
-                        
+
                         <div className="swatch-list">
                             {car.colorOptions?.map((color, index) => (
                                 <button
@@ -317,7 +343,7 @@ const CarDetail = () => {
                                     style={{ backgroundColor: color.hex }}
                                     onClick={() => {
                                         if (color.name !== selectedColor?.name) {
-                                            setIsImgLoading(true); 
+                                            setIsImgLoading(true);
                                             setSelectedColor(color);
                                         }
                                     }}
@@ -329,17 +355,20 @@ const CarDetail = () => {
                 </div>
             </RevealSection>
 
-            {/* VARIANT COMPARISON */}
+            {/* Variant comparison */}
             {car.variants && car.variants.length > 0 && (
                 <RevealSection className="variants-section">
                     <div className="variants-header">
                         <h2>CHOOSE YOUR <span className="red-text">DRIVE</span></h2>
                         <p>Available configurations for the {car.modelName}</p>
                     </div>
+
                     <div className="variants-grid">
                         {car.variants.map((variant, index) => (
                             <div key={index} className="variant-card">
-                                <div className="variant-image"><img src={variant.image} alt={variant.name} /></div>
+                                <div className="variant-image">
+                                    <img src={variant.image} alt={variant.name} />
+                                </div>
                                 <div className="variant-content">
                                     <h3>{variant.name}</h3>
                                     <div className="variant-price-tag">
@@ -347,11 +376,11 @@ const CarDetail = () => {
                                         <span className="price-val">RM {variant.price.toLocaleString()}</span>
                                     </div>
                                     <div className="variant-spec-list">
-                                        {variant.specs && variant.specs.map((spec, specIdx) => (
+                                        {variant.specs?.map((spec, specIdx) => (
                                             <div key={specIdx} className="v-spec-item">
                                                 <span className="v-label">{spec.label}</span>
                                                 <span className="v-value">
-                                                    {spec.value.split('\n').map((line, i) => ( 
+                                                    {spec.value.split('\n').map((line, i) => (
                                                         <div key={i}>{line.trim()}</div>
                                                     ))}
                                                 </span>
@@ -365,10 +394,10 @@ const CarDetail = () => {
                 </RevealSection>
             )}
 
-            {/* FULLSCREEN OVERLAY */}
+            {/* Fullscreen image viewer */}
             {isFullScreen && (
                 <div className="fullscreen-overlay" onClick={() => setIsFullScreen(false)}>
-                    <button className="close-fullscreen" onClick={() => setIsFullScreen(false)}>&times;</button>
+                    <button className="close-fullscreen">&times;</button>
                     <div className="fullscreen-content" onClick={(e) => e.stopPropagation()}>
                         <button className="nav-arrow prev" onClick={() => navigateImage('prev')}>&#10094;</button>
                         <img src={selectedImg} alt="Full View" />
@@ -377,20 +406,21 @@ const CarDetail = () => {
                 </div>
             )}
 
-            {/* Invisible Preloader */}
+            {/* Hidden image preloader for smoother color switching */}
             <div style={{ display: 'none' }}>
                 {car.colorOptions?.map((color, i) => (
                     <img key={i} src={color.image} alt="preload" />
                 ))}
             </div>
 
+            {/* Book now call-to-action */}
             <div className="book-now-wrapper">
-            <button
-                className="book-now-btn"
-                onClick={() => navigate(`/booking/${car.id}`)}
+                <button
+                    className="book-now-btn"
+                    onClick={() => navigate(`/booking/${car.id}`)}
                 >
-                Book Now
-            </button>
+                    Book Now
+                </button>
             </div>
         </div>
     );

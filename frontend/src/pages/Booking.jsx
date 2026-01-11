@@ -9,7 +9,6 @@ const Booking = () => {
   const [car, setCar] = useState(null);
   const [locations, setLocations] = useState([]);
 
-
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -18,14 +17,15 @@ const Booking = () => {
     location: ""
   });
 
+  // Fetch available Subaru locations from backend
   useEffect(() => {
-  fetch("http://localhost:8080/backend/locations")
-    .then(res => res.json())
-    .then(data => setLocations(data))
-    .catch(err => console.error("Location fetch error:", err));
-}, []);
+    fetch("http://localhost:8080/backend/locations")
+      .then(res => res.json())
+      .then(data => setLocations(data))
+      .catch(err => console.error("Location fetch error:", err));
+  }, []);
 
-  // 🔹 Fetch selected car
+  // Fetch details of the selected car using its ID
   useEffect(() => {
     fetch(`http://localhost:8080/backend/products?id=${id}`)
       .then(res => res.json())
@@ -33,26 +33,28 @@ const Booking = () => {
       .catch(err => console.error("Car fetch error:", err));
   }, [id]);
 
-
+  // Update form state when input values change
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Handle booking form submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // 🔒 Validation
+    // Basic form validation before submission
     if (
       !form.name ||
       !form.email ||
       !form.phone ||
-      !form.date  ||
+      !form.date ||
       !form.location
     ) {
       alert("Please fill in all fields.");
       return;
     }
 
+    // Simple phone number format check
     if (!/^[0-9]{8,15}$/.test(form.phone)) {
       alert("Invalid phone number.");
       return;
@@ -67,6 +69,7 @@ const Booking = () => {
       location: form.location
     };
 
+    // Send booking confirmation email using EmailJS
     emailjs
       .send(
         "service_06zvrqu",

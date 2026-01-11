@@ -16,9 +16,9 @@ const Merch = () => {
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   
-  // Checkout State
+  // Checkout-related states
   const [isCheckingOut, setIsCheckingOut] = useState(false);
-  // NEW: Loading State
+  // Used to control loading state during email submission
   const [isSending, setIsSending] = useState(false);
 
   const [checkoutForm, setCheckoutForm] = useState({
@@ -28,13 +28,13 @@ const Merch = () => {
     address: ""
   });
 
-  // 1. Load Cart on Mount
+  // Load saved cart data from localStorage on page load
   useEffect(() => {
     const storedCart = localStorage.getItem('subaru_cart');
     if (storedCart) setCartItems(JSON.parse(storedCart));
   }, []);
 
-  // 2. Add to Cart Logic
+  // Add selected product to cart
   const addToCart = (product) => {
     const updatedCart = [...cartItems];
     const existingItem = updatedCart.find(item => item.id === product.id);
@@ -50,40 +50,40 @@ const Merch = () => {
     setIsCartOpen(true); 
   };
 
-  // 3. Remove Item Logic
+  // Remove a specific item from the cart
   const removeFromCart = (id) => {
     const updatedCart = cartItems.filter(item => item.id !== id);
     setCartItems(updatedCart);
     localStorage.setItem('subaru_cart', JSON.stringify(updatedCart));
   };
 
-  // 4. Handle Form Changes
+  // Handle changes in checkout form fields
   const handleInputChange = (e) => {
     setCheckoutForm({ ...checkoutForm, [e.target.name]: e.target.value });
   };
 
-  // 5. EMAILJS SUBMIT LOGIC (FIXED)
+  // Handle order submission using EmailJS
   const handleOrderSubmit = (e) => {
     e.preventDefault();
 
-    console.log("Submit clicked. Validating cart..."); // DEBUG
+    console.log("Submit clicked. Validating cart..."); // For debugging
 
     if (cartItems.length === 0) {
       alert("Your cart is empty!");
       return;
     }
 
-    // Set Loading to TRUE (Button will change text)
+    // Enable loading state while sending order
     setIsSending(true);
 
-    // A. Create a clean string of items for the email
+    // Create a readable list of items for the email content
     const orderDetails = cartItems.map(item => 
       `${item.name} (x${item.quantity}) - RM ${item.price * item.quantity}`
     ).join('\n');
 
     const total = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
 
-    // B. Prepare params
+    // Prepare parameters required by EmailJS template
     const templateParams = {
       name: checkoutForm.name,
       email: checkoutForm.email,
@@ -93,9 +93,9 @@ const Merch = () => {
       location: checkoutForm.address
     };
 
-    console.log("Sending with params:", templateParams); // DEBUG
+    console.log("Sending with params:", templateParams); // For debugging
 
-    // C. Send using the IDs provided
+    // Send email using configured EmailJS service
     emailjs.send(
       "service_7dqkhk8",     
       "template_6csqik5",    
@@ -110,17 +110,19 @@ const Merch = () => {
       setIsCartOpen(false);
       setIsCheckingOut(false);
       setCheckoutForm({ name: "", email: "", phone: "", address: "" });
-      setIsSending(false); // Turn off loading
+      setIsSending(false);
     })
     .catch((err) => {
       console.error("FAILED...", err);
       alert("Failed to send order. Please check the console (F12) for the error.");
-      setIsSending(false); // Turn off loading
+      setIsSending(false);
     });
   };
 
   const cartTotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
-  const filteredProducts = filter === "All" ? PRODUCTS : PRODUCTS.filter(p => p.category === filter);
+  const filteredProducts = filter === "All"
+    ? PRODUCTS
+    : PRODUCTS.filter(p => p.category === filter);
 
   return (
     <div className="merch-page">
@@ -131,7 +133,11 @@ const Merch = () => {
 
       <div className="merch-filters">
         {["All", "Apparel", "Accessories", "Collectibles"].map((cat) => (
-          <button key={cat} className={`filter-btn ${filter === cat ? 'active' : ''}`} onClick={() => setFilter(cat)}>
+          <button
+            key={cat}
+            className={`filter-btn ${filter === cat ? 'active' : ''}`}
+            onClick={() => setFilter(cat)}
+          >
             {cat}
           </button>
         ))}
@@ -160,38 +166,50 @@ const Merch = () => {
         CART ({cartItems.reduce((acc, item) => acc + item.quantity, 0)})
       </button>
 
-      <div className={`cart-overlay ${isCartOpen ? 'open' : ''}`} onClick={() => setIsCartOpen(false)}></div>
+      <div
+        className={`cart-overlay ${isCartOpen ? 'open' : ''}`}
+        onClick={() => setIsCartOpen(false)}
+      ></div>
 
-      {/* --- CART DRAWER LOGIC --- */}
+      {/* Cart drawer panel */}
       <div className={`cart-drawer ${isCartOpen ? 'open' : ''}`}>
         <div className="cart-header">
           <h2>{isCheckingOut ? "CHECKOUT" : "YOUR GEAR"}</h2>
-          <button className="close-cart-btn" onClick={() => setIsCartOpen(false)}>&times;</button>
+          <button className="close-cart-btn" onClick={() => setIsCartOpen(false)}>
+            &times;
+          </button>
         </div>
 
-        {/* CONDITION: If Checking Out, Show Form. Else, Show List. */}
+        {/* Switch between cart view and checkout form */}
         {isCheckingOut ? (
           <div className="checkout-container">
-            <button className="back-to-cart-btn" onClick={() => setIsCheckingOut(false)}>
+            <button
+              className="back-to-cart-btn"
+              onClick={() => setIsCheckingOut(false)}
+            >
               ← Back to Cart
             </button>
+
             <form className="checkout-form" onSubmit={handleOrderSubmit}>
               <input type="text" name="name" placeholder="Full Name" required onChange={handleInputChange} value={checkoutForm.name} />
               <input type="email" name="email" placeholder="Email Address" required onChange={handleInputChange} value={checkoutForm.email} />
               <input type="tel" name="phone" placeholder="Phone Number" required onChange={handleInputChange} value={checkoutForm.phone} />
               <textarea name="address" placeholder="Shipping Address" rows="3" required onChange={handleInputChange} value={checkoutForm.address}></textarea>
               
-              <div className="cart-total" style={{marginTop: '20px'}}>
+              <div className="cart-total" style={{ marginTop: '20px' }}>
                 <span>TOTAL TO PAY</span>
-                <span style={{color: '#c9a959'}}>RM {cartTotal.toLocaleString()}</span>
+                <span style={{ color: '#c9a959' }}>RM {cartTotal.toLocaleString()}</span>
               </div>
               
-              {/* UPDATED BUTTON: Shows Loading State */}
-              <button 
-                className="checkout-btn" 
-                type="submit" 
+              {/* Button shows loading state while order is being sent */}
+              <button
+                className="checkout-btn"
+                type="submit"
                 disabled={isSending}
-                style={{ opacity: isSending ? 0.7 : 1, cursor: isSending ? 'not-allowed' : 'pointer' }}
+                style={{
+                  opacity: isSending ? 0.7 : 1,
+                  cursor: isSending ? 'not-allowed' : 'pointer'
+                }}
               >
                 {isSending ? "SENDING ORDER..." : "CONFIRM ORDER"}
               </button>
@@ -211,7 +229,12 @@ const Merch = () => {
                       <span className="item-price">RM {item.price}</span>
                       <span className="item-qty">x{item.quantity}</span>
                     </div>
-                    <button className="remove-btn" onClick={() => removeFromCart(item.id)}>&times;</button>
+                    <button
+                      className="remove-btn"
+                      onClick={() => removeFromCart(item.id)}
+                    >
+                      &times;
+                    </button>
                   </div>
                 ))
               )}
@@ -221,9 +244,12 @@ const Merch = () => {
               <div className="cart-footer">
                 <div className="cart-total">
                   <span>TOTAL</span>
-                  <span style={{color: '#c9a959'}}>RM {cartTotal.toLocaleString()}</span>
+                  <span style={{ color: '#c9a959' }}>RM {cartTotal.toLocaleString()}</span>
                 </div>
-                <button className="checkout-btn" onClick={() => setIsCheckingOut(true)}>
+                <button
+                  className="checkout-btn"
+                  onClick={() => setIsCheckingOut(true)}
+                >
                   PROCEED TO CHECKOUT
                 </button>
               </div>
