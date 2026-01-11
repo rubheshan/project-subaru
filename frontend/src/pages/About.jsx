@@ -129,7 +129,7 @@ function About() {
           <div className="split-graphic">
             <img 
                 /* Placeholder image of Subaru EyeSight technology. Replace with your own image. */
-                src="https://www.subaru.ca/content/7907/media/General/webimage/EyeSight/2023/EyeSight_Cameras_Run_01.jpg" 
+                src="/images/home_page/eyesight_tech.jpg" 
                 alt="Subaru EyeSight Technology" 
             />
           </div>
@@ -137,16 +137,53 @@ function About() {
       </RevealSection>
 
       {/* 6. SUSTAINABILITY */}
-      <RevealSection className="about-section">
-        <h2 className="section-title">GLOBAL <span className="blue-text">PRESENCE</span></h2>
-        <div className="text-block">
-          <p>
-            From the rugged terrains of the Americas to the winding roads of Europe and Asia, 
-            Subaru supports a wide range of lifestyles. We are committed to responsible manufacturing 
-            and environmental stewardship, striving for a zero-landfill future.
-          </p>
+      <section className="global-section">
+        
+        {/* The Rotating Background Element */}
+        <div className="global-bg-globe"></div>
+
+        <div className="global-content">
+          <div className="global-header">
+            <h2>
+              Global <span style={{ color: '#003087' }}>Presence</span>
+            </h2>
+          </div>
+
+          <div className="mission-grid">
+            
+            {/* Pillar 1: Reach */}
+            <div className="mission-card">
+              <span className="mission-icon">🌍</span>
+              <h3>Limitless Exploration</h3>
+              <p>
+                From the rugged terrains of the Americas to the winding roads of Europe and Asia.
+                We engineer vehicles that master every corner of the globe.
+              </p>
+            </div>
+
+            {/* Pillar 2: Environment (The Zero-Landfill point) */}
+            <div className="mission-card">
+              <span className="mission-icon">♻️</span>
+              <h3>Zero-Landfill Future</h3>
+              <p>
+                Performance shouldn't cost the planet. We are committed to responsible 
+                manufacturing and strict environmental stewardship.
+              </p>
+            </div>
+
+            {/* Pillar 3: Lifestyle */}
+            <div className="mission-card">
+              <span className="mission-icon">🏔️</span>
+              <h3>Adaptive Lifestyles</h3>
+              <p>
+                Whether you are navigating city streets or off-road trails, our technology 
+                adapts to support your unique journey.
+              </p>
+            </div>
+
+          </div>
         </div>
-      </RevealSection>
+      </section>
 
       {/* 7. CTA */}
       <RevealSection className="about-cta">
