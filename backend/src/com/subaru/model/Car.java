@@ -3,9 +3,15 @@ package com.subaru.model;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * The Car class is the primary Data Model for the application.
+ * It implements Serializable to allow the objects to be converted into 
+ * byte streams (necessary for some web server operations and JSON conversion).
+ */
 public class Car implements Serializable {
     private static final long serialVersionUID = 1L;
     
+    // Basic Identification & Marketing Data
     private int id;
     private String modelName;
     private double price;
@@ -16,7 +22,7 @@ public class Car implements Serializable {
     private String tagline;
     private String description;
     
-    // Quick Stats
+    // Quick Stats: Displayed on the main product cards
     private String horsepower;
     private String torque;
     private String topSpeed;
@@ -24,9 +30,10 @@ public class Car implements Serializable {
     private String accelerationAT;
     private String transmission;
     
-    // --- NEW: Detailed Specs for Comparison Page ---
+    // Detailed Specs: Used for the technical comparison tables
     private Specifications specs; 
 
+    // Media & Feature Collections
     private List<ColorOption> colorOptions; 
     private List<String> allImages;
     private List<String> exteriorImages;
@@ -34,14 +41,16 @@ public class Car implements Serializable {
     private List<Highlight> highlights;
     private List<Variant> variants;
 
-    // --- UPDATED CONSTRUCTOR WITH 'Specifications' ---
+    /**
+     * Main Constructor to initialize a full Car object with all nested data.
+     */
     public Car(int id, String modelName, double price, String imageUrl, String videoUrl, 
                String sideImageUrl, String frontImageUrl,
                String tagline, String description, 
                String horsepower, String torque, String topSpeed, 
                String accelerationMT, String accelerationAT, 
                String transmission, 
-               Specifications specs, // <--- THIS PARAMETER WAS MISSING
+               Specifications specs,
                List<ColorOption> colorOptions,
                List<String> allImages, List<String> exteriorImages, List<String> interiorImages,
                List<Highlight> highlights,
@@ -61,7 +70,7 @@ public class Car implements Serializable {
         this.accelerationMT = accelerationMT;
         this.accelerationAT = accelerationAT;
         this.transmission = transmission;
-        this.specs = specs; // <--- ASSIGN IT
+        this.specs = specs;
         this.colorOptions = colorOptions;
         this.allImages = allImages;
         this.exteriorImages = exteriorImages;
@@ -70,7 +79,9 @@ public class Car implements Serializable {
         this.variants = variants;
     }
 
-    // --- NEW: The Detailed Specifications Class ---
+    /**
+     * Inner class representing technical dimensions and engine details.
+     */
     public static class Specifications implements Serializable {
         private String engineType;      
         private String displacement;    
@@ -103,7 +114,9 @@ public class Car implements Serializable {
         }
     }
 
-    // --- Inner Classes (Keep existing) ---
+    /**
+     * Inner class for specific car models like GT Edition vs Standard
+     */
     public static class Variant implements Serializable {
         private String name;
         private double price;
@@ -122,6 +135,9 @@ public class Car implements Serializable {
         public List<SpecItem> getSpecs() { return specs; }
     }
 
+    /**
+     * Represents a single label-value pair for technical lists.
+     */
     public static class SpecItem implements Serializable {
         private String label;
         private String value;
@@ -130,6 +146,9 @@ public class Car implements Serializable {
         public String getValue() { return value; }
     }
 
+    /**
+     * Represents a paint color choice with a Hex code for UI rendering.
+     */
     public static class ColorOption implements Serializable {
         private String name;
         private String hex;
@@ -140,6 +159,9 @@ public class Car implements Serializable {
         public String getImage() { return image; }
     }
 
+    /**
+     * Represents a specific feature "Highlight" with an image and text.
+     */
     public static class Highlight implements Serializable {
         private String title;
         private String description;
@@ -150,8 +172,8 @@ public class Car implements Serializable {
         public String getImage() { return image; }
     }
 
-    // --- Getters ---
-    public Specifications getSpecs() { return specs; } // <--- NEW GETTER
+    // --- Getters for Accessing Data ---
+    public Specifications getSpecs() { return specs; } 
     public int getId() { return id; }
     public String getModelName() { return modelName; }
     public double getPrice() { return price; }
